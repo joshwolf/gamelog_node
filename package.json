@@ -1,0 +1,16 @@
+{
+  "name": "gamelog",
+  "version": "0.0.1",
+  "dependencies": {
+    "bgg": "^1.0.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "lodash": "^4.14.1",
+    "mysql": "^2.11.1",
+    "sequelize": "^3.23.6",
+    "sequelize-cli": "^2.4.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
