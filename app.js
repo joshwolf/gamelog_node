@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var server = require('http').Server(app);
 var models = require("./models");
 
-
 //For testing
 module.exports = app;
 
