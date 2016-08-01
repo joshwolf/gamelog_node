@@ -8,9 +8,18 @@ module.exports = function(sequelize, DataTypes) {
   	indexes: [
   		{
   			fields: ['title']
+  		},
+  		{
+  			fields: ['bgg_id'],
+  			unique: true
   		}
   	],
     classMethods: {
+    	getOrFindByBggId: function(bgg_id) {
+		  	Game.findOrCreate({ where: {bgg_id: bgg_id} }).then(function(game) {
+		  		return game;
+		  	});
+		}
      /* associate: function(models) {
         Game.hasMany(models.Gameplay)
       }*/

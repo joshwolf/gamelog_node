@@ -1,8 +1,10 @@
 'use strict';
 
 var express = require('express');
+var path = require('path');
 var app = express();
 var _ = require('lodash');
+var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
 var models = require("./models");
@@ -12,7 +14,7 @@ var models = require("./models");
 module.exports = app;
 
 /* Route Imports */
-var gameController =  require('./routes/gameController');
+var games = require('./routes/games');
 
 var allowCORS = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -57,13 +59,17 @@ var auth = function(req, res, next) {
         next();
     }
 }
-
+app.use(logger('dev'));
 app.use(allowCORS);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/frontend/public'));
 
 app.set('port', process.env.PORT || 3000);
+
+
+app.use('/game', games);
+
 
 models.sequelize.sync().then(function () {
   var server = app.listen(app.get('port'));
