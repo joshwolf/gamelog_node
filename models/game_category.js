@@ -1,15 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-  var Game = sequelize.define("Game", {
+  var GameCategory = sequelize.define("GameCategory", {
     bgg_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     year_published: DataTypes.INTEGER,
-    image_thumbnail: DataTypes.STRING   
+    image_thumbnail: DataTypes.STRING    
   }, {
-  	indexes: [
-  		{
-  			fields: ['title']
-  		}
-  	],
     classMethods: {
      /* associate: function(models) {
         Game.hasMany(models.Gameplay)
@@ -17,5 +12,5 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  return Game;
+  return GameCategory;
 };

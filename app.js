@@ -5,6 +5,7 @@ var app = express();
 var _ = require('lodash');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
+var models = require("./models");
 
 
 //For testing
@@ -62,19 +63,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/frontend/public'));
 
-// API Routes
-app.get('/game/:id', gameController.getGame);
-app.get('/alive', function(req, res) {
-    res.send('I live!');
+app.set('port', process.env.PORT || 3000);
+
+models.sequelize.sync().then(function () {
+  var server = app.listen(app.get('port'));
 });
-
-
-// Angular and the Front End gets everything else.
-app.get('*', function(req, res) {
-    res.status(405).send('Not supported');
-});
-
-server.listen(process.env.PORT, function() {
-  console.log('Server listening on port:' + this.address().port);
-});
-
