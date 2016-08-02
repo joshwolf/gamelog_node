@@ -1,5 +1,3 @@
-var util = require('util');
-
 module.exports = function(sequelize, DataTypes) {
   var Category = sequelize.define("Category", {
 	bgg_id: DataTypes.INTEGER,
