@@ -60,7 +60,6 @@ module.exports = function(sequelize, DataTypes) {
   							}
   						});
   						game.save();
-    					console.log(JSON.stringify(game));
   					});
 	      		}
 		  	});

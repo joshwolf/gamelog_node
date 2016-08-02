@@ -7,6 +7,7 @@ var _ = require('lodash');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
+var session = require('express-session')
 var models = require("./models");
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
@@ -30,7 +31,6 @@ var allowCORS = function(req, res, next) {
     }
 };
 
-app.use(logger('dev'));
 app.use(allowCORS);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,28 +45,17 @@ passport.use(new Strategy({
     callbackURL: configAuth.facebookAuth.callbackURL
   },
   function(accessToken, refreshToken, profile, cb) {
-    // asynchronous
-          console.log(profile);
-
-        // find the user in the database based on their facebook id
-        models.User.findOrCreate({ where: {facebook_id: profile.id} })
-          .spread(function(user, created) {
-            console.log(JSON.stringify(user));
-            // set all of the facebook information in our user model
-            user.facebook_id = profile.id; // set the users facebook id                   
-            user.name = profile.displayName;
-            user.profile_pic = profile.profileUrl;
-            console.log(JSON.stringify(user));
-            // save our user to the database
-            user.save(function(err) {
-                if (err)
-                    throw err;
-
-                // if successful, return the new user
-                return done(null, user);
-            });
+      // find the user in the database based on their facebook id
+      models.User.findOrCreate({ where: {full_name: profile.displayName} })
+        .spread(function(user, created) {
+          //set all of the facebook information in our user model
+          user.facebook_id = user.facebook_id || profile.id;
+          user.updateFromFacebook(accessToken);
+          session.current_user = user;
+          return cb(null,user);
         });
-  }));
+  }
+));
 
 
 // Configure Passport authenticated session persistence.
@@ -78,13 +67,17 @@ passport.use(new Strategy({
 // from the database when deserializing.  However, due to the fact that this
 // example does not have a database, the complete Twitter profile is serialized
 // and deserialized.
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
+    // used to serialize the user for the session
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
+    // used to deserialize the user
+    passport.deserializeUser(function(id, done) {
+        models.User.findById(id, function(err, user) {
+            done(err, user);
+        });
+    });
 
 
 app.set('port', process.env.PORT || 3000);
@@ -92,14 +85,29 @@ app.set('port', process.env.PORT || 3000);
 
 app.use('/game', games);
 app.get('/login/facebook',
-  passport.authenticate('facebook', { scope: ['user_friends'] }));
-
-app.get('/login/facebook/return', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+  passport.authenticate('facebook', {}),
+  function(req, res, next) {
+    next();
   });
 
+app.get('/login/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/login/boo' }),
+  function(req, res, next) {
+    // Successful authentication, redirect home.
+    res.send(session.current_user);
+    next();
+  });
+
+app.get('/logout', function(req, res, next) {
+  req.logout();
+  res.send({ success: true });
+  next();
+});
+
+app.get('/', function(req, res, next) {
+  res.send('hello');
+  next();
+});
 
 
 models.sequelize.sync().then(function () {
