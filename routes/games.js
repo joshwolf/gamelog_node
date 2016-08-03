@@ -2,15 +2,14 @@ var _ = require('lodash');
 var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
+var util = require('util');
 
 router.get('/:id', function(req, res) {
-	var game = models.Game.getOrFindByBggId(req.params.id);
-	res.jsonp(game);
-	/*
-	bgg('thing', {type: 'boardgame', id: req.params.id })
-	  .then(function(results){
-	    res.jsonp(results);
-	  });*/
+	models.Game.getOrFindByBggId(req.params.id, function(game) { res.jsonp(game); });
 });
 
+router.get('/search/:title/:exact*?', function(req, res) {
+	var exact = req.params.exact || 0;
+	var games = models.Game.findByTitle(req.params.title, req.params.exact, function(games) { res.jsonp(games); });
+})
 module.exports = router;

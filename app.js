@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var _ = require('lodash');
-var logger = require('morgan');
+//var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
 var session = require('express-session')
@@ -84,7 +84,7 @@ app.set('port', process.env.PORT || 3000);
 
 
 app.use('/game', games);
-app.get('/login/facebook',
+app.get(['/login/facebook','/login'],
   passport.authenticate('facebook', {}),
   function(req, res, next) {
     next();
