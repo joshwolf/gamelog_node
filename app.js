@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var _ = require('lodash');
-//var logger = require('morgan');
+var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
 var session = require('express-session')
@@ -34,7 +34,8 @@ var allowCORS = function(req, res, next) {
 app.use(allowCORS);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/frontend/public'));
+app.use(express.static(__dirname + '/public/app'));
+app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 app.use(passport.initialize());
 app.use(passport.session());
 
