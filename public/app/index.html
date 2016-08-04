@@ -33,11 +33,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Gamelog</a>
+            <a class="navbar-brand" href="/">G</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
-            <div ng-controller="GameSearchCtrl" class="ng-cloak" id="game-quicksearch">
+            <div ng-controller="GameSearchCtrl" ng-cloak id="game-quicksearch">
               <ui-select ng-model="gameSearchResult" on-select="goToGame($item,$model)" style="min-width: 300px;">
                 <ui-select-match placeholder="Search for Games">{{$select.selected.name.value}}</ui-select-match>
                 <ui-select-choices refresh="searchGames($select)" refresh-delay="300" repeat="game in searchRes">
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="container ng-cloak">
+    <div class="container" ng-cloak>
       <div ng-view=""></div>
     </div>
 

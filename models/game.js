@@ -20,7 +20,9 @@ module.exports = function(sequelize, DataTypes) {
   		}
   	],
     getterMethods: {
-      designers: function() { return _.map(this.Designers, function(designer) { return designer.name; })}
+      designers: function() { return _.map(this.Designers, function(designer) { return designer.name; })},
+      mechanics: function() { return _.map(this.Mechanics, function(mechanic) { return mechanic.title; })},
+      categories: function() { return _.map(this.Categories, function(category) { return category.title; })},
     },
     classMethods: {
 	  	associate: function(models) {

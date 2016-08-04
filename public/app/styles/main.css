@@ -5856,6 +5856,9 @@ body {
   .marketing p + h4 {
     margin-top: 28px; }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none; }
+
 #game-quicksearch {
   display: inline-block;
   width: 33vw;

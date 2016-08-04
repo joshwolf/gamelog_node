@@ -26,7 +26,7 @@ angular.module('gamelogApp')
 			      exact: 0
 			    }
 			  }).then(function(response){
-			    $scope.searchRes = response.data.slice(0,20);
+			    $scope.searchRes = _.sortBy(response.data.slice(0,20), function(game) { return game.name.value.toLowerCase().indexOf($select.search.toLowerCase()); });
 			  });
 			}
 		}

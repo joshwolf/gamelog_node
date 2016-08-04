@@ -2,4 +2,6 @@
 <img ng-src="{{current_game.image_thumbnail}}">
 <h1>{{current_game.title}} ({{current_game.year_published}})</h1>
 <h2>by {{current_game.designers | humanizedList}}</h2>
+<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
+<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
 </div>
