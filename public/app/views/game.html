@@ -1,0 +1,5 @@
+<div class="container row" ng-show="current_game">
+<img ng-src="{{current_game.image_thumbnail}}">
+<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
+<h2>by {{current_game.designers | humanizedList}}</h2>
+</div>
