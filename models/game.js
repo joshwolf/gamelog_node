@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
   			unique: true
   		}
   	],
+    getterMethods: {
+      designers: function() { return _.map(this.Designers, function(designer) { return designer.name; })}
+    },
     classMethods: {
 	  	associate: function(models) {
         Game.belongsToMany(models.Designer, {through: 'GameDesigner'});
@@ -98,11 +101,6 @@ module.exports = function(sequelize, DataTypes) {
         	if(!_.isArray(games)) {
         		games = [games];
         	}
- 	        process.nextTick(function() {
- 	        	_.each(games, function(game) {
-   	        	//Game.getOrFindByBggId(game.id);
- 	        	});
- 	        });
  	        if(done) {
 	 	        done(games);
  	        }

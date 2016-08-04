@@ -24,12 +24,12 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        controllerAs: 'mainController'
       })
       .when('/game/:id', {
-        templateUrl: 'views/main.html',
+        templateUrl: 'views/game.html',
         controller: 'GameCtrl',
-        controllerAs: 'game'
+        controllerAs: 'gameController'
       })
       .otherwise({
         redirectTo: '/'
@@ -37,4 +37,16 @@ angular
   })
   .config(function ($locationProvider) {
     $locationProvider.html5Mode(true);
+  })
+  .filter('humanizedList', function() {
+    return function(items) {
+      var _items = (items || []);
+      if (_items.length < 2)
+      {
+        return _items[0];
+      }
+      else {
+        return _items.slice(0, -1).join(', ') + ' and ' + _.last(_items);
+      }
+    };
   });

@@ -5856,6 +5856,13 @@ body {
   .marketing p + h4 {
     margin-top: 28px; }
 
+#game-quicksearch {
+  display: inline-block;
+  width: 33vw;
+  float: left;
+  max-width: 500px;
+  margin: 0.8rem; }
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
