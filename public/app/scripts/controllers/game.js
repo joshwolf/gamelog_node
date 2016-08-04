@@ -8,9 +8,12 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-  .controller('MainCtrl', function ($scope, $http, $location) {
+  .controller('GameCtrl', function ($scope, $http, $location, $routeParams) {
   $scope.searchRes = [];
-  $scope.current_game;
+  $http.get('/api/game/' + $routeParams.id)
+    .then(function(result) {
+      $scope.current_game = result.data;
+    });
 
   $scope.searchGames = function($select) {
   	if($select.search.length > 3) {
@@ -23,9 +26,5 @@ angular.module('gamelogApp')
 	    $scope.searchRes = response.data;
 	  });
 	}
-  }
-
-  $scope.goToGame = function(game) {
-    $location.path('/game/' + game.id);
   }
 });

@@ -21,17 +21,22 @@ module.exports = function(sequelize, DataTypes) {
   	],
     classMethods: {
 	  	associate: function(models) {
-	  		Game.belongsToMany(models.Category, {through: 'GameCategory'});
-	  		Game.belongsToMany(models.Mechanic, {through: 'GameMechanic'});
-	  		Game.belongsToMany(models.Designer, {through: 'GameDesigner'});
+        Game.belongsToMany(models.Designer, {through: 'GameDesigner'});
+        Game.belongsToMany(models.Mechanic, {through: 'GameMechanic'});
+        Game.belongsToMany(models.Category, {through: 'GameCategory'});
 	  	},
     	getOrFindByBggId: function(bgg_id, done) {
-		  	aGame = Game.findOrCreate({ where: {bgg_id: bgg_id} })
+        var m = require('../models');
+		  	Game.findOrCreate({
+		  			where: {bgg_id: bgg_id},
+            include: [ m.Designer, m.Mechanic, m.Category ]
+		  		})
 	      	.spread(function(game, created) {
-	      		if(created || !created) {
+	      		if(created) {
 	      			//get from BGG
       				bgg('thing', {id: bgg_id })
     					.then(function(results){
+                console.log(results);
   							var models = require('../models');
     						bgg_game = results.items.item;
     						game.title = _.isArray(bgg_game.name) ? _.find(bgg_game.name,{'type':'primary'}).value : bgg_game.name.value;
@@ -59,25 +64,47 @@ module.exports = function(sequelize, DataTypes) {
     									break;
     							}
     						});
-    						game.save();
-    						if(done) {
-	    						done(game);
-    						}
+    						game.save().then(function() {
+                  if(done) {
+                    done(game);
+                  }
+                });
     					});
-	      		}
+	      		} else {
+              if(done) {
+                done(game);
+              } else {
+                game;
+              }
+            }
 		  	});
 		  },
+      getByBggId: function(bgg_id, done) {
+        var m = require('../models');
+        Game.findOrCreate({
+          where: {bgg_id: bgg_id},
+          include: [ m.Designer, m.Category, m.Mechanic ]
+        })
+        .then(function(game) {
+          if(done) {
+            done(game);
+          }
+        })
+      },
       findByTitle: function(title, exact, done) {
-      	var games = bgg('search', {'exact': exact, 'type': 'boardgame', 'query': title})
+      	bgg('search', {'exact': exact, 'type': 'boardgame', 'query': title})
         .then(function(results) {
+        	var games = results.items.item;
+        	if(!_.isArray(games)) {
+        		games = [games];
+        	}
  	        process.nextTick(function() {
- 	        	_.each(results.items.item, function(game) {
- 	        		console.log(util.inspect(game));
-   	        	Game.getOrFindByBggId(game.id);
+ 	        	_.each(games, function(game) {
+   	        	//Game.getOrFindByBggId(game.id);
  	        	});
  	        });
  	        if(done) {
-	 	        done(results);
+	 	        done(games);
  	        }
         });
       }

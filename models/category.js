@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
 	  ],
 	  classMethods: {
 	  	associate: function(models) {
-	  		Category.belongsToMany(models.Game, {through: 'GameCategory'});
+	  		//Category.belongsToMany(models.Game, {through: 'GameCategory'});
 	  	}
 	  }
 	});

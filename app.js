@@ -84,7 +84,7 @@ passport.use(new Strategy({
 app.set('port', process.env.PORT || 3000);
 
 
-app.use('/game', games);
+app.use('/api/game', games);
 app.get(['/login/facebook','/login'],
   passport.authenticate('facebook', {}),
   function(req, res, next) {
@@ -105,11 +105,9 @@ app.get('/logout', function(req, res, next) {
   next();
 });
 
-app.get('/', function(req, res, next) {
-  res.send('hello');
-  next();
+app.get('/*', function(req, res) { 
+  res.sendFile(__dirname + '/public/app/index.html')
 });
-
 
 models.sequelize.sync().then(function () {
   var server = app.listen(app.get('port'));

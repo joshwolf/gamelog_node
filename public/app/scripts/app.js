@@ -2,21 +2,22 @@
 
 /**
  * @ngdoc overview
- * @name publicApp
+ * @name gamelogApp
  * @description
- * # publicApp
+ * # gamelogApp
  *
  * Main module of the application.
  */
 angular
-  .module('publicApp', [
+  .module('gamelogApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.select'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -25,12 +26,15 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/game/:id', {
+        templateUrl: 'views/main.html',
+        controller: 'GameCtrl',
+        controllerAs: 'game'
       })
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .config(function ($locationProvider) {
+    $locationProvider.html5Mode(true);
   });
