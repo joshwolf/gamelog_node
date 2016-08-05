@@ -1,8 +1,8 @@
 var _ = require('lodash');
-var configAuth = require('../config/auth');
+var authConfig = require('../config/auth');
 var FB = require('fb'),
-    fb = new FB.Facebook({appId: configAuth.facebookAuth.clientID, appSecret: configAuth.facebookAuth.clientSecret});
-
+    fb = new FB.Facebook({appId: authConfig.facebookAuth.clientID, appSecret: authConfig.facebookAuth.clientSecret});
+var jwt = require('jsonwebtoken');
 module.exports = function(sequelize, DataTypes) {
 	var User = sequelize.define("User", {
 		facebook_id: DataTypes.BIGINT,
@@ -35,6 +35,11 @@ module.exports = function(sequelize, DataTypes) {
 				  user.save();
 				});
 				return user;
+			},
+			getToken: function() {
+				var payload = { 'sub': this.id, 'iat': Date.now()};
+				var token = jwt.sign(payload, authConfig.jwt.secret, {'issuer': 'gamelog'});
+				return token;
 			},
 			getFriends: function(accessToken) {
 				FB.setAccessToken(accessToken);

@@ -5859,6 +5859,12 @@ body {
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none; }
 
+.nav .user {
+  cursor: pointer; }
+  .nav .user i {
+    padding: 15px;
+    line-height: 20px; }
+
 #game-quicksearch {
   display: inline-block;
   width: 33vw;

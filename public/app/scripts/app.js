@@ -17,6 +17,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngCookies',
     'ui.select'
   ])
   .config(function ($routeProvider) {

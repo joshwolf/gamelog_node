@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var _ = require('lodash');
+var jwt = require('jsonwebtoken');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
@@ -11,13 +12,16 @@ var session = require('express-session')
 var models = require("./models");
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
-var configAuth = require('./config/auth');
+var authConfig = require('./config/auth');
+var cookie = require('cookie');
+var util = require('util');
 
 //For testing
 module.exports = app;
 
 /* Route Imports */
 var games = require('./routes/games');
+var users = require('./routes/users');
 
 var allowCORS = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -41,19 +45,20 @@ app.use(passport.session());
 
 //Facebook auth
 passport.use(new Strategy({
-    clientID: configAuth.facebookAuth.clientID,
-    clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL
+    clientID: authConfig.facebookAuth.clientID,
+    clientSecret: authConfig.facebookAuth.clientSecret,
+    callbackURL: authConfig.facebookAuth.callbackURL
   },
-  function(accessToken, refreshToken, profile, cb) {
+  function(accessToken, refreshToken, profile, done) {
       // find the user in the database based on their facebook id
       models.User.findOrCreate({ where: {full_name: profile.displayName} })
         .spread(function(user, created) {
           //set all of the facebook information in our user model
           user.facebook_id = user.facebook_id || profile.id;
           user.updateFromFacebook(accessToken);
-          session.current_user = user;
-          return cb(null,user);
+          session.user = user;
+          session.token = user.getToken();
+          done(null,user);
         });
   }
 ));
@@ -68,23 +73,31 @@ passport.use(new Strategy({
 // from the database when deserializing.  However, due to the fact that this
 // example does not have a database, the complete Twitter profile is serialized
 // and deserialized.
-    // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
+// used to serialize the user for the session
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        models.User.findById(id, function(err, user) {
-            done(err, user);
-        });
+// used to deserialize the user
+passport.deserializeUser(function(id, done) {
+    models.User.findById(id, function(err, user) {
+        done(err, user);
     });
+});
 
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
 
 app.set('port', process.env.PORT || 3000);
 
 
 app.use('/api/game', games);
+app.use('/api/user', users);
 app.get(['/login/facebook','/login'],
   passport.authenticate('facebook', {}),
   function(req, res, next) {
@@ -95,17 +108,29 @@ app.get('/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/login/boo' }),
   function(req, res, next) {
     // Successful authentication, redirect home.
-    res.send(session.current_user);
     next();
   });
 
-app.get('/logout', function(req, res, next) {
+app.get('/logout', function(req, res) {
   req.logout();
-  res.send({ success: true });
-  next();
+  session.user = null;
+  res.redirect('/');
 });
 
-app.get('/*', function(req, res) { 
+app.get('/*', function(req, res) {
+  if(session.token) {
+    res.setHeader('Set-Cookie', cookie.serialize('token', session.token, {
+      maxAge: 60 * 60 * 24 * 60 // 60 days
+    }));
+  }
+  var cookies = cookie.parse(req.headers.cookie || '');
+  var payload = jwt.decode(cookies.token, authConfig.jwt.secret);
+  var now = new Date();
+
+  if (now > payload.exp) {
+    res.setHeader('Set-Cookie', cookie.serialize('token', null));
+  }
+
   res.sendFile(__dirname + '/public/app/index.html')
 });
 

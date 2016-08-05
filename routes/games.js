@@ -3,6 +3,8 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 var util = require('util');
+var auth = require('../config/auth');
+var session = require('express-session')
 
 router.get('/:id', function(req, res) {
 	models.Game.getOrFindByBggId(req.params.id, function(game) { res.jsonp(game); });
