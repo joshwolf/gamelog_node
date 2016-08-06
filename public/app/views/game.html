@@ -1,7 +1,16 @@
-<div class="container row" ng-show="current_game">
-<img ng-src="{{current_game.image_thumbnail}}">
-<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
-<h2>by {{current_game.designers | humanizedList}}</h2>
-<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
-<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
+<div class="container" ng-show="current_game">
+	<div class="row">
+		<img ng-src="{{current_game.image_thumbnail}}">
+		<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
+		<h2>by {{current_game.designers | humanizedList}}</h2>
+		<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
+		<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
+	</div>
+	<div class="row">
+	<h2>Add a gameplay</h2>
+	<datepicker date-format="shortDate" date-set="{{new_gameplay.date_played.toString()}}" selector="date_played">
+		<label>Date:</label>
+  		<input ng-model="new_gameplay.date_played" type="text" class="date_played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
+	</datepicker>
+	</div>
 </div>

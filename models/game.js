@@ -29,12 +29,13 @@ module.exports = function(sequelize, DataTypes) {
         Game.belongsToMany(models.Designer, {through: 'GameDesigner'});
         Game.belongsToMany(models.Mechanic, {through: 'GameMechanic'});
         Game.belongsToMany(models.Category, {through: 'GameCategory'});
+        Game.hasMany(models.Gameplay);
 	  	},
     	getOrFindByBggId: function(bgg_id, done) {
         var m = require('../models');
 		  	Game.findOrCreate({
 		  			where: {bgg_id: bgg_id},
-            include: [ m.Designer, m.Mechanic, m.Category ]
+            include: [ m.Designer, m.Mechanic, m.Category, m.Gameplay ]
 		  		})
 	      	.spread(function(game, created) {
 	      		if(created) {

@@ -18,7 +18,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngCookies',
-    'ui.select'
+    'ui.select',
+    '720kb.datepicker'
   ])
   .config(function ($routeProvider) {
     $routeProvider

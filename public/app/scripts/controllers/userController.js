@@ -8,7 +8,6 @@ angular.module('gamelogApp')
 	    $cookies.put('user',JSON.stringify(response.data),{'expires':expires});
 	    $rootScope.current_user = response.data;
 	    $scope.current_user = response.data;
-	    console.log($scope);
   	});
   	$scope.logout = function() {
   		$scope.current_user = null;

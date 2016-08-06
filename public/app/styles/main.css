@@ -5815,6 +5815,9 @@ button.close {
 body {
   padding: 0; }
 
+.font-fontawesome {
+  font-family: "FontAwesome", "Verdana", "Helvetica", "Sans-Serif"; }
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -5864,6 +5867,9 @@ body {
   .nav .user i {
     padding: 15px;
     line-height: 20px; }
+    .nav .user i:hover {
+      color: #fff;
+      background: #000; }
 
 #game-quicksearch {
   display: inline-block;

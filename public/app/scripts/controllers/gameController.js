@@ -13,6 +13,13 @@ angular.module('gamelogApp')
 		$http.get('/api/game/' + $routeParams.id)
 		.then(function(result) {
 			$scope.current_game = result.data;
+			if($scope.current_user) {
+				$http.get('/api/game/plays/' + $routeParams.id)
+				.then(function(result) {
+					$scope.current_game.gameplays = result.data;
+					$scope.new_gameplay = { players : [], date_played : (new Date()) };
+				});
+			}
 		});
 	})
 	.controller('GameSearchCtrl', function ($scope, $http, $location, $window) {
