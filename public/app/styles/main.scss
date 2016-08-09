@@ -96,6 +96,28 @@ body {
   margin: 0.8rem;
 }
 
+#game-page {
+  #new-gameplay {
+    .date-played {
+      width: 10rem;
+      text-align: center;
+    }
+  }
+  .game-actions {
+    padding-left: 0;
+    li {
+      float: left;
+      list-style-type: none;
+      width: auto;
+      display: inline;
+      cursor: pointer;
+        img {
+          width: 6rem;
+        }
+    }
+  }
+}
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

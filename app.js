@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
-var session = require('express-session')
+var session = require('express-session');
 var models = require("./models");
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
@@ -21,6 +21,7 @@ module.exports = app;
 
 /* Route Imports */
 var games = require('./routes/games');
+var gameplays = require('./routes/gameplays');
 var users = require('./routes/users');
 
 var allowCORS = function(req, res, next) {
@@ -65,7 +66,7 @@ passport.use(new Strategy({
 
 
 // Configure Passport authenticated session persistence.
-//
+//f
 // In order to restore authentication state across HTTP requests, Passport needs
 // to serialize users into and deserialize users out of the session.  In a
 // production-quality application, this would typically be as simple as
@@ -85,28 +86,25 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-function loggedIn(req, res, next) {
-    if (req.user) {
-        next();
-    } else {
-        res.redirect('/');
-    }
-}
-
 app.set('port', process.env.PORT || 3000);
 
 
 app.use('/api/game', games);
+app.use('/api/gameplay', gameplays);
 app.use('/api/user', users);
 app.get(['/login/facebook','/login'],
   passport.authenticate('facebook', {}),
   function(req, res, next) {
-    next();
+    res.redirect('/');
   });
 
 app.get('/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/login/boo' }),
   function(req, res, next) {
+    var cookies = cookie.parse(req.headers.cookie || '');
+    if(cookies.next_url) {
+      res.redirect(cookies.next_url);
+    }
     // Successful authentication, redirect home.
     next();
   });
@@ -114,7 +112,11 @@ app.get('/login/facebook/return',
 app.get('/logout', function(req, res) {
   req.logout();
   session.user = null;
-  res.redirect('/');
+    var cookies = cookie.parse(req.headers.cookie || '');
+    if(cookies.next_url) {
+      res.redirect(cookies.next_url);
+    }
+    res.redirect('/');
 });
 
 app.get('/*', function(req, res) {

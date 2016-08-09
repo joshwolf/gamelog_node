@@ -11,7 +11,7 @@ function loggedIn(req, res, next) {
     if (session.user) {
         next();
     } else {
-        res.send(401,'You must be logged in');
+        res.status(401).send('You must be logged in');
     }
 }
 

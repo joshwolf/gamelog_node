@@ -11,9 +11,13 @@ angular.module('gamelogApp')
   	});
   	$scope.logout = function() {
   		$scope.current_user = null;
+      $cookies.remove('user');
+      $cookies.remove('token');
+      $cookies.put('next_url',$location.path());
   		$window.location.href = '/logout';
   	}
   	$scope.login = function() {
+      $cookies.put('next_url',$location.path());
   		$window.location.href = '/login';
   	}
 });

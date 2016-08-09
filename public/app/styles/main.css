@@ -5878,6 +5878,20 @@ body {
   max-width: 500px;
   margin: 0.8rem; }
 
+#game-page #new-gameplay .date-played {
+  width: 10rem;
+  text-align: center; }
+#game-page .game-actions {
+  padding-left: 0; }
+  #game-page .game-actions li {
+    float: left;
+    list-style-type: none;
+    width: auto;
+    display: inline;
+    cursor: pointer; }
+    #game-page .game-actions li img {
+      width: 6rem; }
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {

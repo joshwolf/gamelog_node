@@ -1,16 +1,21 @@
-<div class="container" ng-show="current_game">
+<div class="container" ng-show="current_game" id="game-page">
 	<div class="row">
 		<img ng-src="{{current_game.image_thumbnail}}">
 		<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
 		<h2>by {{current_game.designers | humanizedList}}</h2>
 		<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
 		<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
+		<ul class="game-actions">
+			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png"></a></li>
+			<li class="" ng-show="{{current_user}}""><img ng-click="showGameplayForm()" src="images/dice.svg"></li>
+		</ul>
 	</div>
-	<div class="row">
-	<h2>Add a gameplay</h2>
-	<datepicker date-format="shortDate" date-set="{{new_gameplay.date_played.toString()}}" selector="date_played">
-		<label>Date:</label>
-  		<input ng-model="new_gameplay.date_played" type="text" class="date_played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
-	</datepicker>
+	<div class="row" ng-show="{{current_user && show_gameplay_form}}" id="new-gameplay">
+		<h2>Add a gameplay</h2>
+		<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">
+			<label>Date:</label>
+	  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
+		</datepicker>
+		<button type="button" class="btn btn-primary" ng-click="addGameplay()">Go</button>
 	</div>
 </div>

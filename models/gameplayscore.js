@@ -1,14 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
   var GameplayScore = sequelize.define("GameplayScore", {
-	score: DataTypes.INTEGER
+	points: DataTypes.INTEGER
 	}, {
 	  indexes: [
 	    {
-	      fields: ['score']
+	      fields: ['points']
 	    }
 	  ],
 	  classMethods: {
 	  	associate: function(models) {
+	  		GameplayScore.belongsTo(models.User, {as: 'Player'});
 	  	}
 	  }
 	});
