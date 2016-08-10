@@ -25,8 +25,12 @@ function loggedIn(req, res, next) {
     }
 }
 
+router.get('/all', function(req, res) {
+	models.Gameplay.findAll().then(function(gameplays) { res.jsonp(gameplays); });
+});
+
 router.get('/:id', function(req, res) {
-	models.Gameplay.findById(req.params.id, function(gameplay) { res.jsonp(gameplay); });
+	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Score'}]}).then(function(gameplay) { res.jsonp(gameplay); });
 });
 
 router.post('/new', loggedIn, function(req, res) {
@@ -35,14 +39,14 @@ router.post('/new', loggedIn, function(req, res) {
 		var gameplay = models.Gameplay.create({
 			play_date: gameplay_data.play_date,
 			GameId: gameplay_data.game_id,
+			CreatorId: gameplay_data.creator_id,
 			scores: []
 		}).then(function(gameplay) {
 			_.forEach(gameplay_data.scores, function(score) {
 				var gameplay_score = models.GameplayScore.create({
 					points: score.points,
-					PlayerId: score.player.id
-				}).then(function(added_score) {
-					gameplay.addScore(added_score);
+					PlayerId: score.player.id,
+					GameplayId: gameplay.id
 				})
 			});
 			gameplay.save();

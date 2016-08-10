@@ -3,6 +3,7 @@ var authConfig = require('../config/auth');
 var FB = require('fb'),
     fb = new FB.Facebook({appId: authConfig.facebookAuth.clientID, appSecret: authConfig.facebookAuth.clientSecret});
 var jwt = require('jsonwebtoken');
+
 module.exports = function(sequelize, DataTypes) {
 	var User = sequelize.define("User", {
 		facebook_id: DataTypes.BIGINT,

@@ -5,6 +5,11 @@ var bgg = require('bgg')(globals.bgg_options);
 
 module.exports = function(sequelize, DataTypes) {
   var Game = sequelize.define("Game", {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: false
+    },
     bgg_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     year_published: DataTypes.INTEGER,
@@ -34,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     	getOrFindByBggId: function(bgg_id, done) {
         var m = require('../models');
 		  	Game.findOrCreate({
-		  			where: {bgg_id: bgg_id},
+		  			where: {id: bgg_id},
             include: [ m.Designer, m.Mechanic, m.Category, m.Gameplay ]
 		  		})
 	      	.spread(function(game, created) {
@@ -42,9 +47,9 @@ module.exports = function(sequelize, DataTypes) {
 	      			//get from BGG
       				bgg('thing', {id: bgg_id })
     					.then(function(results){
-                console.log(results);
   							var models = require('../models');
     						bgg_game = results.items.item;
+                game.bgg_id = bgg_id;
     						game.title = _.isArray(bgg_game.name) ? _.find(bgg_game.name,{'type':'primary'}).value : bgg_game.name.value;
     						game.year_published = bgg_game.yearpublished.value || 1900;
     						game.image_thumbnail = bgg_game.thumbnail;
@@ -88,7 +93,7 @@ module.exports = function(sequelize, DataTypes) {
       getByBggId: function(bgg_id, done) {
         var m = require('../models');
         Game.findOrCreate({
-          where: {bgg_id: bgg_id},
+          where: {id: bgg_id},
           include: [ m.Designer, m.Category, m.Mechanic ]
         })
         .then(function(game) {

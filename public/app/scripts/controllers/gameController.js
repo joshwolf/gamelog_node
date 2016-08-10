@@ -17,7 +17,7 @@ angular.module('gamelogApp')
 				$http.get('/api/game/plays/' + $routeParams.id)
 				.then(function(result) {
 					$scope.current_game.gameplays = result.data;
-					$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()) };
+					$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
 					$scope.new_gameplay.scores.push({ player: $scope.current_user, points: 0});
 				});
 			}
@@ -26,6 +26,7 @@ angular.module('gamelogApp')
 			$http.post('/api/gameplay/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function() {
 					console.log(data);
+					console.log($scope.new_gameplay);
 				})
 				.error(function() {
 					console.log('err');

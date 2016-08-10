@@ -1,5 +1,5 @@
 <div class="container" ng-show="current_game" id="game-page">
-	<div class="row">
+	<section class="row">
 		<img ng-src="{{current_game.image_thumbnail}}">
 		<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
 		<h2>by {{current_game.designers | humanizedList}}</h2>
@@ -9,13 +9,18 @@
 			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png"></a></li>
 			<li class="" ng-show="{{current_user}}""><img ng-click="showGameplayForm()" src="images/dice.svg"></li>
 		</ul>
-	</div>
-	<div class="row" ng-show="{{current_user && show_gameplay_form}}" id="new-gameplay">
+	</section>
+	<section class="row" ng-show="current_user && show_gameplay_form" id="new-gameplay">
 		<h2>Add a gameplay</h2>
 		<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">
 			<label>Date:</label>
 	  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
 		</datepicker>
 		<button type="button" class="btn btn-primary" ng-click="addGameplay()">Go</button>
-	</div>
+	</section>
+	<section id="gameplays">
+		<article ng-repeat="gameplay in current_game.gameplays">
+		<p>{{gameplay.play_date | date:'shortDate'}}</p>
+		</article>
+	</section>
 </div>

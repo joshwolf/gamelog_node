@@ -10,6 +10,8 @@ module.exports = function(sequelize, DataTypes) {
 	  classMethods: {
 	  	associate: function(models) {
 	  		Gameplay.hasMany(models.GameplayScore, {as: 'Score'});
+	  		Gameplay.belongsTo(models.User, {as: 'Creator'});
+	  		Gameplay.belongsTo(models.Game);
 	  	}
 	  }
 	});

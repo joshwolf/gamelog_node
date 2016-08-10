@@ -19,4 +19,8 @@ router.get('/me', loggedIn, function(req, res) {
 	models.User.findById(session.user.id).then(function(user) { res.send(user) });
 });
 
+router.get('/:id'), loggedIn, function(req, res) {
+	res.send(null);
+}
+
 module.exports = router;

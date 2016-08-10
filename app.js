@@ -129,7 +129,7 @@ app.get('/*', function(req, res) {
   var payload = jwt.decode(cookies.token, authConfig.jwt.secret);
   var now = new Date();
 
-  if (now > payload.exp) {
+  if (payload && (now > payload.exp)) {
     res.setHeader('Set-Cookie', cookie.serialize('token', null));
   }
 
