@@ -40,6 +40,13 @@ angular
   .config(function ($locationProvider) {
     $locationProvider.html5Mode(true);
   })
+  .directive('randomBackgroundColor', function() {
+    return {
+      link: function(scope, element) {
+        element.attr('style','background-color:' + "#000000".replace(/0/g,function(){return (~~((Math.random()*8)+8)).toString(16);}));
+      }
+    }
+  })
   .filter('humanizedList', function() {
     return function(items) {
       var _items = (items || []);

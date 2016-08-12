@@ -16,11 +16,29 @@
 			<label>Date:</label>
 	  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
 		</datepicker>
+			<ui-select ng-model="user_search" on-select="addUserToGameplay($item,$model)" style="min-width: 300px;">
+			<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
+			<ui-select-choices refresh="searchUsers($select)" refresh-delay="300" repeat="user in searchRes">
+			  <span ng-bind-html="user.full_name | highlight: $select.search"></span>
+			</ui-select-choices>
+		</ui-select>
+		<ul class="clearfix">
+			<li ng-repeat="score in new_gameplay.scores">
+				<img ng-show="score.player.profile_pic && score.player.profile_pic != ''" ng-src="{{score.player.profile_pic}}" class="profile-circle" alt="{{score.player.initials}}"><span random-background-color ng-show="!score.player.profile_pic || score.player.profile_pic == ''" class="initials-circle">{{score.player.initials}}</span>
+				<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score">
+			</li>
+		</ul>
 		<button type="button" class="btn btn-primary" ng-click="addGameplay()">Go</button>
 	</section>
 	<section id="gameplays">
-		<article ng-repeat="gameplay in current_game.gameplays">
-		<p>{{gameplay.play_date | date:'shortDate'}}</p>
+		<article ng-repeat="gameplay in current_game.gameplays" class="well">
+			<p>{{gameplay.play_date | date:'shortDate'}}</p>
+			<ul class="clearfix">
+				<li ng-repeat="score in gameplay.Scores">
+					<img ng-show="score.Player.profile_pic && score.Player.profile_pic != ''" ng-src="{{score.Player.profile_pic}}" class="profile-circle" alt="{{score.Player.initials}}"><span random-background-color ng-show="!score.Player.profile_pic || score.Player.profile_pic == ''" class="initials-circle">{{score.Player.initials}}</span>
+					<p>{{score.points}}</p>
+				</li>
+			</ul>
 		</article>
 	</section>
 </div>

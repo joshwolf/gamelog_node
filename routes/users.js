@@ -23,4 +23,8 @@ router.get('/:id'), loggedIn, function(req, res) {
 	res.send(null);
 }
 
+router.get('/search/:name', function(req, res) {
+	var games = models.User.findAll({ where: { full_name: { $like: '%' + req.params.name + '%' } } }).then(function(users) { res.jsonp(users) });
+})
+
 module.exports = router;

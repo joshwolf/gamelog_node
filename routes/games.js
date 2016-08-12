@@ -11,7 +11,7 @@ router.get('/:id', function(req, res) {
 });
 
 router.get('/plays/:id', function(req, res) {
-	models.Gameplay.findAll({ where: { GameId: req.params.id }}).then(function(gameplays) { res.jsonp(gameplays); });
+	models.Gameplay.findAll({ where: { GameId: req.params.id }, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplays) { res.jsonp(gameplays); });
 });
 
 router.get('/search/:title/:exact*?', function(req, res) {

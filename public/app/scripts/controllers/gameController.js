@@ -18,7 +18,7 @@ angular.module('gamelogApp')
 				.then(function(result) {
 					$scope.current_game.gameplays = result.data;
 					$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
-					$scope.new_gameplay.scores.push({ player: $scope.current_user, points: 0});
+					$scope.new_gameplay.scores.push({ player: $scope.current_user});
 				});
 			}
 		});
@@ -35,6 +35,20 @@ angular.module('gamelogApp')
 		$scope.show_gameplay_form = false;
 		$scope.showGameplayForm = function() {
 			$scope.show_gameplay_form = true;
+		}
+		$scope.searchRes = [];
+
+		$scope.searchUsers = function($select) {
+			if($select.search.length > 3) {
+			  return $http.get('/api/user/search/' + $select.search, {
+			  }).then(function(response){
+			    $scope.searchRes = response.data.slice(0,20);
+			  });
+			}			
+		}
+
+		$scope.addUserToGameplay = function(user) {
+			$scope.new_gameplay.scores.push({ player: user });
 		}
 	})
 	.controller('GameSearchCtrl', function ($scope, $http, $location, $window) {

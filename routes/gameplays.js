@@ -30,7 +30,7 @@ router.get('/all', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Score'}]}).then(function(gameplay) { res.jsonp(gameplay); });
+	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) { res.jsonp(gameplay); });
 });
 
 router.post('/new', loggedIn, function(req, res) {

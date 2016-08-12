@@ -13,6 +13,9 @@ module.exports = function(sequelize, DataTypes) {
 		email: DataTypes.STRING,
 		profile_pic: DataTypes.STRING
 		}, {
+		getterMethods: {
+			initials: function()  { return this.first_name.slice(0,1) + this.last_name.slice(0,1) }
+		},
 	  	indexes: [
 	  		{
 	  			fields: ['full_name'],

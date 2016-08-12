@@ -1,5 +1,6 @@
 $font-family: 'Verdana','Helvetica','Sans-Serif';
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
 // bower:scss
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
@@ -114,6 +115,34 @@ body {
         img {
           width: 6rem;
         }
+    }
+  }
+  #gameplays {
+    ul {
+      li {
+        list-style-type: none;
+        float: left;
+        img.profile-circle, span.initials-circle {
+          height: 5rem;
+          width: 5rem;
+          border-radius: 50%;
+          vertical-align: middle;
+          display: inline-block;
+        }
+        span {
+          text-align: center;
+          vertical-align: middle;
+          color: #333;
+          font-size: 3rem;
+          overflow: hidden;
+          top: 50%;
+          bottom: auto;
+        }
+        p {
+          text-align: center;
+          width: 5rem;
+        }
+      }
     }
   }
 }
