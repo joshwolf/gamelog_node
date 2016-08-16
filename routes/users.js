@@ -8,7 +8,7 @@ var util = require('util');
 var session = require('express-session')
 
 function loggedIn(req, res, next) {
-    if (session.user) {
+    if (req.session.user) {
         next();
     } else {
         res.status(401).send('You must be logged in');
@@ -16,7 +16,7 @@ function loggedIn(req, res, next) {
 }
 
 router.get('/me', loggedIn, function(req, res) {
-	models.User.findById(session.user.id).then(function(user) { res.send(user) });
+	models.User.findById(req.session.user.id).then(function(user) { res.send(user) });
 });
 
 router.get('/:id'), loggedIn, function(req, res) {

@@ -6,167 +6,176 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 // endbower
 
 .browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+	margin: 0.2em 0;
+	background: #ccc;
+	color: #000;
+	padding: 0.2em 0;
 }
 
 body {
-  padding: 0;
+	padding: 0;
 }
 
 .font-fontawesome{
-  font-family: 'FontAwesome',$font-family;
+	font-family: 'FontAwesome',$font-family;
 }
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 10px;
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
+	/* Make the masthead heading the same height as the navigation */
+	h3 {
+		margin-top: 0;
+		margin-bottom: 0;
+		line-height: 40px;
+		padding-bottom: 19px;
+	}
 }
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+	padding-top: 19px;
+	color: #777;
+	border-top: 1px solid #e5e5e5;
 }
 
 .container-narrow > hr {
-  margin: 30px 0;
+	margin: 30px 0;
 }
 
 /* Main marketing message and sign up button */
 .jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
+	.btn {
+		font-size: 21px;
+		padding: 14px 24px;
+	}
 }
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+	margin: 40px 0;
 
-  p + h4 {
-    margin-top: 28px;
-  }
+	p + h4 {
+		margin-top: 28px;
+	}
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
-    display: none;
+		display: none;
 }
 
 .nav {
-  .user {
-    cursor: pointer;
-    i {
-      padding: 15px;
-      line-height: 20px;
-      &:hover {
-        color: #fff;
-        background: #000;
-      }
-    }
-  }
+	.user {
+		cursor: pointer;
+		i {
+			padding: 15px;
+			line-height: 20px;
+			&:hover {
+				color: #fff;
+				background: #000;
+			}
+		}
+	}
 }
+
 #game-quicksearch {
-  display: inline-block;
-  width: 33vw;
-  float: left;
-  max-width: 500px;
-  margin: 0.8rem;
+	display: inline-block;
+	width: 33vw;
+	float: left;
+	max-width: 500px;
+	margin: 0.8rem;
+}
+
+.user-quicksearch {
+	.user-quicksearch-pic {
+		margin-right: 1.5rem;
+	}
+}
+
+img.profile-circle, span.initials-circle {
+	height: 5rem;
+	width: 5rem;
+	border-radius: 50%;
+	vertical-align: middle;
+	display: inline-block;
+	~ span {
+		text-align: center;
+		vertical-align: middle;
+		color: #333;
+		font-size: 3rem;
+		overflow: hidden;
+		top: 50%;
+		bottom: auto;
+	}
 }
 
 #game-page {
-  #new-gameplay {
-    .date-played {
-      width: 10rem;
-      text-align: center;
-    }
-  }
-  .game-actions {
-    padding-left: 0;
-    li {
-      float: left;
-      list-style-type: none;
-      width: auto;
-      display: inline;
-      cursor: pointer;
-        img {
-          width: 6rem;
-        }
-    }
-  }
-  #gameplays {
-    ul {
-      li {
-        list-style-type: none;
-        float: left;
-        img.profile-circle, span.initials-circle {
-          height: 5rem;
-          width: 5rem;
-          border-radius: 50%;
-          vertical-align: middle;
-          display: inline-block;
-        }
-        span {
-          text-align: center;
-          vertical-align: middle;
-          color: #333;
-          font-size: 3rem;
-          overflow: hidden;
-          top: 50%;
-          bottom: auto;
-        }
-        p {
-          text-align: center;
-          width: 5rem;
-        }
-      }
-    }
-  }
+	#new-gameplay {
+		.date-played {
+			width: 10rem;
+			text-align: center;
+		}
+	}
+	.game-actions {
+		padding-left: 0;
+		li {
+			float: left;
+			list-style-type: none;
+			width: auto;
+			display: inline;
+			cursor: pointer;
+				img {
+					width: 6rem;
+				}
+		}
+	}
+	#gameplays {
+		ul {
+			li {
+				list-style-type: none;
+				float: left;
+
+				p {
+					text-align: center;
+					width: 5rem;
+				}
+			}
+		}
+	}
 }
 
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+	.container {
+		max-width: 730px;
+	}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+	/* Remove the padding we set earlier */
+	.header,
+	.marketing,
+	.footer {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	/* Space out the masthead */
+	.header {
+		margin-bottom: 30px;
+	}
+	/* Remove the bottom border on the jumbotron for visual effect */
+	.jumbotron {
+		border-bottom: 0;
+	}
 }

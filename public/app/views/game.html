@@ -11,24 +11,27 @@
 		</ul>
 	</section>
 	<section class="row" ng-show="current_user && show_gameplay_form" id="new-gameplay">
-		<h2>Add a gameplay</h2>
-		<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">
-			<label>Date:</label>
-	  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
-		</datepicker>
-			<ui-select ng-model="user_search" on-select="addUserToGameplay($item,$model)" style="min-width: 300px;">
-			<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
-			<ui-select-choices refresh="searchUsers($select)" refresh-delay="300" repeat="user in searchRes">
-			  <span ng-bind-html="user.full_name | highlight: $select.search"></span>
-			</ui-select-choices>
-		</ui-select>
-		<ul class="clearfix">
-			<li ng-repeat="score in new_gameplay.scores">
-				<img ng-show="score.player.profile_pic && score.player.profile_pic != ''" ng-src="{{score.player.profile_pic}}" class="profile-circle" alt="{{score.player.initials}}"><span random-background-color ng-show="!score.player.profile_pic || score.player.profile_pic == ''" class="initials-circle">{{score.player.initials}}</span>
-				<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score">
-			</li>
-		</ul>
-		<button type="button" class="btn btn-primary" ng-click="addGameplay()">Go</button>
+		<ng-form name="newGameplayForm">
+			<h2>Add a gameplay</h2>
+			<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">
+				<label>Date:</label>
+		  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
+			</datepicker>
+			<ui-select ng-model="user_search" on-select="addUserToGameplay($item,$model)" style="min-width: 300px;" class="user-quicksearch">
+				<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
+				<ui-select-choices refresh="searchUsers($select)" refresh-delay="300" repeat="user in searchRes">
+				  <img ng-src="{{user.profile_pic}}" class="user-quicksearch-pic"><span ng-bind-html="user.full_name | highlight: $select.search"></span>
+				</ui-select-choices>
+			</ui-select>
+			<ul class="clearfix">
+				<li ng-repeat="score in new_gameplay.scores">
+					<img ng-show="score.player.profile_pic && score.player.profile_pic != ''" ng-src="{{score.player.profile_pic}}" class="profile-circle" alt="{{score.player.initials}}"><span random-background-color ng-show="!score.player.profile_pic || score.player.profile_pic == ''" class="initials-circle">{{score.player.initials}}</span>
+					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true">
+					<button ng-click="removeUserFromGameplay(score.player)">X</button>
+				</li>
+			</ul>
+			<button type="button" class="btn btn-primary" ng-click="addGameplay()" ng-disabled="newGameplayForm.$invalid">Go</button>
+		</ng-form>
 	</section>
 	<section id="gameplays">
 		<article ng-repeat="gameplay in current_game.gameplays" class="well">

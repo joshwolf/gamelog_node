@@ -5,7 +5,7 @@ angular.module('gamelogApp')
   	$http.get('/api/user/me').then(function(response) {
    		var expires = new Date();
     	expires.setDate(expires.getDate() + 60);
-	    $cookies.put('user',JSON.stringify(response.data),{'expires':expires});
+//	    $cookies.put('user',JSON.stringify(response.data),{'expires':expires});
 	    $rootScope.current_user = response.data;
 	    $scope.current_user = response.data;
   	});

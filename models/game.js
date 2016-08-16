@@ -76,9 +76,11 @@ module.exports = function(sequelize, DataTypes) {
     							}
     						});
     						game.save().then(function() {
-                  if(done) {
-                    done(game);
-                  }
+                  game.reload({include: [ m.Designer, m.Mechanic, m.Category, m.Gameplay ]}).then(function() {
+                    if(done) {
+                      done(game);
+                    }
+                  });
                 });
     					});
 	      		} else {
