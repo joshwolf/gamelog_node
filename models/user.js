@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
 		profile_pic: DataTypes.STRING
 		}, {
 		getterMethods: {
-			initials: function()  { return this.first_name.slice(0,1) + (this.last_name || '').slice(0,1) }
+			initials: function()  { if(!this.first_name) { return ''; } return (this.first_name.slice(0,1) + (this.last_name || '').slice(0,1)).toUpperCase(); }
 		},
 	  	indexes: [
 	  		{
@@ -57,9 +57,23 @@ module.exports = function(sequelize, DataTypes) {
 				        });
 					})
 				});
+			},
+			getRecentOpponents: function() {
+				console.log(models);
+				models.GameplayScore.findAll({
+					where: {
+						Player: this
+					}
+				}).then(function(scores) {
+					console.log(scores);
+					return _.map(gameplays, (score) => score.Gameplay);
+				});
 			}
 		},
 		classMethods: {
+		  	associate: function(models) {
+		        User.hasMany(models.GameplayScore, { as: 'Scores', foreignKey: 'PlayerId' });
+		  	}
 		}
 	});
 

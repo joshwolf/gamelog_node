@@ -16,7 +16,6 @@ angular.module('gamelogApp')
 			if($scope.current_user) {
 				$http.get('/api/game/plays/' + $routeParams.id)
 				.then(function(result) {
-					console.log(result);
 					$scope.current_game.gameplays = result.data;
 					$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
 					$scope.new_gameplay.scores.push({ player: $scope.current_user});
@@ -26,7 +25,6 @@ angular.module('gamelogApp')
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplay/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {
-					console.log(result);
 					$scope.current_game.gameplays.push(result);
 				})
 				.error(function(err) {
@@ -45,11 +43,16 @@ angular.module('gamelogApp')
 			  }).then(function(response){
 			    $scope.searchRes = response.data.slice(0,20);
 			    if(!_.some($scope.searchRes, (user) => user.full_name.toLowerCase() == $select.search.toLowerCase())) {
-			    	var name_array = $select.search.split(' ');
+			    	var parsedName = parseName($select.search);
+			    	console.log(parsedName);
 			    	$scope.searchRes.push({
-			    		full_name: $select.search, first_name: name_array[0],
+			    		full_name: $select.search,
+			    		first_name: parsedName.firstName,
+			    		last_name: parsedName.lastName,
 						initials: _.map($select.search.split(' '), (name) => name.slice(0,1)).slice(0,2).join('')
 			    	});
+
+			    	console.log(parseName($select.search));
 			    }
 			  });
 			}			

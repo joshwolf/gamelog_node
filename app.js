@@ -2,7 +2,6 @@
 
 var express = require('express');
 var path = require('path');
-var app = express();
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var logger = require('morgan');
@@ -14,7 +13,7 @@ var session = require('express-session');
 var redisStore = require('connect-redis')(session);
 var models = require("./models");
 var passport = require('passport');
-var Strategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var authConfig = require('./config/auth');
 var cookie = require('cookie');
 var util = require('util');
@@ -39,9 +38,11 @@ var allowCORS = function(req, res, next) {
 		}
 };
 
+var app = express();
 app.use(allowCORS);
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public/app'));
@@ -54,13 +55,14 @@ app.use(session({
 		// create new redis store.
 		store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
 		saveUninitialized: false,
-		resave: false
+		resave: false,
+		secure: false
 }));
 
-app.use(passport.initialize());
+app.use(passport.session());
 
 //Facebook auth
-passport.use(new Strategy({
+passport.use(new FacebookStrategy({
 		clientID: authConfig.facebookAuth.clientID,
 		clientSecret: authConfig.facebookAuth.clientSecret,
 		callbackURL: authConfig.facebookAuth.callbackURL,
@@ -73,7 +75,6 @@ passport.use(new Strategy({
 					//set all of the facebook information in our user model
 					user.facebook_id = user.facebook_id || profile.id;
 					user.updateFromFacebook(accessToken);
-					req.session.user = user;
 					req.session.token = user.getToken();
 					done(null,user);
 				});
@@ -117,13 +118,18 @@ app.get(['/login/facebook','/login'],
 app.get('/login/facebook/return',
 	passport.authenticate('facebook', { failureRedirect: '/login/boo' }),
 	function(req, res, next) {
-		if(req.cookies.next_url) {
-			res.redirect(req.cookies.next_url);
-		} else {
-			// Successful authentication, redirect home.
+		if(req.user) {
+			req.logIn(req.user, function(err) {
+				req.session.user = req.user;
+				if(req.cookies.next_url) {
+					res.redirect(req.cookies.next_url);
+				} else {
+					// Successful authentication, redirect home.
+					next();
+				}
+			});
 			next();
 		}
-		next();
 	});
 
 app.get('/logout', function(req, res) {
@@ -135,7 +141,6 @@ app.get('/logout', function(req, res) {
 
 app.get('/*', function(req, res) {
 	if(req.session && req.session.token) {
-		console.log(req.session)
 		res.cookie('user', req.session.user,  {
 			path: '/',
 			maxAge: 60 * 60 * 24 * 60 // 60 days
@@ -153,7 +158,7 @@ app.get('/*', function(req, res) {
 		res.setHeader('Set-Cookie', cookie.serialize('token', null));
 	}
 
-	res.sendFile(__dirname + '/public/app/index.html')
+	res.sendFile(__dirname + '/public/app/home.html')
 });
 
 models.sequelize.sync().then(function () {

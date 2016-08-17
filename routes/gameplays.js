@@ -42,7 +42,8 @@ router.post('/new', loggedIn, function(req, res) {
 			if(!score.player.id) {
 				var newPromise =  models.User.findOrCreate({ where: {
 						full_name: score.player.full_name, 
-						first_name: score.player.first_name
+						first_name: score.player.first_name,
+						last_name: score.player.last_name
 					},transaction: t})
 					.spread(function(user) { score.player = user; });
 				promises.push(newPromise);
@@ -68,5 +69,17 @@ router.post('/new', loggedIn, function(req, res) {
 router.get('/search/:title/:exact*?', function(req, res) {
 	var exact = req.params.exact || 0;
 	var games = models.Game.findByTitle(req.params.title, req.params.exact, function(games) { res.jsonp(games); });
+})
+
+router.get('/my/recent', loggedIn, function(req, res) {
+	models.User.findById(req.session.user.id).then(function(user) {
+		user.getScores({include: [ {
+			model: models.Gameplay, include: [ {
+				model: models.GameplayScore, as: 'Scores', include: [ {
+					model: models.User, as: 'Player'
+				}]
+			}]
+		} ]}).then(function(scores) { res.jsonp(scores); });
+	});
 })
 module.exports = router;

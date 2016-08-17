@@ -8,6 +8,7 @@ var util = require('util');
 var session = require('express-session')
 
 function loggedIn(req, res, next) {
+	console.log(req.user);
     if (req.session.user) {
         next();
     } else {
