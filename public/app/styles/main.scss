@@ -16,6 +16,12 @@ body {
 	padding: 0;
 }
 
+ul {
+	li {
+		list-style-type: none;
+	}
+}
+
 .font-fontawesome{
 	font-family: 'FontAwesome',$font-family;
 }
@@ -126,6 +132,14 @@ img.profile-circle, span.initials-circle {
 		.date-played {
 			width: 10rem;
 			text-align: center;
+		}
+		.recent-opponents {
+			li {
+				list-style-type: none;
+				float: left;
+				margin-right: 1rem;
+				cursor: pointer;
+			}
 		}
 	}
 	.game-actions {

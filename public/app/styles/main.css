@@ -5815,6 +5815,9 @@ button.close {
 body {
   padding: 0; }
 
+ul li {
+  list-style-type: none; }
+
 .font-fontawesome {
   font-family: "FontAwesome", "Verdana", "Helvetica", "Sans-Serif"; }
 
@@ -5899,6 +5902,11 @@ img.profile-circle, span.initials-circle {
 #game-page #new-gameplay .date-played {
   width: 10rem;
   text-align: center; }
+#game-page #new-gameplay .recent-opponents li {
+  list-style-type: none;
+  float: left;
+  margin-right: 1rem;
+  cursor: pointer; }
 #game-page .game-actions {
   padding-left: 0; }
   #game-page .game-actions li {

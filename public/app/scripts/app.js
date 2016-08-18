@@ -47,6 +47,16 @@ angular
       }
     }
   })
+  .directive('userIcon', function ($document) {
+      return {
+          restrict: 'E',
+          templateUrl: 'partials/userIcon.html',
+          transclude: true,
+          scope: {
+              user: '='
+          }
+      };
+  })
   .filter('humanizedList', function() {
     return function(items) {
       var _items = (items || []);

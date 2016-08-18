@@ -23,9 +23,12 @@
 				  <img ng-src="{{user.profile_pic}}" class="user-quicksearch-pic"><span ng-bind-html="user.full_name | highlight: $select.search"></span>
 				</ui-select-choices>
 			</ui-select>
-			<ul class="clearfix">
+			<ul class="recent-opponents clearfix">
+				<li ng-repeat="player in recent_opponents"><user-icon user="player" ng-click="addRecentOpponentToGameplay(player)"></user-icon></li>
+			</ul>
+			<ul class="clearfix players">
 				<li ng-repeat="score in new_gameplay.scores">
-					<img ng-show="score.player.profile_pic && score.player.profile_pic != ''" ng-src="{{score.player.profile_pic}}" class="profile-circle" alt="{{score.player.initials}}"><span random-background-color ng-show="!score.player.profile_pic || score.player.profile_pic == ''" class="initials-circle">{{score.player.initials}}</span>
+					<user-icon user="score.player"></user-icon>
 					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true">
 					<button ng-click="removeUserFromGameplay(score.player)">X</button>
 				</li>

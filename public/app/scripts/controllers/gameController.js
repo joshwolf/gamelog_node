@@ -33,7 +33,20 @@ angular.module('gamelogApp')
 		}
 		$scope.show_gameplay_form = false;
 		$scope.showGameplayForm = function() {
-			$scope.show_gameplay_form = true;
+			if(!$scope.show_gameplay_form) {
+				$scope.show_gameplay_form = true;
+				$http.get('/api/gameplay/my/recent').then(function(response) {
+					$scope.recent_opponents = _.reject(_.uniq(_.flatten(_.map(response.data, function(gameplay) {
+						return _.map(gameplay.Gameplay.Scores, function(score) {
+								return score.Player;
+						});
+					})),
+					(player) => player.full_name
+					),
+					(player) => player.id == $scope.current_user.id
+					);
+				});
+			}
 		}
 		$scope.searchRes = [];
 
@@ -51,8 +64,6 @@ angular.module('gamelogApp')
 			    		last_name: parsedName.lastName,
 						initials: _.map($select.search.split(' '), (name) => name.slice(0,1)).slice(0,2).join('')
 			    	});
-
-			    	console.log(parseName($select.search));
 			    }
 			  });
 			}			
@@ -64,6 +75,11 @@ angular.module('gamelogApp')
 
 		$scope.removeUserFromGameplay = function(user) {
 			$scope.new_gameplay.scores = _.reject($scope.new_gameplay.scores, (score) => score.player.id == user.id );
+		}
+
+		$scope.addRecentOpponentToGameplay = function(user) {
+			$scope.recent_opponents = _.reject($scope.recent_opponents, (opponent) => opponent == user);
+			$scope.addUserToGameplay(user);
 		}
 
 	})
