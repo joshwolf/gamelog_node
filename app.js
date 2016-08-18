@@ -17,6 +17,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var authConfig = require('./config/auth');
 var cookie = require('cookie');
 var util = require('util');
+var initCacheStore = require("redis-cache-sequelize");
 
 //For testing
 module.exports = app;
@@ -26,20 +27,8 @@ var games = require('./routes/games');
 var gameplays = require('./routes/gameplays');
 var users = require('./routes/users');
 
-var allowCORS = function(req, res, next) {
-		res.header('Access-Control-Allow-Origin', '*');
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Authorization,Accept');
-
-		if (req.method === 'OPTIONS') {
-				res.send(200);
-		} else {
-				next();
-		}
-};
-
 var app = express();
-app.use(allowCORS);
+
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(logger('dev'));
@@ -48,16 +37,18 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 
-var client  = redis.createClient();
+var redisClient  = redis.createClient();
 
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
-		store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+		store: new redisStore({ host: 'localhost', port: 6379, client: redisClient,ttl :  260}),
 		saveUninitialized: false,
 		resave: false,
 		secure: false
 }));
+
+var cacheStore = initCacheStore(redisClient, {namespace: 'gamelogcache'});
 
 app.use(passport.session());
 

@@ -1,4 +1,4 @@
 <span class="user-icon">
-	<img ng-show="{{user.profile_pic && user.profile_pic != ''}}" ng-src="{{user.profile_pic}}" class="profile-circle" alt="{{user.initials}}">
-	<span random-background-color ng-show="{{!user.profile_pic || user.profile_pic ==''}}" class="initials-circle">{{user.initials}}</span>
+	<img ng-show="{{user.profile_pic && user.profile_pic != ''}}" ng-src="{{user.profile_pic}}" class="profile-circle" alt="{{user.initials}}" title="{{user.full_name}}">
+	<span random-background-color ng-show="{{!user.profile_pic || user.profile_pic ==''}}" class="initials-circle" title="{{user.full_name}}">{{user.initials}}</span>
 </span>

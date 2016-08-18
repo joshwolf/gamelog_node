@@ -5899,14 +5899,23 @@ img.profile-circle, span.initials-circle {
     top: 50%;
     bottom: auto; }
 
-#game-page #new-gameplay .date-played {
-  width: 10rem;
-  text-align: center; }
-#game-page #new-gameplay .recent-opponents li {
-  list-style-type: none;
-  float: left;
-  margin-right: 1rem;
-  cursor: pointer; }
+#game-page #new-gameplay {
+  -webkit-transition: all ease 1s;
+  -o-transition: all ease 1s;
+  transition: all ease 1s;
+  max-height: 200vh;
+  overflow: hidden; }
+  #game-page #new-gameplay .date-played {
+    width: 10rem;
+    text-align: center; }
+  #game-page #new-gameplay .recent-opponents li {
+    list-style-type: none;
+    float: left;
+    margin-right: 1rem;
+    cursor: pointer; }
+  #game-page #new-gameplay.ng-hide {
+    height: 0px;
+    max-height: 0; }
 #game-page .game-actions {
   padding-left: 0; }
   #game-page .game-actions li {
