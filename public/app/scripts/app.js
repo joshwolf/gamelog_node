@@ -19,7 +19,9 @@ angular
     'ngTouch',
     'ngCookies',
     'ui.select',
-    '720kb.datepicker'
+    'ui.bootstrap',
+    '720kb.datepicker',
+    'ordinal'
   ])
   .config(function ($routeProvider) {
     $routeProvider

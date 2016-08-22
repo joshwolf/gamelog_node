@@ -1,6 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var GameplayScore = sequelize.define("GameplayScore", {
-	points: DataTypes.INTEGER
+	points: DataTypes.FLOAT,
+	rank: DataTypes.INTEGER
 	}, {
 	  indexes: [
 	    {

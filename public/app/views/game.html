@@ -29,7 +29,8 @@
 			<ul class="clearfix players">
 				<li ng-repeat="score in new_gameplay.scores">
 					<user-icon user="score.player"></user-icon>
-					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true">
+					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true" ng-blur="calculateGameplayOrder()">
+					({{score.rank | ordinal}})
 					<button ng-click="removeUserFromGameplay(score.player)" tabindex="-1">X</button>
 				</li>
 			</ul>
@@ -40,8 +41,8 @@
 		<article ng-repeat="gameplay in current_game.gameplays" class="well">
 			<p>{{gameplay.play_date | date:'shortDate'}}</p>
 			<ul class="clearfix">
-				<li ng-repeat="score in gameplay.Scores">
-					<img ng-show="score.Player.profile_pic && score.Player.profile_pic != ''" ng-src="{{score.Player.profile_pic}}" class="profile-circle" alt="{{score.Player.initials}}"><span random-background-color ng-show="!score.Player.profile_pic || score.Player.profile_pic == ''" class="initials-circle">{{score.Player.initials}}</span>
+				<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
+					<user-icon user="score.Player"></user-icon>
 					<p>{{score.points}}</p>
 				</li>
 			</ul>
