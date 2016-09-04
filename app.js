@@ -17,7 +17,6 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var authConfig = require('./config/auth');
 var cookie = require('cookie');
 var util = require('util');
-var initCacheStore = require("redis-cache-sequelize");
 
 //For testing
 module.exports = app;
@@ -47,8 +46,6 @@ app.use(session({
 		resave: false,
 		secure: false
 }));
-
-var cacheStore = initCacheStore(redisClient, {namespace: 'gamelogcache'});
 
 app.use(passport.session());
 

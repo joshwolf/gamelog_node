@@ -30,8 +30,8 @@
 				<li ng-repeat="score in new_gameplay.scores">
 					<user-icon user="score.player"></user-icon>
 					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true" ng-blur="calculateGameplayOrder()">
-					({{score.rank | ordinal}})
 					<button ng-click="removeUserFromGameplay(score.player)" tabindex="-1">X</button>
+					({{score.rank | ordinal}})
 				</li>
 			</ul>
 			<button type="button" class="btn btn-primary" ng-click="addGameplay()" ng-disabled="newGameplayForm.$invalid">Go</button>

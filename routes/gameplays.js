@@ -6,6 +6,13 @@ var util = require('util');
 var authConfig = require('../config/auth');
 var session = require('express-session')
 var jwt = require('jsonwebtoken');
+var initCacher = require('sequelize-redis-cache');
+var redis = require('redis');
+var redisClient  = redis.createClient();
+var cacher = initCacher(models.sequelize, redisClient);
+
+var gameplayCache = cacher('Gameplay')
+  .ttl(5);
 
 function loggedIn(req, res, next) {
     if (req.session.user) {
@@ -25,10 +32,6 @@ function loggedIn(req, res, next) {
 
 router.get('/all', function(req, res) {
 	models.Gameplay.findAll().then(function(gameplays) { res.jsonp(gameplays); });
-});
-
-router.get('/:id', function(req, res) {
-	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) { res.jsonp(gameplay); });
 });
 
 router.post('/new', loggedIn, function(req, res) {
@@ -69,7 +72,7 @@ router.post('/new', loggedIn, function(req, res) {
 router.get('/search/:title/:exact*?', function(req, res) {
 	var exact = req.params.exact || 0;
 	var games = models.Game.findByTitle(req.params.title, req.params.exact, function(games) { res.jsonp(games); });
-})
+});
 
 router.get('/my/recent', loggedIn, function(req, res) {
 	models.User.findById(req.session.user.id).then(function(user) {
@@ -81,5 +84,21 @@ router.get('/my/recent', loggedIn, function(req, res) {
 			}]
 		} ]}).then(function(scores) { res.jsonp(scores); });
 	});
-})
+});
+
+router.get('/recent', function(req,res) {
+	gameplayCache.find({ where: {
+		play_date: { $gt: { new Date(new Date() - 24 * 60 * 60 * 1000) } }
+	} })
+	  .then(function(row) {
+	    console.log(row); // sequelize db object
+	    console.log(gameplayCache.cacheHit); // true or false
+  	});
+});
+
+
+router.get('/:id', function(req, res) {
+	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) { res.jsonp(gameplay); });
+});
+
 module.exports = router;
