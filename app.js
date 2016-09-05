@@ -48,6 +48,8 @@ if (nconf.get('REDIS_AUTH')) {
 	redisClient.auth(nconf.get('REDIS_AUTH'));
 }
 
+console.log(redisClient);
+
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
