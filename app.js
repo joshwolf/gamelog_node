@@ -61,9 +61,9 @@ app.use(passport.session());
 
 //Facebook auth
 passport.use(new FacebookStrategy({
-		clientID: authConfig.facebookAuth.clientID,
-		clientSecret: authConfig.facebookAuth.clientSecret,
-		callbackURL: authConfig.facebookAuth.callbackURL,
+		clientID: nconf.get('GAMELOG_FB_APP_ID'),
+		clientSecret: nconf.get('GAMELOG_FB_APP_SECRET'),
+		callbackURL: nconf.get('GAMELOG_FB_CALLBACK_URL'),
 		passReqToCallback: true
 	},
 	function(req, accessToken, refreshToken, profile, done) {
