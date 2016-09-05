@@ -5904,7 +5904,7 @@ img.profile-circle, span.initials-circle {
   -o-transition: all ease 1s;
   transition: all ease 1s;
   max-height: 200vh;
-  overflow: hidden; }
+  overflow: visible; }
   #game-page #new-gameplay .date-played {
     width: 10rem;
     text-align: center; }

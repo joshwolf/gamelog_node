@@ -17,6 +17,7 @@
 				<label>Date:</label>
 		  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
 			</datepicker>
+			<br/><br/>
 			<ui-select ng-model="user_search" on-select="addUserToGameplay($item,$model)" style="min-width: 300px;" class="user-quicksearch">
 				<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
 				<ui-select-choices refresh="searchUsers($select)" refresh-delay="300" repeat="user in searchRes">

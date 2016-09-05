@@ -131,7 +131,7 @@ img.profile-circle, span.initials-circle {
 	#new-gameplay {
 		@include transition(all ease 1s);
 		max-height: 200vh;
-		overflow: hidden;
+		overflow: visible;
 		.date-played {
 			width: 10rem;
 			text-align: center;
