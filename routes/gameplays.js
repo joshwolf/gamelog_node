@@ -88,7 +88,7 @@ router.get('/my/recent', loggedIn, function(req, res) {
 
 router.get('/recent', function(req,res) {
 	gameplayCache.find({ where: {
-		play_date: { $gt: { new Date(new Date() - 24 * 60 * 60 * 1000) } }
+		//play_date: { $gt: { new Date(new Date() - 24 * 60 * 60 * 1000) } }
 	} })
 	  .then(function(row) {
 	    console.log(row); // sequelize db object

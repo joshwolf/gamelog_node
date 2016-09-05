@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var nconf = require('nconf');
 var path = require('path');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
@@ -20,6 +21,12 @@ var util = require('util');
 
 //For testing
 module.exports = app;
+
+
+// Config
+nconf.argv()
+   .env()
+   .file({ file: 'config/env.json' });
 
 /* Route Imports */
 var games = require('./routes/games');
@@ -41,7 +48,7 @@ var redisClient  = redis.createClient();
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
-		store: new redisStore({ host: 'localhost', port: 6379, client: redisClient,ttl :  260}),
+		store: new redisStore({ host: 'foo', port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  260}),
 		saveUninitialized: false,
 		resave: false,
 		secure: false
