@@ -43,12 +43,15 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 
-var redisClient  = redis.createClient();
+var redisClient  = redis.createClient(nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER'));
+if (nconf.get('REDIS_AUTH')) {
+	redisClient.auth(nconf.get('REDIS_AUTH'));
+}
 
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
-		store: new redisStore({ host: 'foo', port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  260}),
+		store: new redisStore({ host: nconf.get('REDIS_SERVER'), port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  260}),
 		saveUninitialized: false,
 		resave: false,
 		secure: false
