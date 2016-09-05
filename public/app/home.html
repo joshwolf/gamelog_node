@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html ng-app="gamelogApp">
   <head>
     <meta charset="utf-8">
-    <title>Gamelog</title>
+    <title ng-bind="'Gamelog - ' + page_title ">Gamelog</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon-precomposed" href="/images/favicon-152.png">
@@ -23,7 +23,7 @@
     <base href="/">
     <!-- endbuild -->
   </head>
-  <body ng-app="gamelogApp">
+  <body>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->

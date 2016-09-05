@@ -8,7 +8,7 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies) {
+	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies, $rootScope) {
 		$scope.searchRes = [];
 		$http.get('/api/game/' + $routeParams.id)
 		.then(function(result) {
@@ -19,6 +19,7 @@ angular.module('gamelogApp')
 					$scope.current_game.gameplays = _.sortBy(result.data, function(gameplay) { return gameplay.play_date; }).reverse();
 				});
 			}
+			$rootScope.page_title = $scope.current_game.title;
 		});
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplay/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))

@@ -28,12 +28,14 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'mainController'
+        controllerAs: 'mainController',
+        page_title: 'Home'
       })
       .when('/game/:id', {
         templateUrl: 'views/game.html',
         controller: 'GameCtrl',
-        controllerAs: 'gameController'
+        controllerAs: 'gameController',
+        page_title: 'Game'
       })
       .otherwise({
         redirectTo: '/'
@@ -70,4 +72,9 @@ angular
         return _items.slice(0, -1).join(', ') + ' and ' + _.last(_items);
       }
     };
-  });
+  })
+  .run(['$rootScope', function($rootScope) {
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.page_title = current.$$route.page_title;
+    });
+}]);
