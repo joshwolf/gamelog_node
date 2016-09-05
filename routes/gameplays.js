@@ -8,7 +8,12 @@ var session = require('express-session')
 var jwt = require('jsonwebtoken');
 var initCacher = require('sequelize-redis-cache');
 var redis = require('redis');
-var redisClient  = redis.createClient();
+
+var redisClient  = redis.createClient(nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER'));
+if (nconf.get('REDIS_AUTH')) {
+	redisClient.auth(nconf.get('REDIS_AUTH'));
+}
+
 var cacher = initCacher(models.sequelize, redisClient);
 
 var gameplayCache = cacher('Gameplay')
