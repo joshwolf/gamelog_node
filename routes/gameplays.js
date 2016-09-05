@@ -1,3 +1,4 @@
+var nconf = require('nconf');
 var _ = require('lodash');
 var models  = require('../models');
 var express = require('express');
