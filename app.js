@@ -48,8 +48,6 @@ if (nconf.get('REDIS_AUTH')) {
 	redisClient.auth(nconf.get('REDIS_AUTH'));
 }
 
-console.log(process.env);
-
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
@@ -59,8 +57,9 @@ app.use(session({
 		secure: false
 }));
 
+console.log('here1');
 app.use(passport.session());
-
+console.log('here2');
 //Facebook auth
 passport.use(new FacebookStrategy({
 		clientID: authConfig.facebookAuth.clientID,
@@ -80,7 +79,7 @@ passport.use(new FacebookStrategy({
 				});
 	}
 ));
-
+console.log('here3');
 
 // Configure Passport authenticated session persistence.
 //f
