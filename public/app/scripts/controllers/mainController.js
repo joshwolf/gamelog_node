@@ -8,7 +8,7 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-  .controller('MainCtrl', function ($scope, $http, $location, $document, $cookies) {
+  .controller('MainCtrl', function ($scope, $http, $location, $document, $cookies, $window) {
   	if($document[0].cookie.indexOf('token') >= 0) {
    		var expires = new Date();
     	expires.setDate(expires.getDate() + 60);
@@ -18,7 +18,13 @@ angular.module('gamelogApp')
     	})
   	}
 
-	$http.get('/api/gameplays/recent').then(function (result) {
-		$scope.recent_gameplays = result.data;
-	});
-});
+  	$http.get('/api/gameplays/recent').then(function (result) {
+  		$scope.recent_gameplays = result.data;
+  	});
+
+    $scope.login = function() {
+      $cookies.put('next_url',$location.path());
+      $window.location.href = '/login';
+    }
+
+  });
