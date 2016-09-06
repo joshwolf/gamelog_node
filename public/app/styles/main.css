@@ -5889,12 +5889,14 @@ img.profile-circle, span.initials-circle {
   width: 5rem;
   border-radius: 50%;
   vertical-align: middle;
-  display: inline-block; }
+  display: inline-block;
+  font-weight: normal; }
   img.profile-circle ~ span, span.initials-circle ~ span {
     text-align: center;
     vertical-align: middle;
     color: #333;
-    font-size: 3rem;
+    font-size: 2rem;
+    padding: 1rem 0;
     overflow: hidden;
     top: 50%;
     bottom: auto; }
@@ -5939,6 +5941,12 @@ ul.gameplay-scores li {
   #game-page #gameplays ul li p {
     text-align: center;
     width: 5rem; }
+#game-page #gameplays .fa-facebook-official {
+  font-size: 3rem; }
+#game-page #gameplays .bgg-share-icon {
+  height: 3rem;
+  width: 3rem;
+  vertical-align: bottom; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
