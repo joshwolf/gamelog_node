@@ -212,3 +212,9 @@ ul.gameplay-scores {
 		border-bottom: 0;
 	}
 }
+
+@media (min-width: 979px) {
+	.dropdown:hover .dropdown-menu {
+		display: block;
+	}
+}

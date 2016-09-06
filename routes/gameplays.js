@@ -124,7 +124,9 @@ router.get('/recent', function(req,res) {
 
 
 router.get('/:id', function(req, res) {
-	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) { res.jsonp(gameplay); });
+	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
+		res.jsonp(gameplay);
+	});
 });
 
 module.exports = router;

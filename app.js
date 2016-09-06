@@ -137,6 +137,16 @@ app.get('/logout', function(req, res) {
 	res.redirect(next_url);
 });
 
+app.get('/gameplay/:id', function(req, res) {
+	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
+		models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
+			res.jsonp(gameplay);
+		});
+	} else {
+		res.sendFile(__dirname + '/public/app/home.html')
+	}
+});
+
 app.get('/*', function(req, res) {
 	if(req.session && req.session.token) {
 		res.cookie('user', req.session.user,  {

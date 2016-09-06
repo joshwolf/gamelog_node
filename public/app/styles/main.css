@@ -5959,5 +5959,8 @@ ul.gameplay-scores li {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0; } }
+@media (min-width: 979px) {
+  .dropdown:hover .dropdown-menu {
+    display: block; } }
 
 /*# sourceMappingURL=main.css.map */
