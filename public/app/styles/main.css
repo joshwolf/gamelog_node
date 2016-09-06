@@ -5908,6 +5908,10 @@ ul.gameplay-scores li {
     text-align: center;
     width: 5rem; }
 
+.recent-gameplays-nologin article {
+  display: inline-block;
+  margin: .2rem; }
+
 #game-page #new-gameplay {
   -webkit-transition: all ease 1s;
   -o-transition: all ease 1s;

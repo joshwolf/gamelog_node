@@ -14,7 +14,7 @@
 			</label>
 		</article>
 	</section>
-	<section ng-if="!current_user">
+	<section ng-if="!current_user" class="recent-gameplays-nologin">
 		<h2>Recently played games:</h2>
 		<article ng-repeat="gameplay in recent_gameplays">
 			<a ng-href="/game/{{gameplay.GameId}}"><img ng-src="{{gameplay.Game.image_thumbnail}}" uib-tooltip="{{gameplay.Game.title}}" title="{{gameplay.Game.title}}"></a>

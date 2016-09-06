@@ -141,6 +141,13 @@ ul.gameplay-scores {
 	}
 }
 
+.recent-gameplays-nologin {
+	article {
+		display: inline-block;
+		margin: .2rem;
+	}
+}
+
 #game-page {
 	#new-gameplay {
 		@include transition(all ease 1s);
