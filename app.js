@@ -104,9 +104,9 @@ passport.deserializeUser(function(id, done) {
 app.set('port', process.env.PORT || 3000);
 
 
-app.use('/api/game', games);
-app.use('/api/gameplay', gameplays);
-app.use('/api/user', users);
+app.use('/api/games', games);
+app.use('/api/gameplays', gameplays);
+app.use('/api/users', users);
 app.get(['/login/facebook','/login'],
 	passport.authenticate('facebook', {}),
 	function(req, res, next) {

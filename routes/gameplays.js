@@ -83,23 +83,43 @@ router.get('/search/:title/:exact*?', function(req, res) {
 router.get('/my/recent', loggedIn, function(req, res) {
 	models.User.findById(req.session.user.id).then(function(user) {
 		user.getScores({include: [ {
-			model: models.Gameplay, include: [ {
-				model: models.GameplayScore, as: 'Scores', include: [ {
-					model: models.User, as: 'Player'
-				}]
-			}]
+			model: models.Gameplay, include: [ 
+				{
+					model: models.GameplayScore, as: 'Scores', include: [ {
+						model: models.User, as: 'Player'
+					}]
+				},
+				{
+					model: models.Game, as: 'Game'
+				}
+			]
 		} ]}).then(function(scores) { res.jsonp(scores); });
 	});
 });
 
 router.get('/recent', function(req,res) {
-	gameplayCache.find({ where: {
-		//play_date: { $gt: { new Date(new Date() - 24 * 60 * 60 * 1000) } }
-	} })
-	  .then(function(row) {
-	    console.log(row); // sequelize db object
-	    console.log(gameplayCache.cacheHit); // true or false
-  	});
+	var time_ago = new Date() - (60 * 24 * 60 * 60 * 1000);
+	var included_models = [{
+		model: models.Game
+	}];
+	if (req.session.user) {
+		included_models.push(
+			{
+				model: models.GameplayScore, as: 'Scores', include: [ {
+					model: models.User, as: 'Player'
+				}]
+			}
+		);
+	}
+	models.Gameplay.findAll({
+		where: {
+			play_date: { $gt: time_ago }
+		},
+		include: included_models
+	})
+	.then(function(row) {
+		res.send(row); // sequelize db object
+	});
 });
 
 

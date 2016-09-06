@@ -127,6 +127,18 @@ img.profile-circle, span.initials-circle {
 	}
 }
 
+ul.gameplay-scores {
+	li {
+		list-style-type: none;
+		float: left;
+
+		p {
+			text-align: center;
+			width: 5rem;
+		}
+	}
+}
+
 #game-page {
 	#new-gameplay {
 		@include transition(all ease 1s);

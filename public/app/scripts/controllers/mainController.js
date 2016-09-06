@@ -17,4 +17,8 @@ angular.module('gamelogApp')
 	    	$cookies.put(cookie.split('=')[0],cookie.split('=')[1],{'expires':expires});
     	})
   	}
+
+	$http.get('/api/gameplays/recent').then(function (result) {
+		$scope.recent_gameplays = result.data;
+	});
 });

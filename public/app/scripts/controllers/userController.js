@@ -2,7 +2,7 @@
 
 angular.module('gamelogApp')
   .controller('UserStatusCtrl', function ($scope, $window, $http, $location, $cookies, $rootScope) {
-  	$http.get('/api/user/me').then(function(response) {
+  	$http.get('/api/users/me').then(function(response) {
    		var expires = new Date();
     	expires.setDate(expires.getDate() + 60);
 	    $rootScope.current_user = response.data;
