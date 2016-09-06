@@ -18,6 +18,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var authConfig = require('./config/auth');
 var cookie = require('cookie');
 var util = require('util');
+var dateFormat = require('dateformat');
 
 //For testing
 module.exports = app;
@@ -146,7 +147,7 @@ app.get('/gameplay/:id', function(req, res) {
 					"title" : gameplay.getFacebookPostTitle(),
 					"type" : "website",
 					"image" : "http:" + gameplay.Game.image_thumbnail,
-					"description" : _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
+					"description" : "Played on " + dateFormat(gameplay.play_date, "shortDate") + ". " + _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
 					"url" : "http://gamelog-node.herokuapp.com/gameplay/" + gameplay.id
 				}
 				res.render('opengraph', { "og_data" : og_data });
