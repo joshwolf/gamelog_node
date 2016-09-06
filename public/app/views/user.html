@@ -1,0 +1,18 @@
+<div class="container" ng-show="user" id="user-page">
+	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
+	<label><h2>{{user.full_name}}</h2></label>
+	<section  ng-class="current_user ? '' : 'recent-gameplays-nologin'">
+		<article ng-repeat="score in user.Scores">
+			<a ng-href="/game/{{score.Gameplay.GameId}}"><img ng-src="{{score.Gameplay.Game.image_thumbnail}}" uib-tooltip="{{score.Gameplay.Game.title}}" title="{{score.Gameplay.Game.title}}"></a>
+			<label>
+				<p ng-show="current_user">{{score.Gameplay.play_date | date:'shortDate'}}</p>
+				<ul class="clearfix players gameplay-scores">
+					<li ng-repeat="score in score.Gameplay.Scores | orderBy: 'rank'">
+						<user-icon user="score.Player"></user-icon>
+						<p>{{score.points}}</p>
+					</li>
+				</ul>
+			</label>
+		</article>
+	</section>
+</div>

@@ -117,16 +117,16 @@ img.profile-circle, span.initials-circle {
 	vertical-align: middle;
 	display: inline-block;
 	font-weight: normal;
-	~ span {
-		text-align: center;
-		vertical-align: middle;
-		color: #333;
-		font-size: 2rem;
-		padding: 1rem 0;
-		overflow: hidden;
-		top: 50%;
-		bottom: auto;
-	}
+	text-align: center;
+	color: #333;
+	font-size: 2rem;
+	overflow: hidden;
+	top: 50%;
+	bottom: auto;
+}
+
+span.initials-circle {
+	padding: 1rem 0;
 }
 
 ul.gameplay-scores {
