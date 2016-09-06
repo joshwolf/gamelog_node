@@ -147,7 +147,7 @@ app.get('/gameplay/:id', function(req, res) {
 					"type" : "website",
 					"image" : gameplay.Game.image_thumbnail,
 					"description" : _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
-					"url" : "https://games.greenlightgo.com/gameplay/" + gameplay.id
+					"url" : "http://gamelog-node.herokuapp.com/gameplay/" + gameplay.id
 				}
 				res.render('opengraph', { "og_data" : og_data });
 			} else {
