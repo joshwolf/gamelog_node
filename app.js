@@ -145,7 +145,7 @@ app.get('/gameplay/:id', function(req, res) {
 				var og_data = {
 					"title" : gameplay.getFacebookPostTitle(),
 					"type" : "website",
-					"image" : gameplay.Game.image_thumbnail,
+					"image" : "http:" + gameplay.Game.image_thumbnail,
 					"description" : _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
 					"url" : "http://gamelog-node.herokuapp.com/gameplay/" + gameplay.id
 				}
