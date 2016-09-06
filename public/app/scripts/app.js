@@ -37,6 +37,12 @@ angular
         controllerAs: 'gameController',
         page_title: 'Game'
       })
+      .when('/gameplay/:id', {
+        templateUrl: 'views/gameplay.html',
+        controller: 'GameplayCtrl',
+        controllerAs: 'gameplayController',
+        page_title: 'Gameplay'
+      })
       .otherwise({
         redirectTo: '/'
       });

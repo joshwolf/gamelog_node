@@ -42,6 +42,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
+app.set('view engine', 'pug');
 
 var redisClient  = redis.createClient(nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER'));
 if (nconf.get('REDIS_AUTH')) {
@@ -139,8 +140,19 @@ app.get('/logout', function(req, res) {
 
 app.get('/gameplay/:id', function(req, res) {
 	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
-		models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
-			res.jsonp(gameplay);
+		models.Gameplay.find({where: {id: req.params.id}, order: ['rank'], include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
+			if(gameplay) {
+				var og_data = {
+					"title" : gameplay.getFacebookPostTitle(),
+					"type" : "website",
+					"image" : gameplay.Game.image_thumbnail,
+					"description" : _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
+					"url" : "https://games.greenlightgo.com/gameplay/" + gameplay.id
+				}
+				res.render('opengraph', { "og_data" : og_data });
+			} else {
+				res.send('No such gameplay');
+			}
 		});
 	} else {
 		res.sendFile(__dirname + '/public/app/home.html')

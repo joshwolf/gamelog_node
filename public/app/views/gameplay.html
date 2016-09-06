@@ -1,0 +1,52 @@
+<div class="container" ng-show="current_game" id="game-page">
+	<section class="row">
+		<img ng-src="{{current_game.image_thumbnail}}">
+		<h1>{{current_game.title}} ({{current_game.year_published}})</h1>
+		<h2>by {{current_game.designers | humanizedList}}</h2>
+		<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
+		<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
+		<ul class="game-actions">
+			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png"></a></li>
+			<li class="" ng-show="{{current_user}}""><img ng-click="showGameplayForm()" src="images/dice.svg"></li>
+		</ul>
+	</section>
+	<section class="row" ng-show="current_user && show_gameplay_form" id="new-gameplay">
+		<ng-form name="newGameplayForm">
+			<h2>Add a gameplay</h2>
+			<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">
+				<label>Date:</label>
+		  		<input ng-model="new_gameplay.play_date" type="text" class="date-played font-fontawesome font-light radius3" placeholder="&#xf073; Choose a date"/>
+			</datepicker>
+			<br/><br/>
+			<ui-select ng-model="user_search" on-select="addUserToGameplay($item,$model)" style="min-width: 300px;" class="user-quicksearch">
+				<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
+				<ui-select-choices refresh="searchUsers($select)" refresh-delay="300" repeat="user in searchRes">
+				  <img ng-src="{{user.profile_pic}}" class="user-quicksearch-pic"><span ng-bind-html="user.full_name | highlight: $select.search"></span>
+				</ui-select-choices>
+			</ui-select>
+			<ul class="recent-opponents clearfix">
+				<li ng-repeat="player in recent_opponents"><user-icon user="player" ng-click="addUserToGameplay(player)"></user-icon></li>
+			</ul>
+			<ul class="clearfix players">
+				<li ng-repeat="score in new_gameplay.scores">
+					<user-icon user="score.player"></user-icon>
+					<input ng-model="score.points" placeholder="{{score.player.first_name}}'s score" ng-pattern="'[0-9.\-]*'" ng-required="true" ng-blur="calculateGameplayOrder()">
+					<button ng-click="removeUserFromGameplay(score.player)" tabindex="-1">X</button>
+					({{score.rank | ordinal}})
+				</li>
+			</ul>
+			<button type="button" class="btn btn-primary" ng-click="addGameplay()" ng-disabled="newGameplayForm.$invalid">Go</button>
+		</ng-form>
+	</section>
+	<section id="gameplays">
+		<article ng-repeat="gameplay in current_game.gameplays" class="well">
+			<p>{{gameplay.play_date | date:'shortDate'}}</p>
+			<ul class="clearfix">
+				<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
+					<user-icon user="score.Player"></user-icon>
+					<p>{{score.points}}</p>
+				</li>
+			</ul>
+		</article>
+	</section>
+</div>
