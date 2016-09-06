@@ -54,8 +54,14 @@
             </div>
             <ul class="nav navbar-nav">
               <li class="user" ng-controller="UserStatusCtrl">
-                <i ng-if="!current_user" ng-click="login()" class="material-icons">account_circle</i>
-                <img ng-if="current_user" ng-src="{{current_user.profile_pic}}" ng-click="logout()">
+                <i ng-if="!current_user" ng-click="login()" class="material-icons" uib-tooltip="Log In" title="Log In">account_circle</i>
+                <div class="dropdown" ng-if="current_user">
+                    <img ng-src="{{current_user.profile_pic}}" class="user-profile-pic" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" uib-tooltip="Log In" title="Log In">
+                    <ul class="dropdown-menu">
+                      <li><a href="/me">Me</a></li>
+                      <li><a href="#" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </div>
               </li>
             </ul>
 
@@ -100,6 +106,7 @@
         <script src="/scripts/controllers/mainController.js"></script>
         <script src="/scripts/controllers/userController.js"></script>
         <script src="/scripts/controllers/gameController.js"></script>
+        <script src="/scripts/controllers/gameplayController.js"></script>
         <script src="/scripts/controllers/aboutController.js"></script>
         <!-- endbuild -->
 </body>

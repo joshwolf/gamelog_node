@@ -2,9 +2,8 @@
 	<section ng-if="current_user">
 		<h2>Recently played games:</h2>
 		<article ng-repeat="gameplay in recent_gameplays">
-			<img ng-src="{{gameplay.Game.image_thumbnail}}">
+			<a ng-href="/game/{{gameplay.GameId}}"><img ng-src="{{gameplay.Game.image_thumbnail}}" uib-tooltip="{{gameplay.Game.title}}" title="{{gameplay.Game.title}}"></a>
 			<label>
-				<p>{{gameplay.Game.title}}</p>
 				<p>{{gameplay.play_date | date:'shortDate'}}</p>
 				<ul class="clearfix players gameplay-scores">
 					<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
@@ -18,8 +17,7 @@
 	<section ng-if="!current_user">
 		<h2>Recently played games:</h2>
 		<article ng-repeat="gameplay in recent_gameplays">
-			<img ng-src="{{gameplay.Game.image_thumbnail}}">
-			<label>{{gameplay.Game.title}}</label>
+			<a ng-href="/game/{{gameplay.GameId}}"><img ng-src="{{gameplay.Game.image_thumbnail}}" uib-tooltip="{{gameplay.Game.title}}" title="{{gameplay.Game.title}}"></a>
 		</article>
 		<h2><button ng-click="login()">Log in</button> for more</h2>
 	</section>
