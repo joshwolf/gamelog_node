@@ -125,6 +125,10 @@ img.profile-circle, span.initials-circle {
 	bottom: auto;
 }
 
+img.profile-circle {
+	cursor: pointer;
+}
+
 span.initials-circle {
 	padding: 1rem 0;
 }

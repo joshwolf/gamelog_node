@@ -115,6 +115,7 @@ router.get('/recent', function(req,res) {
 		where: {
 			play_date: { $gt: time_ago }
 		},
+		order: [['play_date','DESC']],
 		include: included_models
 	})
 	.then(function(row) {
