@@ -53,7 +53,7 @@ if (nconf.get('REDIS_AUTH')) {
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
-		store: new redisStore({ host: nconf.get('REDIS_SERVER'), port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  260}),
+		store: new redisStore({ host: nconf.get('REDIS_SERVER'), port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  (60 * 60 * 24 * 14)}),
 		saveUninitialized: false,
 		resave: false,
 		secure: false
