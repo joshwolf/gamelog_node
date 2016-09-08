@@ -5909,7 +5909,8 @@ ul.gameplay-scores li {
   float: left; }
   ul.gameplay-scores li p {
     text-align: center;
-    width: 5rem; }
+    width: 5rem;
+    font-weight: normal; }
 
 .recent-gameplays-nologin article {
   display: inline-block;
@@ -5977,5 +5978,22 @@ ul.gameplay-scores li {
 @media (min-width: 979px) {
   .dropdown:hover .dropdown-menu {
     display: block; } }
+@media (max-width: 992px) {
+  .header {
+    padding: 0;
+    border-bottom: none; }
+    .header .main-nav {
+      position: absolute;
+      top: 0;
+      width: 100vw;
+      right: -6rem; }
+      .header .main-nav #game-quicksearch {
+        width: 75vw; }
+    .header ul.navbar-nav {
+      margin: 0; }
+      .header ul.navbar-nav li.user {
+        display: inline; }
+        .header ul.navbar-nav li.user div {
+          display: inline; } }
 
 /*# sourceMappingURL=main.css.map */

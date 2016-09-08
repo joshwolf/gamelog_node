@@ -141,6 +141,7 @@ ul.gameplay-scores {
 		p {
 			text-align: center;
 			width: 5rem;
+			font-weight: normal;
 		}
 	}
 }
@@ -237,5 +238,30 @@ ul.gameplay-scores {
 @media (min-width: 979px) {
 	.dropdown:hover .dropdown-menu {
 		display: block;
+	}
+}
+
+@media (max-width: 992px) {
+	.header {
+		padding: 0;
+		border-bottom: none;
+		.main-nav {
+		    position: absolute;
+		    top: 0;
+		    width: 100vw;
+		    right: -6rem;
+			#game-quicksearch {
+				width: 75vw;		
+			}
+		}
+		ul.navbar-nav {
+			margin: 0;
+			li.user {
+				display: inline;
+				div {
+					display: inline;
+				}
+			}
+		}
 	}
 }
