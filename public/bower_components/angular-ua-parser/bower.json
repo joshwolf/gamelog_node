@@ -1,0 +1,17 @@
+{
+  "name": "angular-ua-parser",
+  "version": "0.0.2",
+  "main": "angular-ua-parser.js",
+  "ignore": [
+    "**/.*",
+    "*.yml",
+    "*.xml",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "angular-ua-parser",
+  "version": "0.0.2",
+  "main": "angular-ua-parser.js",
+  "ignore": [
+    "**/.*",
+    "*.yml",
+    "*.xml",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*"
+  },
+  "homepage": "https://github.com/gdi2290/angular-ua-parser",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "519aca45f7bcac04131ee63fb1ce7bcdb9e8722b"
+  },
+  "_source": "https://github.com/gdi2290/angular-ua-parser.git",
+  "_target": "~0.0.2",
+  "_originalSource": "angular-ua-parser",
+  "_direct": true
+}

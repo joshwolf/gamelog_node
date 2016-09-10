@@ -18,6 +18,7 @@ angular
 		'ngSanitize',
 		'ngTouch',
 		'ngCookies',
+		'ngUAParser',
 		'ui.select',
 		'ui.bootstrap',
 		'720kb.datepicker',
@@ -56,6 +57,16 @@ angular
 	.config(function ($locationProvider) {
 		$locationProvider.html5Mode(true);
 	})
+	.config(['$uibTooltipProvider', function ($uibTooltipProvider) {
+	     var parser = new UAParser();
+	     var result = parser.getResult();
+	     var touch = result.device && (result.device.type === 'tablet' || result.device.type === 'mobile');
+	     if ( touch ){
+	         $uibTooltipProvider.options({trigger: 'dontTrigger'});
+	     } else {
+	         $uibTooltipProvider.options({trigger: 'mouseenter'});
+	    }
+	}])
 	.directive('randomBackgroundColor', function() {
 		return {
 			link: function(scope, element) {
