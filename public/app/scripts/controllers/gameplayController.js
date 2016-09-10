@@ -12,6 +12,7 @@ angular.module('gamelogApp')
 		$scope.searchRes = [];
 		$http.get('/api/gameplays/' + $routeParams.id)
 		.then(function(result) {
+			$scope.gameplay = result.data;
 			$scope.current_game = result.data.Game;
 			$rootScope.page_title = $scope.current_game.title;
 		});
