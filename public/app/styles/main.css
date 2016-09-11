@@ -5828,6 +5828,9 @@ ul li {
   padding-left: 15px;
   padding-right: 15px; }
 
+.btn-cancel {
+  cursor: pointer; }
+
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
@@ -5838,6 +5841,15 @@ ul li {
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px; }
+  .header .navbar-default {
+    background-color: #225378;
+    padding: .7rem; }
+  .header .navbar {
+    margin-bottom: 0; }
+  .header .navbar-brand, .header .navbar-brand:hover, .header .navbar-brand:visited {
+    font-size: 2rem;
+    color: #F3FFE2;
+    cursor: pointer; }
 
 /* Custom page footer */
 .footer {
@@ -5933,6 +5945,8 @@ ul.gameplay-scores li {
   #game-page #new-gameplay.ng-hide {
     height: 0px;
     max-height: 0; }
+  #game-page #new-gameplay aside.rank {
+    display: inline; }
 #game-page .game-actions {
   padding-left: 0; }
   #game-page .game-actions li {
