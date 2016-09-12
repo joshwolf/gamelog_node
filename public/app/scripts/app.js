@@ -50,6 +50,11 @@ angular
 				controllerAs: 'gameplayController',
 				page_title: 'Gameplay'
 			})
+			.when('/import', {
+				templateUrl: 'views/main.html',
+				controller: 'ImportCtrl',
+				controllerAs: 'importController'
+			})
 			.otherwise({
 				redirectTo: '/'
 			});

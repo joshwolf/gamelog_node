@@ -27,4 +27,18 @@ angular.module('gamelogApp')
       $window.location.href = '/login';
     }
 
+  })
+  .controller('ImportCtrl', function($scope, $http) {
+    console.log('ok');
+    $http.get('/scripts/gamelogger.json').then(function (result) {
+      var gameplays = result.data;
+      angular.forEach(gameplays, function(g) {
+        if(g.game) {
+          $http.get('/api/games/' + g.game.id)
+            .then(function(result) {
+              console.log(result);
+            });
+          }
+      });
+    });
   });
