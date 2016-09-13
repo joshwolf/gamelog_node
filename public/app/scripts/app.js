@@ -51,7 +51,7 @@ angular
 				page_title: 'Gameplay'
 			})
 			.when('/import', {
-				templateUrl: 'views/main.html',
+				templateUrl: 'views/import.html',
 				controller: 'ImportCtrl',
 				controllerAs: 'importController'
 			})
