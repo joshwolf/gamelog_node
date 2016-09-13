@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
             include: [ m.Designer, m.Mechanic, m.Category, m.Gameplay ]
 		  		})
 	      	.spread(function(game, created) {
-	      		if(created) {
+	      		if(created || !game.title) {
 	      			//get from BGG
       				bgg('thing', {id: bgg_id })
     					.then(function(results){
