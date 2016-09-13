@@ -98,7 +98,7 @@ router.get('/my/recent', loggedIn, function(req, res) {
 });
 
 router.get('/recent', function(req,res) {
-	var time_ago = new Date() - (60 * 24 * 60 * 60 * 1000);
+	var time_ago = new Date() - (90 * 24 * 60 * 60 * 1000);
 	var included_models = [{
 		model: models.Game
 	}];

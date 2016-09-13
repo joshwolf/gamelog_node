@@ -28,7 +28,7 @@ angular.module('gamelogApp')
     }
 
   })
-  .controller('ImportCtrl', function($scope, $http) {
+  .controller('ImportCtrl', function($scope, $http, $cookies) {
     console.log('ok');
     $http.get('/scripts/gamelogger.json').then(function (result) {
       var gameplays = result.data;
@@ -36,8 +36,25 @@ angular.module('gamelogApp')
         if(g.game) {
           $http.get('/api/games/' + g.game.id)
             .then(function(result) {
-              var gameplay = {};
-              
+              var gameplay = {
+                creator_id: 1,
+                game_id: g.game.id,
+                play_date: g.date_played,
+                scores: []
+              }
+              angular.forEach(g.user_gameplay_scores, function(s) {
+                var score = {
+                  player: {
+                    full_name: s.user.name,
+                    first_name: s.user.first_name,
+                    last_name: s.user.last_name,
+                    initials: s.user.first_name.slice(0,1) + s.user.last_name.slice(0,1),
+                  },
+                  points: s.score,
+                  rank: s.rank
+                }
+                gameplay.scores.push(score);
+              });
               $http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: gameplay}));
             });
           }
