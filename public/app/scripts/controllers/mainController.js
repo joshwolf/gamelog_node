@@ -36,7 +36,9 @@ angular.module('gamelogApp')
         if(g.game) {
           $http.get('/api/games/' + g.game.id)
             .then(function(result) {
-              console.log(result);
+              var gameplay = {};
+              
+              $http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: gameplay}));
             });
           }
       });

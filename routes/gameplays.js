@@ -45,33 +45,33 @@ router.post('/new', loggedIn, function(req, res) {
 	if (gameplay_data.play_date && gameplay_data.scores) {
 		//create any new users
 		var new_users = _.filter(gameplay_data.scores, (score) => !score.player.id);
-	return models.sequelize.transaction(function (t) {
-		var promises = [];
-		_.each(gameplay_data.scores, function(score) {
-			if(!score.player.id) {
-				var newPromise =  models.User.findOrCreate({ where: {
-						full_name: score.player.full_name, 
-						first_name: score.player.first_name,
-						last_name: score.player.last_name
-					},transaction: t})
-					.spread(function(user) { score.player = user; });
-				promises.push(newPromise);
-			}
-		});
-		return Promise.all(promises);
-	})
-	.then(function(result) {
-		var gameplay = models.Gameplay.create({
-			play_date: gameplay_data.play_date,
-			GameId: gameplay_data.game_id,
-			CreatorId: gameplay_data.creator_id,
-			Scores: _.map(gameplay_data.scores, function(score) { return { points: score.points, rank: score.rank, PlayerId: score.player.id }; })
-		}, { include: {model: models.GameplayScore, as: 'Scores'}})
-		.then(function(gameplay) {
-			gameplay.save().then(function(gameplay) { gameplay.reload({ include: [{model: models.GameplayScore, as: 'Scores', include: [{model: models.User, as: 'Player'}] }] }).then(function(scores) { res.jsonp(gameplay); }); });
-		});
-	})
-	.catch(function(error) { console.log(error); });
+		return models.sequelize.transaction(function (t) {
+			var promises = [];
+			_.each(gameplay_data.scores, function(score) {
+				if(!score.player.id) {
+					var newPromise =  models.User.findOrCreate({ where: {
+							full_name: score.player.full_name, 
+							first_name: score.player.first_name,
+							last_name: score.player.last_name
+						},transaction: t})
+						.spread(function(user) { score.player = user; });
+					promises.push(newPromise);
+				}
+			});
+			return Promise.all(promises);
+		})
+		.then(function(result) {
+			var gameplay = models.Gameplay.create({
+				play_date: gameplay_data.play_date,
+				GameId: gameplay_data.game_id,
+				CreatorId: gameplay_data.creator_id,
+				Scores: _.map(gameplay_data.scores, function(score) { return { points: score.points, rank: score.rank, PlayerId: score.player.id }; })
+			}, { include: {model: models.GameplayScore, as: 'Scores'}})
+			.then(function(gameplay) {
+				gameplay.save().then(function(gameplay) { gameplay.reload({ include: [{model: models.GameplayScore, as: 'Scores', include: [{model: models.User, as: 'Player'}] }] }).then(function(scores) { res.jsonp(gameplay); }); });
+			});
+		})
+		.catch(function(error) { console.log(error); });
 	}
 });
 
