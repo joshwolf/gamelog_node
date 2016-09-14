@@ -27,6 +27,9 @@ angular.module('gamelogApp')
       $window.location.href = '/login';
     }
 
+    $scope.paginationTotalItems = $scope.recent_gameplays.length;
+    $scope.paginationCurrentPage = 1;
+    
   })
   .controller('ImportCtrl', function($scope, $http, $cookies) {
     console.log('ok');
