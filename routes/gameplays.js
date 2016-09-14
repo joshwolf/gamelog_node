@@ -81,19 +81,27 @@ router.get('/search/:title/:exact*?', function(req, res) {
 });
 
 router.get('/my/recent', loggedIn, function(req, res) {
+	var time_ago = new Date() - (90 * 24 * 60 * 60 * 1000);
 	models.User.findById(req.session.user.id).then(function(user) {
-		user.getScores({include: [ {
-			model: models.Gameplay, include: [ 
-				{
-					model: models.GameplayScore, as: 'Scores', include: [ {
-						model: models.User, as: 'Player'
-					}]
+		user.getScores({
+			include: [ {
+				model: models.Gameplay,
+				where: {
+					play_date: { $gt: time_ago }
 				},
-				{
-					model: models.Game, as: 'Game'
-				}
-			]
-		} ]}).then(function(scores) { res.jsonp(scores); });
+				include: [ 
+					{
+						model: models.GameplayScore, as: 'Scores', include: [ {
+							model: models.User, as: 'Player'
+						}]
+					},
+					{
+						model: models.Game, as: 'Game'
+					}
+				]
+			} ]
+		})
+		.then(function(scores) { res.jsonp(scores); });
 	});
 });
 

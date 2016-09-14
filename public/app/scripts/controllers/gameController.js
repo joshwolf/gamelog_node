@@ -44,9 +44,9 @@ angular.module('gamelogApp')
 								return score.Player;
 						});
 					})),
-					function (player) { return player.full_name; }
+					function (player) { return player ? player.full_name : ''; }
 					),
-					function (player) { return player.id == $scope.current_user.id; }
+					function (player) { return player ? (player.id == $scope.current_user.id) : false; }
 					);
 				});
 			}
