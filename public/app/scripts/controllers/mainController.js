@@ -20,6 +20,8 @@ angular.module('gamelogApp')
 
   	$http.get('/api/gameplays/recent').then(function (result) {
   		$scope.recent_gameplays = result.data;
+      $scope.paginationTotalItems = $scope.recent_gameplays.length;
+      $scope.paginationCurrentPage = 1;
   	});
 
     $scope.login = function() {
@@ -27,9 +29,6 @@ angular.module('gamelogApp')
       $window.location.href = '/login';
     }
 
-    $scope.paginationTotalItems = $scope.recent_gameplays.length;
-    $scope.paginationCurrentPage = 1;
-    
   })
   .controller('ImportCtrl', function($scope, $http, $cookies) {
     console.log('ok');
