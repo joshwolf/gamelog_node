@@ -154,10 +154,11 @@ span.initials-circle {
 }
 
 ul.gameplay-scores {
+	padding-left: 0;
 	li {
 		list-style-type: none;
 		float: left;
-
+		margin: .5rem;
 		p {
 			text-align: center;
 			width: 5rem;
@@ -173,6 +174,19 @@ ul.gameplay-scores {
 	}
 }
 
+#home-page {
+	.gameplay {
+		h2 {
+			margin-top: 0;
+		}
+		> a {
+			float: left;
+		}
+		.img-game {
+			margin-right: 1rem;
+		}
+	}
+}
 #game-page {
 	#new-gameplay {
 		@include transition(all ease 1s);

@@ -1,10 +1,11 @@
-<div class="container row">
+<div class="container row" id="home-page">
 	<section ng-if="current_user">
 		<h2>Recently played games:</h2>
-		<article ng-repeat="gameplay in recent_gameplays">
-			<a ng-href="/game/{{gameplay.GameId}}"><img ng-src="{{gameplay.Game.image_thumbnail}}" uib-tooltip="{{gameplay.Game.title}}" title="{{gameplay.Game.title}}"></a>
+		<article ng-repeat="gameplay in recent_gameplays" class="well gameplay">
+			<a ng-href="/game/{{gameplay.GameId}}"><img class="img-game" ng-src="{{gameplay.Game.image_thumbnail}}" uib-tooltip="{{gameplay.Game.title}}" title="{{gameplay.Game.title}}"></a>
 			<label>
-				<p>{{gameplay.play_date | date:'shortDate'}}</p>
+				<h2>{{gameplay.Game.title}}</h2>
+				<h4>{{gameplay.play_date | date:'shortDate'}}</h4>
 				<ul class="clearfix players gameplay-scores">
 					<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
 						<user-icon user="score.Player"></user-icon>

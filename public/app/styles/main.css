@@ -5916,17 +5916,27 @@ img.profile-circle {
 span.initials-circle {
   padding: 1rem 0; }
 
-ul.gameplay-scores li {
-  list-style-type: none;
-  float: left; }
-  ul.gameplay-scores li p {
-    text-align: center;
-    width: 5rem;
-    font-weight: normal; }
+ul.gameplay-scores {
+  padding-left: 0; }
+  ul.gameplay-scores li {
+    list-style-type: none;
+    float: left;
+    margin: .5rem; }
+    ul.gameplay-scores li p {
+      text-align: center;
+      width: 5rem;
+      font-weight: normal; }
 
 .recent-gameplays-nologin article {
   display: inline-block;
   margin: .2rem; }
+
+#home-page .gameplay h2 {
+  margin-top: 0; }
+#home-page .gameplay > a {
+  float: left; }
+#home-page .gameplay .img-game {
+  margin-right: 1rem; }
 
 #game-page #new-gameplay {
   -webkit-transition: all ease 1s;
