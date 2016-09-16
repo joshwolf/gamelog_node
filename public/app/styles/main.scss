@@ -143,8 +143,8 @@ img.profile-circle, span.initials-circle {
 	overflow: hidden;
 	top: 50%;
 	bottom: auto;
-	&[rank="1"]{
-		border:3px solid black;
+	&[rank="1"] {
+		border: 3px solid #ffff00;
 	}
 }
 
@@ -154,6 +154,9 @@ img.profile-circle {
 
 span.initials-circle {
 	padding: 1rem 0;
+	&[rank="1"] {
+		padding: .8rem 0;
+	}
 }
 
 ul.gameplay-scores {

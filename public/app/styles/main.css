@@ -5910,13 +5910,15 @@ img.profile-circle, span.initials-circle {
   top: 50%;
   bottom: auto; }
   img.profile-circle[rank="1"], span.initials-circle[rank="1"] {
-    border: 3px solid black; }
+    border: 3px solid #ffff00; }
 
 img.profile-circle {
   cursor: pointer; }
 
 span.initials-circle {
   padding: 1rem 0; }
+  span.initials-circle[rank="1"] {
+    padding: .8rem 0; }
 
 ul.gameplay-scores {
   padding-left: 0; }
