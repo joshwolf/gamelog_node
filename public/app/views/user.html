@@ -33,6 +33,7 @@
 				</article>
 			</div>
 		</article>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()"></ul>
 	</section>
 	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'" ng-show="!games_grouped">
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
