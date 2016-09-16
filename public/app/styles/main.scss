@@ -143,6 +143,9 @@ img.profile-circle, span.initials-circle {
 	overflow: hidden;
 	top: 50%;
 	bottom: auto;
+	&[rank="1"]{
+		border:3px solid black;
+	}
 }
 
 img.profile-circle {
@@ -174,8 +177,31 @@ ul.gameplay-scores {
 	}
 }
 
-#home-page {
-	.gameplay {
+gameplay {
+	article.well {
+		padding-bottom: 0;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		position: relative;
+		> * {
+			position: relative;
+		}
+		label {
+			max-width: 66%;
+		}
+		&:before {
+			content: ' ';
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(255,255,255,.75);
+		}
+		ul {
+			margin-bottom: 0;
+		}
 		h2 {
 			margin-top: 0;
 		}
@@ -187,6 +213,7 @@ ul.gameplay-scores {
 		}
 	}
 }
+
 #game-page {
 	#new-gameplay {
 		@include transition(all ease 1s);

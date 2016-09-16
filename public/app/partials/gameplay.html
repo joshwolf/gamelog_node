@@ -1,0 +1,13 @@
+<article class="well" style="background-image: url({{gameplayData.Game.image_thumbnail}});">
+	<a ng-href="/game/{{gameplayData.GameId}}"><img class="img-game" ng-src="{{gameplayData.Game.image_thumbnail}}" uib-tooltip="{{gameplayData.Game.title}}" title="{{gameplayData.Game.title}}"></a>
+	<label>
+		<h2>{{gameplayData.Game.title}}</h2>
+		<h4>{{gameplayData.play_date | date:'shortDate'}}</h4>
+		<ul class="clearfix players gameplay-scores">
+			<li ng-repeat="score in gameplayData.Scores | orderBy: 'rank'">
+				<user-icon user="score.Player" rank="score.rank"></user-icon>
+				<p>{{score.points}}</p>
+			</li>
+		</ul>
+	</label>
+</article>

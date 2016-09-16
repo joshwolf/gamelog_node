@@ -5909,6 +5909,8 @@ img.profile-circle, span.initials-circle {
   overflow: hidden;
   top: 50%;
   bottom: auto; }
+  img.profile-circle[rank="1"], span.initials-circle[rank="1"] {
+    border: 3px solid black; }
 
 img.profile-circle {
   cursor: pointer; }
@@ -5931,12 +5933,32 @@ ul.gameplay-scores {
   display: inline-block;
   margin: .2rem; }
 
-#home-page .gameplay h2 {
-  margin-top: 0; }
-#home-page .gameplay > a {
-  float: left; }
-#home-page .gameplay .img-game {
-  margin-right: 1rem; }
+gameplay article.well {
+  padding-bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative; }
+  gameplay article.well > * {
+    position: relative; }
+  gameplay article.well label {
+    max-width: 66%; }
+  gameplay article.well:before {
+    content: ' ';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.75); }
+  gameplay article.well ul {
+    margin-bottom: 0; }
+  gameplay article.well h2 {
+    margin-top: 0; }
+  gameplay article.well > a {
+    float: left; }
+  gameplay article.well .img-game {
+    margin-right: 1rem; }
 
 #game-page #new-gameplay {
   -webkit-transition: all ease 1s;

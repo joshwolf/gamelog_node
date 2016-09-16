@@ -85,7 +85,23 @@ angular
 					templateUrl: 'partials/userIcon.html',
 					transclude: true,
 					scope: {
-							user: '='
+							user: '=',
+							rank: '='
+					},
+					link: function(scope, element, attrs) {
+						scope.showUser = function(id) {
+							$window.location.href = '/user/' + id;
+						}
+					}
+			};
+	})
+	.directive('gameplay', function ($document, $window) {
+			return {
+					restrict: 'E',
+					templateUrl: 'partials/gameplay.html',
+					transclude: true,
+					scope: {
+							gameplayData: '='
 					},
 					link: function(scope, element, attrs) {
 						scope.showUser = function(id) {
