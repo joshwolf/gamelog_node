@@ -2,6 +2,8 @@
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
 	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'">
-		<gameplay ng-repeat="score in user.Scores | orderBy: '-Gameplay.play_date'" gameplay-data="score.Gameplay"></gameplay>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+		<gameplay ng-repeat="gameplay in pagedGameplays | orderBy: '-play_date'" gameplay-data="gameplay"></gameplay>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
 	</section>
 </div>

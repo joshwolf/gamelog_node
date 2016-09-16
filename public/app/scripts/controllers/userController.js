@@ -6,7 +6,19 @@ angular.module('gamelogApp')
 	.then(function(result) {
 	  $scope.user = result.data;
 	  $rootScope.page_title = $scope.user.full_name;
+      $scope.pagination = {
+        totalItems : $scope.user.Scores.length,
+        currentPage : 1,
+        numPerPage : 10,
+      }
+      $scope.setPage();
 	});
+
+    $scope.setPage = function() {
+      var current_position = (($scope.pagination.currentPage - 1) * $scope.pagination.numPerPage);
+      $scope.pagedGameplays = _.map($scope.user.Scores.slice(current_position, current_position + $scope.pagination.numPerPage),
+      	function(score) { return score.Gameplay; });
+    }
 });
 
 angular.module('gamelogApp')

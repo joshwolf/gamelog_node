@@ -1,7 +1,9 @@
 <div class="container row" id="home-page">
 	<section ng-if="current_user">
 		<h2>Recently played games:</h2>
-		<gameplay ng-repeat="gameplay in recent_gameplays" gameplay-data="gameplay"></gameplay>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+		<gameplay ng-repeat="gameplay in pagedGameplays" gameplay-data="gameplay"></gameplay>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
 	</section>
 	<section ng-if="!current_user" class="recent-gameplays-nologin">
 		<h2>Recently played games:</h2>
