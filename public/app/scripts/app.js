@@ -86,11 +86,15 @@ angular
 					transclude: true,
 					scope: {
 							user: '=',
-							rank: '='
+							rank: '=',
+							noLink: '='
 					},
 					link: function(scope, element, attrs) {
 						scope.showUser = function(id) {
-							$window.location.href = '/user/' + id;
+							console.log(scope);
+							if(!scope.noLink) {
+								$window.location.href = '/user/' + id;
+							}
 						}
 					}
 			};
@@ -102,11 +106,6 @@ angular
 					transclude: true,
 					scope: {
 							gameplayData: '='
-					},
-					link: function(scope, element, attrs) {
-						scope.showUser = function(id) {
-							$window.location.href = '/user/' + id;
-						}
 					}
 			};
 	})
