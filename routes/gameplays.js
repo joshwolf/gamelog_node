@@ -89,6 +89,7 @@ router.get('/my/recent', loggedIn, function(req, res) {
 				where: {
 					play_date: { $gt: time_ago }
 				},
+				order: [['play_date','DESC']],
 				include: [ 
 					{
 						model: models.GameplayScore, as: 'Scores', include: [ {

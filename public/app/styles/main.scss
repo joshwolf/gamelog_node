@@ -281,9 +281,6 @@ gameplay {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-	.container {
-		max-width: 730px;
-	}
 
 	/* Remove the padding we set earlier */
 	.header,
@@ -307,8 +304,15 @@ gameplay {
 		display: block;
 	}
 }
-
+@media (min-width: 992px) {
+	.container {
+		max-width: 1024px;
+	}
+}
 @media (max-width: 992px) {
+	.container {
+		width: 100vw;
+	}
 	.header {
 		padding: 0;
 		border-bottom: none;

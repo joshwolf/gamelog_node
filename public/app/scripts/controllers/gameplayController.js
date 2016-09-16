@@ -80,7 +80,6 @@ angular.module('gamelogApp')
 
 		$scope.calculateGameplayOrder = function() {
 			var game_scores = _.map($scope.new_gameplay.scores, function(score) { return score.points || 0 }).sort().reverse();
-			console.log(game_scores);
 			_.each($scope.new_gameplay.scores, function(score) {
 				score.rank = (game_scores.indexOf(score.points)) + 1;
 			})

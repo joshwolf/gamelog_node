@@ -3,7 +3,7 @@
 	<label><h2>{{user.full_name}}</h2></label>
 	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'">
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
-		<gameplay ng-repeat="gameplay in pagedGameplays | orderBy: '-play_date'" gameplay-data="gameplay"></gameplay>
+		<gameplay ng-repeat="gameplay in pagedGameplays" gameplay-data="gameplay"></gameplay>
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
 	</section>
 </div>
