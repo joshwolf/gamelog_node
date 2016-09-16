@@ -89,15 +89,6 @@ ul {
 	}
 }
 
-/* Supporting marketing content */
-.marketing {
-	margin: 40px 0;
-
-	p + h4 {
-		margin-top: 28px;
-	}
-}
-
 [ng\:cloak], [ng-cloak], .ng-cloak {
 		display: none;
 }
@@ -217,6 +208,44 @@ gameplay {
 	}
 }
 
+.grouped-gameplays {
+	article.well {
+		padding-bottom: 0;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		position: relative;
+		&:before {
+			content: ' ';
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(255,255,255,.75);
+			display: block;
+		}
+		> * {
+			position: relative;
+		}
+		.img-game {
+			margin: 0 auto;
+			position: relative;
+			display: block;
+			text-align: center;
+		}
+		label {
+			width: 100%;
+			cursor: pointer;
+			h2 {
+				text-align: center;
+				font-size: 2rem;
+				color: black;
+			}
+		}
+	}
+}
+
 #game-page {
 	#new-gameplay {
 		@include transition(all ease 1s);
@@ -278,6 +307,11 @@ gameplay {
 	}
 }
 
+#user-page {
+	.gameplay-display {
+		display: block;
+	}
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

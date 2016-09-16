@@ -22,7 +22,8 @@ angular
 		'ui.select',
 		'ui.bootstrap',
 		'720kb.datepicker',
-		'ordinal'
+		'ordinal',
+		'angular.filter'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider
@@ -108,6 +109,13 @@ angular
 							gameplayData: '='
 					}
 			};
+	})
+	.filter('startFrom', function () {
+	    return function (input, start) {
+	        if (input === undefined || input === null || input.length === 0) return [];
+	        start = +start; //parse to int
+	        return input.slice(start);
+	    }
 	})
 	.filter('humanizedList', function() {
 		return function(items) {

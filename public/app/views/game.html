@@ -45,7 +45,7 @@
 			<a target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png"></a>
 			<ul class="clearfix">
 				<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
-					<user-icon user="score.Player"></user-icon>
+					<user-icon user="score.Player" rank="score.rank"></user-icon>
 					<p>{{score.points}}</p>
 				</li>
 			</ul>

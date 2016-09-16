@@ -5868,12 +5868,6 @@ ul li {
     font-size: 21px;
     padding: 14px 24px; }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0; }
-  .marketing p + h4 {
-    margin-top: 28px; }
-
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none; }
 
@@ -5962,6 +5956,36 @@ gameplay article.well {
   gameplay article.well .img-game {
     margin-right: 1rem; }
 
+.grouped-gameplays article.well {
+  padding-bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative; }
+  .grouped-gameplays article.well:before {
+    content: ' ';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+    display: block; }
+  .grouped-gameplays article.well > * {
+    position: relative; }
+  .grouped-gameplays article.well .img-game {
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    text-align: center; }
+  .grouped-gameplays article.well label {
+    width: 100%;
+    cursor: pointer; }
+    .grouped-gameplays article.well label h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: black; }
+
 #game-page #new-gameplay {
   -webkit-transition: all ease 1s;
   -o-transition: all ease 1s;
@@ -6003,6 +6027,9 @@ gameplay article.well {
   height: 3rem;
   width: 3rem;
   vertical-align: bottom; }
+
+#user-page .gameplay-display {
+  display: block; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

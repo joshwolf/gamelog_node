@@ -1,9 +1,42 @@
 <div class="container" ng-show="user" id="user-page">
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
-	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'">
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+    <nav class="gameplay-display">
+    	<label>Show Gameplays:</label>
+    	<div class="btn-group">
+	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">By Date</label>
+    	    <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="true">By Game</label>
+    	</div>
+    </nav>
+	<section ng-show="current_user && games_grouped" class="grouped-gameplays">
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()"></ul>
+		<article ng-repeat="(game, plays) in pagedGameplaysGrouped | orderBy: 'Game.title' | groupBy: 'Game.title'" class="well clearfix" style="background-image: url({{plays[0].Game.image_thumbnail}});">
+			<aside class="col-xs-3">
+				<a ng-href="/game/{{plays[0].GameId}}">
+					<img class="img-game" ng-src="{{plays[0].Game.image_thumbnail}}" uib-tooltip="{{plays[0].Game.title}}" title="{{plays[0].Game.title}}">
+					<label>
+						<h2>{{plays[0].Game.title}}</h2>
+					</label>
+				</a>
+			</aside>
+			<div class="col-xs-9 gameplays">
+				<article ng-repeat="gameplay in plays | orderBy: '-play_date'">
+					<h4>{{gameplay.play_date | date:'shortDate'}}</h4>
+					<!--<a target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://gamelog-node.herokuapp.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+					<a target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png"></a>-->
+					<ul class="clearfix gameplay-scores">
+						<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
+							<user-icon user="score.Player" rank="score.rank"></user-icon>
+							<p>{{score.points}}</p>
+						</li>
+					</ul>
+				</article>
+			</div>
+		</article>
+	</section>
+	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'" ng-show="!games_grouped">
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
 		<gameplay ng-repeat="gameplay in pagedGameplays" gameplay-data="gameplay"></gameplay>
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
 	</section>
 </div>
