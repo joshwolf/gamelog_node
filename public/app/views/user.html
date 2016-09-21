@@ -15,7 +15,7 @@
 		</ui-select>-->
     </nav>
 	<section ng-show="current_user && games_grouped" class="grouped-gameplays">
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()"></ul>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()" boundary-link-numbers="true" rotate="false"></ul>
 		<article ng-repeat="(game, plays) in pagedGameplaysGrouped | orderBy: 'Game.title' | groupBy: 'Game.title'" class="well clearfix" style="background-image: url({{plays[0].Game.image_thumbnail}});">
 			<aside class="col-xs-3">
 				<a ng-href="/game/{{plays[0].GameId}}">
@@ -39,11 +39,11 @@
 				</article>
 			</div>
 		</article>
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()"></ul>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()" boundary-link-numbers="true" rotate="false"></ul>
 	</section>
 	<section ng-class="current_user ? '' : 'recent-gameplays-nologin'" ng-show="!games_grouped">
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()" boundary-link-numbers="true" rotate="false"></ul>
 		<gameplay ng-repeat="gameplay in pagedGameplays" gameplay-data="gameplay"></gameplay>
-	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
+	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" items-per-page="10" ng-model="pagination.currentPage" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()" boundary-link-numbers="true" rotate="false"></ul>
 	</section>
 </div>
