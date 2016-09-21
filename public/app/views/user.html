@@ -7,6 +7,12 @@
 	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">By Date</label>
     	    <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="true">By Game</label>
     	</div>
+		<!--<ui-select ng-model="gameSearchResult" on-select="filterGameplays($item,$model)" style="min-width: 300px;">
+			<ui-select-match placeholder="Search for Games">{{$select.selected.name.value}}</ui-select-match>
+		    <ui-select-choices repeat="game in gameplay_games | filter: $select.search">
+				<span ng-bind-html="game | highlight: $select.search"></span>
+			</ui-select-choices>
+		</ui-select>-->
     </nav>
 	<section ng-show="current_user && games_grouped" class="grouped-gameplays">
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="10" class="pagination-sm" boundary-links="true" num-pages="numPagesGrouped" ng-change="setPageGrouped()"></ul>

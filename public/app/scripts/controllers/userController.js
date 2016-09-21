@@ -11,8 +11,9 @@ angular.module('gamelogApp')
 
 	  $scope.gameplay_games = _.chain($scope.gameplays).map((gameplay) => gameplay.Game.title).unique().sort().value();
 
+	  $scope.filtered_gameplays = $scope.gameplays;
       $scope.pagination = {
-        totalItems : $scope.user.Scores.length,
+        totalItems : $scope.filtered_gameplays.length,
         currentPage : 1,
         numPerPage : 10,
         totalItemsGrouped: $scope.gameplay_games.length,
@@ -32,7 +33,16 @@ angular.module('gamelogApp')
 
     $scope.setPage = function() {
       var current_position = (($scope.pagination.currentPage - 1) * $scope.pagination.numPerPage);
-      $scope.pagedGameplays = $scope.gameplays.slice(current_position, current_position + $scope.pagination.numPerPage);
+      $scope.pagedGameplays = $scope.filtered_gameplays.slice(current_position, current_position + $scope.pagination.numPerPage);
+    }
+
+    $scope.filterGameplays = function(game_title) {
+    	$scope.filtered_gameplays = _.filter($scope.gameplays, (gameplay) => gameplay.Game.title == game_title);
+    	$scope.pagination.currentPage = 1;
+    	$scope.pagination.currentPageGrouped = 1;
+    	$scope.pagination.totalItems = $scope.filtered_gameplays.length;
+		$scope.setPage();
+		$scope.setPageGrouped();
     }
 });
 
