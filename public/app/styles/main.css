@@ -5814,13 +5814,16 @@ button.close {
 
 body {
   padding: 0;
-  font-family: "Open Sans", "Verdana", "Helvetica", "Sans-Serif"; }
+  font-family: "Lato", "Verdana", "Helvetica", "Sans-Serif"; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", "Verdana", "Sans-Serif"; }
 
 ul li {
   list-style-type: none; }
 
 .font-fontawesome {
-  font-family: "FontAwesome", "Open Sans", "Verdana", "Helvetica", "Sans-Serif"; }
+  font-family: "FontAwesome", "Lato", "Verdana", "Helvetica", "Sans-Serif"; }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
@@ -5844,7 +5847,9 @@ ul li {
     padding-bottom: 19px; }
   .header .navbar-default {
     background-color: #225378;
-    padding: .7rem; }
+    padding: 0;
+    border-radius: 0;
+    border: none; }
   .header .navbar {
     margin-bottom: 0; }
   .header .navbar-brand, .header .navbar-brand:hover, .header .navbar-brand:visited {
@@ -5876,17 +5881,18 @@ ul li {
   cursor: pointer; }
   .nav .user i {
     padding: 15px;
-    line-height: 20px; }
+    line-height: 20px;
+    color: #fff; }
     .nav .user i:hover {
-      color: #fff;
-      background: #000; }
+      color: #225378;
+      background: #fff; }
 
 #game-quicksearch {
   display: inline-block;
   width: 33vw;
   float: left;
   max-width: 500px;
-  margin: 0.8rem; }
+  margin: 8px; }
 
 .user-quicksearch .user-quicksearch-pic {
   margin-right: 1.5rem; }
@@ -6064,15 +6070,21 @@ gameplay article.well {
     .header .main-nav {
       position: absolute;
       top: 0;
+      left: 0;
       width: 100vw;
-      right: -6rem; }
+      height: 52px; }
       .header .main-nav #game-quicksearch {
-        width: 75vw; }
-    .header ul.navbar-nav {
-      margin: 0; }
-      .header ul.navbar-nav li.user {
-        display: inline; }
-        .header ul.navbar-nav li.user div {
-          display: inline; } }
+        width: 70vw; }
+        .header .main-nav #game-quicksearch .ui-select-choices {
+          font-size: 1rem; }
+      .header .main-nav ul.navbar-nav {
+        margin: 0;
+        position: absolute;
+        right: 0;
+        top: -1px; }
+        .header .main-nav ul.navbar-nav li.user {
+          display: inline; }
+          .header .main-nav ul.navbar-nav li.user div {
+            display: inline; } }
 
 /*# sourceMappingURL=main.css.map */

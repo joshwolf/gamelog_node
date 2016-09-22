@@ -9,7 +9,7 @@ angular.module('gamelogApp')
 	  $rootScope.page_title = $scope.user.full_name;
 	  $scope.gameplays = _.sortBy(_.map($scope.user.Scores, function(score) { return score.Gameplay; }), 'play_date').reverse();
 
-	  $scope.gameplay_games = _.chain($scope.gameplays).map((gameplay) => gameplay.Game.title).unique().sort().value();
+	  $scope.gameplay_games = _.chain($scope.gameplays).map(function(gameplay) { return gameplay.Game.title; }).unique().sort().value();
 
 	  $scope.filtered_gameplays = $scope.gameplays;
       $scope.pagination = {
@@ -28,7 +28,7 @@ angular.module('gamelogApp')
     $scope.setPageGrouped = function() {
       var current_position = (($scope.pagination.currentPageGrouped - 1) * $scope.pagination.numPerPageGrouped);
       var pagedGames = $scope.gameplay_games.slice(current_position, current_position + $scope.pagination.numPerPageGrouped);
-      $scope.pagedGameplaysGrouped = _.filter($scope.gameplays, (gameplay) => pagedGames.indexOf(gameplay.Game.title) > -1);
+      $scope.pagedGameplaysGrouped = _.filter($scope.gameplays, function(gameplay) { return pagedGames.indexOf(gameplay.Game.title) > -1; });
     }
 
     $scope.setPage = function() {
@@ -37,7 +37,7 @@ angular.module('gamelogApp')
     }
 
     $scope.filterGameplays = function(game_title) {
-    	$scope.filtered_gameplays = _.filter($scope.gameplays, (gameplay) => gameplay.Game.title == game_title);
+    	$scope.filtered_gameplays = _.filter($scope.gameplays, function(gameplay) { return gameplay.Game.title == game_title; });
     	$scope.pagination.currentPage = 1;
     	$scope.pagination.currentPageGrouped = 1;
     	$scope.pagination.totalItems = $scope.filtered_gameplays.length;

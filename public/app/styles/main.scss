@@ -1,4 +1,5 @@
-$font-family: 'Open Sans','Verdana','Helvetica','Sans-Serif';
+$font-family: 'Lato','Verdana','Helvetica','Sans-Serif';
+$font-family-header: 'Roboto','Verdana','Sans-Serif';
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 $primary-blue: #225378;
 $secondary-blue: #1695A3;
@@ -21,6 +22,9 @@ body {
 	font-family: $font-family;
 }
 
+h1,h2,h3,h4,h5,h6 {
+	font-family: $font-family-header;
+}
 ul {
 	li {
 		list-style-type: none;
@@ -56,7 +60,9 @@ ul {
 	}
 	.navbar-default {
 		background-color: $primary-blue;
-		padding: .7rem;
+		padding: 0;
+		border-radius: 0;
+		border: none;
 	}
 	.navbar {
 		margin-bottom: 0;
@@ -100,9 +106,10 @@ ul {
 		i {
 			padding: 15px;
 			line-height: 20px;
+			color: #fff;
 			&:hover {
-				color: #fff;
-				background: #000;
+				color: $primary-blue;
+				background: #fff;
 			}
 		}
 	}
@@ -113,7 +120,7 @@ ul {
 	width: 33vw;
 	float: left;
 	max-width: 500px;
-	margin: 0.8rem;
+	margin: 8px;
 }
 
 .user-quicksearch {
@@ -354,18 +361,25 @@ gameplay {
 		.main-nav {
 		    position: absolute;
 		    top: 0;
+		    left: 0;
 		    width: 100vw;
-		    right: -6rem;
+		    height: 52px;
 			#game-quicksearch {
-				width: 75vw;		
+				width: 70vw;
+				.ui-select-choices {
+					font-size: 1rem;		
+				}
 			}
-		}
-		ul.navbar-nav {
-			margin: 0;
-			li.user {
-				display: inline;
-				div {
+			ul.navbar-nav {
+				margin: 0;
+				position: absolute;
+				right: 0;
+				top: -1px;
+				li.user {
 					display: inline;
+					div {
+						display: inline;
+					}
 				}
 			}
 		}

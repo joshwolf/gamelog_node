@@ -2,10 +2,9 @@
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
     <nav class="gameplay-display">
-    	<label>Show Gameplays:</label>
     	<div class="btn-group">
-	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">By Date</label>
-    	    <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="true">By Game</label>
+	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">List By Date</label>
+    	    <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="true">List By Game</label>
     	</div>
 		<!--<ui-select ng-model="gameSearchResult" on-select="filterGameplays($item,$model)" style="min-width: 300px;">
 			<ui-select-match placeholder="Search for Games">{{$select.selected.name.value}}</ui-select-match>
