@@ -50,6 +50,8 @@ if (nconf.get('REDIS_AUTH')) {
 	redisClient.auth(nconf.get('REDIS_AUTH'));
 }
 
+var appHost = nconf.get('GAMELOG_HOST');
+
 app.use(session({
 		secret: 'secretstash',
 		// create new redis store.
@@ -161,6 +163,11 @@ app.get('/gameplay/:id', function(req, res) {
 });
 
 app.get('/*', function(req, res) {
+	//make sure we're on the right domain
+
+	if(req.headers.host != appHost) {
+		res.redirect((req.connection.encrypted ? 'https://' : 'http://') + appHost);
+	}
 	if(req.session && req.session.token) {
 		res.cookie('user', req.session.user,  {
 			path: '/',
