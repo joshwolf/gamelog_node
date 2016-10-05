@@ -1,0 +1,35 @@
+{
+  "name": "ngColorThief",
+  "version": "0.2.0",
+  "main": "./angular-colorthief.js",
+  "authors": [
+    "Ian Murray <me@ianmurray.me>"
+  ],
+  "description": "ColorThief wrapper for AngularJS",
+  "keywords": [
+    "colorthief",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "color-thief": "*"
+  },
+  "homepage": "https://github.com/ianmurrays/ngColorThief",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "e84c424f340025a56b1b299442830a3f9bde666e"
+  },
+  "_source": "https://github.com/ianmurrays/ngColorThief.git",
+  "_target": "~0.2.0",
+  "_originalSource": "angular-colorthief",
+  "_direct": true
+}
