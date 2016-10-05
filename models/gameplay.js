@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 				var winners = _.map(_.filter(this.Scores, { rank:1 }), function(score) { return score.Player.full_name; });
 				return gamelogUtils.humanizeList(winners) + ' won a game of ' + this.Game.title + '!';
 			}
-		},
+		}
 	});
   return Gameplay;
 };
