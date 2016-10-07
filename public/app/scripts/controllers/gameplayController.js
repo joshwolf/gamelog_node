@@ -99,7 +99,7 @@ angular.module('gamelogApp')
 			  }).then(function(response){
 			  	var results = response.data;
 			  	if($select.search.indexOf('"') > -1) {
-			  		results = _.filter(results, function(game) { console.log(game); return (game.name.value.toLowerCase().indexOf(criteria.toLowerCase()) > -1); });
+			  		results = _.filter(results, function(game) { return (game.name.value.toLowerCase().indexOf(criteria.toLowerCase()) > -1); });
 			  	}
 			    $scope.searchRes = _.sortBy(results.slice(0,20), function(game) { return game.name.value.toLowerCase().indexOf($select.search.toLowerCase()); });
 			  });
