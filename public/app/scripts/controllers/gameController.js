@@ -94,7 +94,7 @@ angular.module('gamelogApp')
 		$scope.searchRes = [];
 		$scope.searchGames = function($select) {
 			if($select.search.length > 3) {
-			  return $http.get('/api/games/search/' + $select.search + '/0', {
+			  return $http.get('/api/games/search/' + $select.search + '/' + ($select.search.indexOf('"') > -1 ? 1 : 0), {
 			    params: {
 			      title: $select.search,
 			      exact: 0
