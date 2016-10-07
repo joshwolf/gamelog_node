@@ -89,14 +89,19 @@ angular.module('gamelogApp')
 	.controller('GameSearchCtrl', function ($scope, $http, $location, $window) {
 		$scope.searchRes = [];
 		$scope.searchGames = function($select) {
+			var criteria = $select.search.replace(/"/,'');
 			if($select.search.length > 3) {
-			  return $http.get('/api/games/search/' + $select.search + '/0', {
+			  return $http.get('/api/games/search/' + criteria + '/0', {
 			    params: {
-			      title: $select.search,
+			      title: criteria,
 			      exact: 0
 			    }
 			  }).then(function(response){
-			    $scope.searchRes = _.sortBy(response.data.slice(0,20), function(game) { return game.name.value.toLowerCase().indexOf($select.search.toLowerCase()); });
+			  	var results = response.data;
+			  	if($select.search.indexOf('"') > -1) {
+			  		results = _.filter(results, function(game) { console.log(game); return (game.name.value.toLowerCase().indexOf(criteria.toLowerCase()) > -1); });
+			  	}
+			    $scope.searchRes = _.sortBy(results.slice(0,20), function(game) { return game.name.value.toLowerCase().indexOf($select.search.toLowerCase()); });
 			  });
 			}
 		}

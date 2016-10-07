@@ -94,10 +94,10 @@ angular.module('gamelogApp')
 		$scope.searchRes = [];
 		$scope.searchGames = function($select) {
 			if($select.search.length > 3) {
-			  return $http.get('/api/games/search/' + $select.search + '/' + ($select.search.indexOf('"') > -1 ? 1 : 0), {
+			  return $http.get('/api/games/search/' + $select.search + '/0', {
 			    params: {
 			      title: $select.search,
-			      exact: 0
+			      exact: $select.search.indexOf('"') > -1 ? 1 : 0
 			    }
 			  }).then(function(response){
 			    $scope.searchRes = _.sortBy(response.data.slice(0,20), function(game) { return game.name.value.toLowerCase().indexOf($select.search.toLowerCase()); });

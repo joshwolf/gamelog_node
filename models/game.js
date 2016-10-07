@@ -105,6 +105,8 @@ module.exports = function(sequelize, DataTypes) {
         })
       },
       findByTitle: function(title, exact, done) {
+        console.log(title);
+        console.log(exact);
       	bgg('search', {'exact': exact, 'type': 'boardgame', 'query': title})
         .then(function(results) {
         	var games = results.items.item;
