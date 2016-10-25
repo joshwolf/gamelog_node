@@ -81,7 +81,7 @@ router.get('/search/:title/:exact*?', function(req, res) {
 });
 
 router.get('/my/recent', loggedIn, function(req, res) {
-	var time_ago = new Date() - (90 * 24 * 60 * 60 * 1000);
+	var time_ago = new Date() - (180 * 24 * 60 * 60 * 1000);
 	models.User.findById(req.session.user.id).then(function(user) {
 		user.getScores({
 			include: [ {
@@ -97,7 +97,7 @@ router.get('/my/recent', loggedIn, function(req, res) {
 						}]
 					},
 					{
-						model: models.Game, as: 'Game'
+						model: models.Game, as: 'Game', include: [ { model: models.Category, as: 'Categories' }, { model: models.Mechanic, as: 'Mechanics' }, { model: models.Designer, as: 'Designers' }]
 					}
 				]
 			} ]
@@ -134,9 +134,10 @@ router.get('/recent', function(req,res) {
 
 
 router.get('/:id', function(req, res) {
-	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
-		res.jsonp(gameplay);
-	});
+	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]})
+		.then(function(gameplay) {
+			res.jsonp(gameplay);
+		});
 });
 
 module.exports = router;

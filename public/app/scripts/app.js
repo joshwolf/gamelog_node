@@ -45,6 +45,12 @@ angular
 				controllerAs: 'userController',
 				page_title: 'User'
 			})
+			.when('/me', {
+				templateUrl: 'views/me.html',
+				controller: 'UserOpponentsCtrl',
+				controllerAs: 'userController',
+				page_title: 'User'
+			})
 			.when('/gameplay/:id', {
 				templateUrl: 'views/gameplay.html',
 				controller: 'GameplayCtrl',

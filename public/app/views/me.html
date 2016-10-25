@@ -1,0 +1,11 @@
+<section>
+	<article ng-repeat="opponent in opponents" class="well">
+		<h1>{{opponent.name}}</h1>
+		<aside>{{opponent.count}} plays, last on {{opponent.last_played | date: 'shortDate'}}
+		<ul>
+			<li ng-repeat="game in opponent.games">
+				{{game.title}}
+			</li>
+		</ul>
+	</article>
+</section>
