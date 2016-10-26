@@ -1,7 +1,12 @@
 <section>
 	<article ng-repeat="opponent in opponents" class="well">
 		<h1>{{opponent.name}}</h1>
-		<aside>{{opponent.count}} plays, last on {{opponent.last_played | date: 'shortDate'}}
+		<aside>
+			<p>{{opponent.count}} plays, last on {{opponent.last_played | date: 'shortDate'}}</p>
+			<p>You beat {{opponent.first_name}} {{opponent.betters}} times.</p>
+			<p>You won {{opponent.me_wins}} times against {{opponent.first_name}}, last on {{opponent.me_last_won | date: 'shortDate'}}.</p>
+			<p>{{opponent.first_name}} won {{opponent.wins}} times, last on {{opponent.last_won | date: 'shortDate'}}.</p>
+		</aside>
 		<ul>
 			<li ng-repeat="game in opponent.games">
 				{{game.title}}

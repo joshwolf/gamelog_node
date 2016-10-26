@@ -76,11 +76,40 @@ angular.module('gamelogApp')
 				$scope.opponents =
 				_.reduce(result.data, function(opponents, gameplay) {
 					var _gameplay = gameplay ? (gameplay.Gameplay || {}) : {};
+					var _my_score = _.find(_gameplay.Scores, function(score) { return score.PlayerId == $scope.current_user.id; });
 					_.map(_gameplay.Scores || [], function(score) {
 						if(score.PlayerId && score.PlayerId != $scope.current_user.id) {
-							opponents[score.PlayerId] = opponents[score.PlayerId] || { id: score.PlayerId, name: score.Player.full_name, count: 0, last_played: '"2000-01-01T00:00:00.000Z', games: {}, topics: {} };
-							opponents[score.PlayerId].games[_gameplay.GameId] = opponents[score.PlayerId].games[_gameplay.GameId] || { id: _gameplay.GameId, title: _gameplay.Game.title, count: 0, last_played: _gameplay.play_date };
+							opponents[score.PlayerId] = opponents[score.PlayerId] || { id: score.PlayerId, name: score.Player.full_name, first_name: score.Player.first_name, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null, games: {}, topics: {} };
+							opponents[score.PlayerId].games[_gameplay.GameId] = opponents[score.PlayerId].games[_gameplay.GameId] || { id: _gameplay.GameId, title: _gameplay.Game.title, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null };
 							opponents[score.PlayerId].count += 1;
+							if(_my_score.rank == 1) {
+								opponents[score.PlayerId].me_wins += 1;
+								opponents[score.PlayerId].games[_gameplay.GameId].me_wins += 1;
+								if(!opponents[score.PlayerId].me_last_won || (opponents[score.PlayerId].me_last_won < _gameplay.play_date)) {
+									opponents[score.PlayerId].me_last_won = _gameplay.play_date;
+								}
+								if(!opponents[score.PlayerId].games[_gameplay.GameId].me_last_won || (opponents[score.PlayerId].games[_gameplay.GameId].me_last_won < _gameplay.play_date)) {
+									opponents[score.PlayerId].games[_gameplay.GameId].me_last_won = _gameplay.play_date;
+								}
+							}
+							if(score.rank == 1) {
+								opponents[score.PlayerId].wins += 1;
+								opponents[score.PlayerId].games[_gameplay.GameId].wins += 1;
+								if(!opponents[score.PlayerId].last_won || (opponents[score.PlayerId].last_won < _gameplay.play_date)) {
+									opponents[score.PlayerId].last_won = _gameplay.play_date;
+								}
+								if(!opponents[score.PlayerId].games[_gameplay.GameId].last_won || (opponents[score.PlayerId].games[_gameplay.GameId].last_won < _gameplay.play_date)) {
+									opponents[score.PlayerId].games[_gameplay.GameId].last_won = _gameplay.play_date;
+								}
+							}
+							if(score.points < _my_score.points) {
+								opponents[score.PlayerId].betters += 1;
+								opponents[score.PlayerId].games[_gameplay.GameId].betters += 1;
+							}
+							if(score.points == _my_score.points) {
+								opponents[score.PlayerId].ties += 1;
+								opponents[score.PlayerId].games[_gameplay.GameId].ties += 1;
+							}
 							if(opponents[score.PlayerId].last_played < _gameplay.play_date) {
 								opponents[score.PlayerId].last_played = _gameplay.play_date;
 							}

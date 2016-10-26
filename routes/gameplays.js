@@ -81,7 +81,7 @@ router.get('/search/:title/:exact*?', function(req, res) {
 });
 
 router.get('/my/recent', loggedIn, function(req, res) {
-	var time_ago = new Date() - (180 * 24 * 60 * 60 * 1000);
+	var time_ago = new Date() - (365 * 24 * 60 * 60 * 1000);
 	models.User.findById(req.session.user.id).then(function(user) {
 		user.getScores({
 			include: [ {
