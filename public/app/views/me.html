@@ -1,4 +1,4 @@
-<div class="container" id="opponents-page">
+<div class="container" id="opponents-page" ng-show="current_user">
 	<ui-select ng-model="user_search" on-select="setCurrentOpponent($item,$model)" style="min-width: 300px;" class="user-quicksearch">
 		<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
 	    <ui-select-choices repeat="opponent in opponents">
@@ -37,4 +37,7 @@
 			</div>
 		</article>
 	</section>
+</div>
+<div class="container" ng-show="!current_user">
+	<h2>Please <button ng-click="login()">Log in</button>
 </div>

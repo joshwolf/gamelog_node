@@ -172,4 +172,10 @@ angular.module('gamelogApp')
 	$scope.setCurrentGame = function(game) {
 		$scope.selected_game = game;
 	}
+
+    $scope.login = function() {
+      $cookies.put('next_url',$location.path());
+      $window.location.href = '/login';
+    }
+
 });
