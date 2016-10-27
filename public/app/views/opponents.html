@@ -23,9 +23,17 @@
 					<canvas class="chart chart-horizontal-bar" chart-data="selected_opponent.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas> 
 				</figure>
 			</div>
-			<div class="row well opponent-games">		
+			<div class="row well opponent-games">
+				<div class="row col-sm-10 col-sm-offset-1">
+					<ui-select multiple tagging tagging-label="false" ng-model="selected_topics.topics" theme="bootstrap" title="Filter by topic">
+						<ui-select-match placeholder="Filter by category/mechanic...">{{$item}}</ui-select-match>
+						<ui-select-choices repeat="topic in selected_opponent_topics | filter:$select.search">
+						  {{topic}}
+						</ui-select-choices>
+					</ui-select>
+	  			</div>
 				<ul class="col-sm-6">
-					<li ng-repeat="game in selected_opponent_games" ng-click="setCurrentGame(game)" ng-class="{'active':game.id == selected_game.id}">
+					<li ng-repeat="game in filteredByTopic(selected_opponent_games)" ng-click="setCurrentGame(game)" ng-class="{'active':game.id == selected_game.id}">
 						<h3>{{game.title}}</h3> (<b>{{game.count}}</b> plays, last on <b>{{game.last_played | ordinalDate }}</b>)
 					</li>
 				</ul>

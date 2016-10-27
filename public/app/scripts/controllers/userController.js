@@ -118,6 +118,7 @@ angular.module('gamelogApp')
 							if(opponents[score.PlayerId].games[_gameplay.GameId].last_played < _gameplay.play_date) {
 								opponents[score.PlayerId].games[_gameplay.GameId].last_played = _gameplay.play_date;
 							}
+							opponents[score.PlayerId].games[_gameplay.GameId].topics = _.flatten(_.union([_gameplay.Game.categories, _gameplay.Game.mechanics]));
 							_.each(
 								_.flatten(_.union([_gameplay.Game.categories, _gameplay.Game.mechanics])),
 								function(topic) { opponents[score.PlayerId].topics[topic] = (opponents[score.PlayerId].topics[topic] || 0) + 1; }
@@ -168,9 +169,29 @@ angular.module('gamelogApp')
 		$scope.selected_opponent = user;
 		$scope.selected_opponent_games = _.orderBy(Object.values(user.games),['last_played'],['desc']);
 		$scope.selected_game = $scope.selected_opponent_games[0];
+		$scope.selected_opponent_topics = _.chain($scope.selected_opponent_games)
+			.map(function(game) { return game.topics; })
+			.flattenDeep()
+			.uniq()
+			.sort()
+			.value();
+		$scope.selected_topics = {};
 	}
+
 	$scope.setCurrentGame = function(game) {
 		$scope.selected_game = game;
+	}
+
+	$scope.filteredByTopic = function(games) {
+		if(!$scope.selected_topics || !$scope.selected_topics.topics) {
+			return games;
+		}
+		var filt = _.filter(games, function(game) {
+			console.log(game.topics);
+			console.log($scope.selected_topics.topics)
+			return _.intersection(game.topics, $scope.selected_topics.topics).length == $scope.selected_topics.topics.length;
+		});
+		return filt;
 	}
 
     $scope.login = function() {

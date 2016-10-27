@@ -6042,18 +6042,18 @@ gameplay article.well {
   margin-top: 1rem;
   height: 100vh;
   overflow: hidden; }
-  #opponents-page .opponent-games ul {
+  #opponents-page .opponent-games > ul {
     overflow: scroll;
     height: 100%; }
-    #opponents-page .opponent-games ul li {
+    #opponents-page .opponent-games > ul li {
       padding: 1rem;
       margin: .2rem;
       cursor: pointer;
       display: inline-block;
       width: 108%; }
-      #opponents-page .opponent-games ul li h3 {
+      #opponents-page .opponent-games > ul li h3 {
         margin-top: 0; }
-      #opponents-page .opponent-games ul li:hover, #opponents-page .opponent-games ul li.active {
+      #opponents-page .opponent-games > ul li:hover, #opponents-page .opponent-games > ul li.active {
         background-color: #fff;
         border-radius: 1rem; }
 #opponents-page .selected-game {
