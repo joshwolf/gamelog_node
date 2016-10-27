@@ -1,19 +1,18 @@
 <div class="container" id="opponents-page">
 	<ui-select ng-model="user_search" on-select="setCurrentOpponent($item,$model)" style="min-width: 300px;" class="user-quicksearch">
-		<ui-select-match placeholder="Search for People">{{$select.selected.name}}</ui-select-match>
+		<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
 	    <ui-select-choices repeat="opponent in opponents">
-			<span ng-bind-html="opponent.name | highlight: $select.search"></span>
+			<span ng-bind-html="opponent.full_name | highlight: $select.search"></span>
 		</ui-select-choices>
 	</ui-select>
 	<section ng-show="selected_opponent">
 		<article class="well">
 			<div class="row col-sm-12">
-				<h1>{{selected_opponent.name}}</h1>
+				<h1><img ng-show="selected_opponent.profile_pic && selected_opponent.profile_pic != ''" ng-src="{{selected_opponent.profile_pic}}" class="profile-circle" alt="{{selected_opponent.initials}}" title="{{selected_opponent.full_name}}" uib-tooltip="{{selected_opponent.full_name}}">
+ {{selected_opponent.full_name}}</h1>
 				<aside>
-					<p>{{selected_opponent.count}} plays, last on {{selected_opponent.last_played | date: 'shortDate'}}</p>
-					<p>You beat {{selected_opponent.first_name}} {{selected_opponent.betters}} times.</p>
-					<p>You won {{selected_opponent.me_wins}} times against {{selected_opponent.first_name}}, last on {{selected_opponent.me_last_won | date: 'shortDate'}}.</p>
-					<p>{{selected_opponent.first_name}} won {{selected_opponent.wins}} times, last on {{selected_opponent.last_won | date: 'shortDate'}}.</p>
+					<p><b>{{selected_opponent.count}}</b> plays, last on <b>{{selected_opponent.last_played | ordinalDate }}.</b> You had a better score <b>{{selected_opponent.betters}}</b> times. <span ng-show="selected_opponent.ties > 0">You tied <b>{{selected_opponent.ties}}</b> times.</span></p>
+					<p>You won <b>{{selected_opponent.me_wins}}</b> times against {{selected_opponent.first_name}}, last on <b>{{selected_opponent.me_last_won | ordinalDate }}</b>. {{selected_opponent.first_name}} won <b>{{selected_opponent.wins}}</b> times, last on <b>{{selected_opponent.last_won | ordinalDate }}.</p>
 				</aside>
 			</div>
 			<div class="row">		
@@ -30,7 +29,7 @@
 			</div>
 			<ul>
 				<li ng-repeat="game in selected_opponent.games">
-					{{game.title}}
+					{{game.title}} ({{game.count}} plays)
 				</li>
 			</ul>
 		</article>

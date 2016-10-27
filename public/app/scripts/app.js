@@ -124,6 +124,11 @@ angular
 	        return input.slice(start);
 	    }
 	})
+	.filter('ordinalDate', function ($filter) {
+	    return function (date) {
+	        return $filter('date')(date, 'MMMM') + ' ' + $filter('ordinal')($filter('date')(date, 'd'));
+	    }
+	})
 	.filter('humanizedList', function() {
 		return function(items) {
 			var _items = (items || []);
