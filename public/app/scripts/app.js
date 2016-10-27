@@ -46,8 +46,8 @@ angular
 				controllerAs: 'userController',
 				page_title: 'User'
 			})
-			.when('/me', {
-				templateUrl: 'views/me.html',
+			.when('/opponents', {
+				templateUrl: 'views/opponents.html',
 				controller: 'UserOpponentsCtrl',
 				controllerAs: 'userController',
 				page_title: 'User'

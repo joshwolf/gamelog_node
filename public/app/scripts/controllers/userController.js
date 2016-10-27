@@ -167,7 +167,7 @@ angular.module('gamelogApp')
 	$scope.setCurrentOpponent = function(user) {
 		$scope.selected_opponent = user;
 		$scope.selected_opponent_games = _.orderBy(Object.values(user.games),['last_played'],['desc']);
-		$scope.selected_game = null;
+		$scope.selected_game = $scope.selected_opponent_games[0];
 	}
 	$scope.setCurrentGame = function(game) {
 		$scope.selected_game = game;
