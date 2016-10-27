@@ -127,9 +127,35 @@ angular.module('gamelogApp')
 					return opponents;
 				},{})
 				.orderBy(['last_played'],['desc'])
-				.each(function(opponent) { opponent.chart_data = [opponent.betters, opponent.ties, (opponent.count - opponent.betters - opponent.ties)] })
+				.each(function(opponent) {
+					opponent.chart_score_data = [opponent.betters, (opponent.count - opponent.betters - opponent.ties), opponent.ties];
+					opponent.chart_wins_data = [opponent.me_wins, opponent.wins];
+				})
 				.value();
 				$scope.opponents_str = JSON.stringify($scope.opponents,null,"    ");
+				$scope.chart_score_options = {
+					legend : {
+						display : true
+					},
+					title : {
+						display : true,
+						text : 'Better Score'
+					}
+				};
+				$scope.chart_wins_options = {
+					title : {
+						display : true,
+						text : 'Wins'
+					},
+					scales : {
+						xAxes: [{
+							type : 'linear',
+							ticks: {
+								beginAtZero : true
+							}
+						}]
+					}
+				};
 			});
 	}
 
