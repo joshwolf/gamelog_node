@@ -5860,8 +5860,7 @@ ul li {
 /* Custom page footer */
 .footer {
   padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5; }
+  color: #777; }
 
 .container-narrow > hr {
   margin: 30px 0; }
@@ -6038,6 +6037,32 @@ gameplay article.well {
 
 #user-page .gameplay-display {
   display: block; }
+
+#opponents-page .opponent-games {
+  margin-top: 1rem;
+  height: 100vh;
+  overflow: hidden; }
+  #opponents-page .opponent-games ul {
+    overflow: scroll;
+    height: 100%; }
+    #opponents-page .opponent-games ul li {
+      padding: 1rem;
+      margin: .2rem;
+      cursor: pointer;
+      display: inline-block;
+      width: 108%; }
+      #opponents-page .opponent-games ul li h3 {
+        margin-top: 0; }
+      #opponents-page .opponent-games ul li:hover, #opponents-page .opponent-games ul li.active {
+        background-color: #fff;
+        border-radius: 1rem; }
+#opponents-page .selected-game {
+  background-color: #fff;
+  border-radius: 1rem;
+  height: 100%;
+  padding-top: 1rem; }
+  #opponents-page .selected-game canvas {
+    margin-bottom: 2rem; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

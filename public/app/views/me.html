@@ -12,26 +12,29 @@
  {{selected_opponent.full_name}}</h1>
 				<aside>
 					<p><b>{{selected_opponent.count}}</b> plays, last on <b>{{selected_opponent.last_played | ordinalDate }}.</b> You had a better score <b>{{selected_opponent.betters}}</b> times. <span ng-show="selected_opponent.ties > 0">You tied <b>{{selected_opponent.ties}}</b> times.</span></p>
-					<p>You won <b>{{selected_opponent.me_wins}}</b> times against {{selected_opponent.first_name}}, last on <b>{{selected_opponent.me_last_won | ordinalDate }}</b>. {{selected_opponent.first_name}} won <b>{{selected_opponent.wins}}</b> times, last on <b>{{selected_opponent.last_won | ordinalDate }}.</p>
+					<p>You won <b>{{selected_opponent.me_wins}}</b> times against {{selected_opponent.first_name}}, last on <b>{{selected_opponent.me_last_won | ordinalDate }}</b>. {{selected_opponent.first_name}} won <b>{{selected_opponent.wins}}</b> times, last on <b>{{selected_opponent.last_won | ordinalDate }}.</b></p>
 				</aside>
 			</div>
 			<div class="row">		
-				<div class="col-sm-6">
-					<figure class="chart-opponent">
-						<canvas class="chart chart-pie" chart-data="selected_opponent.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_score_options"></canvas> 
-					</figure>
-				</div>
-				<div class="col-sm-6">
-					<figure class="chart-opponent">
-						<canvas class="chart chart-horizontal-bar" chart-data="selected_opponent.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas> 
-					</figure>
-				</div>
+				<figure class="col-sm-6 chart-opponent">
+					<canvas class="chart chart-pie" chart-data="selected_opponent.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_score_options"></canvas> 
+				</figure>
+				<figure class="col-sm-6 chart-opponent">
+					<canvas class="chart chart-horizontal-bar" chart-data="selected_opponent.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas> 
+				</figure>
 			</div>
-			<ul>
-				<li ng-repeat="game in selected_opponent.games">
-					{{game.title}} ({{game.count}} plays)
-				</li>
-			</ul>
+			<div class="row well opponent-games">		
+				<ul class="col-sm-6">
+					<li ng-repeat="game in selected_opponent_games" ng-click="setCurrentGame(game)" ng-class="{'active':game.id == selected_game.id}">
+						<h3>{{game.title}}</h3> (<b>{{game.count}}</b> plays, last on <b>{{game.last_played | ordinalDate }}</b>)
+					</li>
+				</ul>
+				<figure class="col-sm-6 selected-game" ng-show="selected_game">
+					<a ng-href="/game/{{selected_game.id}}"><img class="center-block img-responsive" ng-src="{{selected_game.image_thumbnail}}"></a>
+					<canvas class="chart chart-pie" chart-data="selected_game.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_score_options"></canvas> 
+					<canvas class="chart chart-horizontal-bar" chart-data="selected_game.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas>
+				</figure>
+			</div>
 		</article>
 	</section>
 </div>

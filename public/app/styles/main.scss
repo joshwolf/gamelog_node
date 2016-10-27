@@ -78,7 +78,7 @@ ul {
 .footer {
 	padding-top: 19px;
 	color: #777;
-	border-top: 1px solid #e5e5e5;
+	//border-top: 1px solid #e5e5e5;
 }
 
 .container-narrow > hr {
@@ -323,8 +323,37 @@ gameplay {
 }
 
 #opponents-page {
-	.chart-opponent {
-		
+	.opponent-games {
+		margin-top: 1rem;
+		height: 100vh;
+		overflow: hidden;
+		ul {
+			overflow: scroll;
+			height: 100%;
+			li {
+				padding: 1rem;
+				margin: .2rem;
+				cursor: pointer;
+				display: inline-block;
+				width: 108%;
+				h3 {
+					margin-top: 0;
+				}
+				&:hover, &.active {
+					background-color: #fff;
+					border-radius: 1rem;
+				}
+			}
+		}
+	}
+	.selected-game {
+		background-color: #fff;
+		border-radius: 1rem;
+		height: 100%;
+		padding-top: 1rem;
+		canvas {
+			margin-bottom: 2rem;
+		}
 	}
 }
 

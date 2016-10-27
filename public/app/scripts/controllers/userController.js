@@ -81,7 +81,7 @@ angular.module('gamelogApp')
 					_.map(_gameplay.Scores || [], function(score) {
 						if(score.PlayerId && score.PlayerId != $scope.current_user.id) {
 							opponents[score.PlayerId] = opponents[score.PlayerId] || { id: score.PlayerId, full_name: score.Player.full_name, first_name: score.Player.first_name, profile_pic: score.Player.profile_pic, initials: score.Player.initials, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null, games: {}, topics: {} };
-							opponents[score.PlayerId].games[_gameplay.GameId] = opponents[score.PlayerId].games[_gameplay.GameId] || { id: _gameplay.GameId, title: _gameplay.Game.title, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null };
+							opponents[score.PlayerId].games[_gameplay.GameId] = opponents[score.PlayerId].games[_gameplay.GameId] || { id: _gameplay.GameId, title: _gameplay.Game.title, image_thumbnail: _gameplay.Game.image_thumbnail, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null };
 							opponents[score.PlayerId].count += 1;
 							if(_my_score.rank == 1) {
 								opponents[score.PlayerId].me_wins += 1;
@@ -130,6 +130,11 @@ angular.module('gamelogApp')
 				.each(function(opponent) {
 					opponent.chart_score_data = [opponent.betters, (opponent.count - opponent.betters - opponent.ties), opponent.ties];
 					opponent.chart_wins_data = [opponent.me_wins, opponent.wins];
+					_.orderBy(opponent.games, (['last_played'],['desc']));
+					_.each(opponent.games, function(game) {
+						game.chart_score_data = [game.betters, (game.count - game.betters - game.ties), game.ties];
+						game.chart_wins_data = [game.me_wins, game.wins];
+					});
 				})
 				.value();
 				$scope.opponents_str = JSON.stringify($scope.opponents,null,"    ");
@@ -161,6 +166,10 @@ angular.module('gamelogApp')
 
 	$scope.setCurrentOpponent = function(user) {
 		$scope.selected_opponent = user;
-		$scope.$apply();
+		$scope.selected_opponent_games = _.orderBy(Object.values(user.games),['last_played'],['desc']);
+		$scope.selected_game = null;
+	}
+	$scope.setCurrentGame = function(game) {
+		$scope.selected_game = game;
 	}
 });
