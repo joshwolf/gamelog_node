@@ -1,14 +1,21 @@
-<section>
-	<article ng-repeat="opponent in opponents" class="well">
-		<h1>{{opponent.name}}</h1>
+<ui-select ng-model="user_search" on-select="setCurrentOpponent($item,$model)" style="min-width: 300px;" class="user-quicksearch">
+	<ui-select-match placeholder="Search for People">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="opponent in opponents">
+		<span ng-bind-html="opponent.name | highlight: $select.search"></span>
+	</ui-select-choices>
+</ui-select>
+<section ng-show="selected_opponent">
+	<article class="well">
+		<h1>{{selected_opponent.name}}</h1>
 		<aside>
-			<p>{{opponent.count}} plays, last on {{opponent.last_played | date: 'shortDate'}}</p>
-			<p>You beat {{opponent.first_name}} {{opponent.betters}} times.</p>
-			<p>You won {{opponent.me_wins}} times against {{opponent.first_name}}, last on {{opponent.me_last_won | date: 'shortDate'}}.</p>
-			<p>{{opponent.first_name}} won {{opponent.wins}} times, last on {{opponent.last_won | date: 'shortDate'}}.</p>
+			<p>{{selected_opponent.count}} plays, last on {{selected_opponent.last_played | date: 'shortDate'}}</p>
+			<p>You beat {{selected_opponent.first_name}} {{selected_opponent.betters}} times.</p>
+			<p>You won {{selected_opponent.me_wins}} times against {{selected_opponent.first_name}}, last on {{selected_opponent.me_last_won | date: 'shortDate'}}.</p>
+			<p>{{selected_opponent.first_name}} won {{selected_opponent.wins}} times, last on {{selected_opponent.last_won | date: 'shortDate'}}.</p>
 		</aside>
+		<canvas id="pie" class="chart chart-pie" chart-data="selected_opponent.chart_data" chart-labels="['You','Tied',selected_opponent.first_name]" chart-options="options"></canvas> 
 		<ul>
-			<li ng-repeat="game in opponent.games">
+			<li ng-repeat="game in selected_opponent.games">
 				{{game.title}}
 			</li>
 		</ul>

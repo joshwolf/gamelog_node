@@ -74,9 +74,10 @@ angular.module('gamelogApp')
 		$http.get('/api/gameplays/my/recent')
 			.then(function(result) {
 				$scope.opponents =
-				_.reduce(result.data, function(opponents, gameplay) {
+				_.chain(result.data)
+				.reduce(function(opponents, gameplay) {
 					var _gameplay = gameplay ? (gameplay.Gameplay || {}) : {};
-					var _my_score = _.find(_gameplay.Scores, function(score) { return score.PlayerId == $scope.current_user.id; });
+						var _my_score = _.find(_gameplay.Scores, function(score) { return score.PlayerId == $scope.current_user.id; });
 					_.map(_gameplay.Scores || [], function(score) {
 						if(score.PlayerId && score.PlayerId != $scope.current_user.id) {
 							opponents[score.PlayerId] = opponents[score.PlayerId] || { id: score.PlayerId, name: score.Player.full_name, first_name: score.Player.first_name, count: 0, wins: 0, me_wins: 0, betters: 0, ties: 0, last_played: _gameplay.play_date, last_won: null, me_last_won: null, games: {}, topics: {} };
@@ -124,8 +125,15 @@ angular.module('gamelogApp')
 						}
 					});
 					return opponents;
-				},{});
-				console.log($scope.opponents);
+				},{})
+				.orderBy(['last_played'],['desc'])
+				.each(function(opponent) { opponent.chart_data = [opponent.betters, opponent.ties, (opponent.count - opponent.betters - opponent.ties)] })
+				.value();
+				$scope.opponents_str = JSON.stringify($scope.opponents,null,"    ");
 			});
+	}
+
+	$scope.setCurrentOpponent = function(user) {
+		$scope.selected_opponent = user;
 	}
 });
