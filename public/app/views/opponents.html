@@ -32,12 +32,12 @@
 						</ui-select-choices>
 					</ui-select>
 	  			</div>
-				<ul class="col-sm-6">
+				<ul class="col-xs-6">
 					<li ng-repeat="game in filteredByTopic(selected_opponent_games)" ng-click="setCurrentGame(game)" ng-class="{'active':game.id == selected_game.id}">
 						<h3>{{game.title}}</h3> (<b>{{game.count}}</b> plays, last on <b>{{game.last_played | ordinalDate }}</b>)
 					</li>
 				</ul>
-				<figure class="col-sm-6 selected-game" ng-show="selected_game">
+				<figure class="col-xs-6 selected-game" ng-show="selected_game">
 					<a ng-href="/game/{{selected_game.id}}"><img class="center-block img-responsive" ng-src="{{selected_game.image_thumbnail}}"></a>
 					<canvas class="chart chart-pie" chart-data="selected_game.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_score_options"></canvas> 
 					<canvas class="chart chart-horizontal-bar" chart-data="selected_game.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas>
