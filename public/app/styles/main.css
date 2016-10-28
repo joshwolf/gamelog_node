@@ -6112,7 +6112,23 @@ gameplay article.well {
         top: -1px; }
         .header .main-nav ul.navbar-nav li.user {
           display: inline; }
+          .header .main-nav ul.navbar-nav li.user img {
+            float: right; }
           .header .main-nav ul.navbar-nav li.user div {
-            display: inline; } }
+            display: inline; }
+          .header .main-nav ul.navbar-nav li.user ul.dropdown-menu li {
+            display: inline-block;
+            background-color: #fff;
+            width: 100vw;
+            border-top: 1px solid #225378;
+            border-bottom: 1px solid #225378;
+            text-align: center;
+            font-size: 2rem;
+            position: relative;
+            z-index: 100;
+            padding: 2rem; }
+
+  ul.pagination {
+    font-size: .8rem; } }
 
 /*# sourceMappingURL=main.css.map */

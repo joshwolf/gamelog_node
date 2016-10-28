@@ -415,12 +415,30 @@ gameplay {
 				right: 0;
 				top: -1px;
 				li.user {
+					img {
+						float: right;
+					}
 					display: inline;
 					div {
 						display: inline;
 					}
+					ul.dropdown-menu li {
+						display: inline-block;
+						background-color: #fff;
+						width: 100vw;
+						border-top: 1px solid $primary-blue;
+						border-bottom: 1px solid $primary-blue;
+						text-align: center;
+						font-size: 2rem;
+						position: relative;
+						z-index: 100;
+						padding: 2rem;
+					}
 				}
 			}
 		}
+	}
+	ul.pagination {
+		font-size: .8rem;
 	}
 }
