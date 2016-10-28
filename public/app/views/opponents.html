@@ -24,8 +24,8 @@
 				</figure>
 			</div>
 			<div class="row well opponent-games">
-				<div class="row col-sm-10 col-sm-offset-1">
-					<ui-select multiple tagging tagging-label="false" ng-model="selected_topics.topics" theme="bootstrap" title="Filter by topic">
+				<div class="row col-sm-10 col-sm-offset-1 topics-select">
+					<ui-select multiple tagging ng-disabled="selected_topics.disabled" ng-model="selected_topics.topics" on-remove="filterTopics()" on-select="filterTopics()" theme="bootstrap" title="Filter by topic">
 						<ui-select-match placeholder="Filter by category/mechanic...">{{$item}}</ui-select-match>
 						<ui-select-choices repeat="topic in selected_opponent_topics | filter:$select.search">
 						  {{topic}}

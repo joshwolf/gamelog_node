@@ -169,12 +169,7 @@ angular.module('gamelogApp')
 		$scope.selected_opponent = user;
 		$scope.selected_opponent_games = _.orderBy(Object.values(user.games),['last_played'],['desc']);
 		$scope.selected_game = $scope.selected_opponent_games[0];
-		$scope.selected_opponent_topics = _.chain($scope.selected_opponent_games)
-			.map(function(game) { return game.topics; })
-			.flattenDeep()
-			.uniq()
-			.sort()
-			.value();
+		$scope.filterTopics();
 		$scope.selected_topics = {};
 	}
 
@@ -186,12 +181,9 @@ angular.module('gamelogApp')
 		if(!$scope.selected_topics || !$scope.selected_topics.topics) {
 			return games;
 		}
-		var filt = _.filter(games, function(game) {
-			console.log(game.topics);
-			console.log($scope.selected_topics.topics)
+		return _.filter(games, function(game) {
 			return _.intersection(game.topics, $scope.selected_topics.topics).length == $scope.selected_topics.topics.length;
 		});
-		return filt;
 	}
 
     $scope.login = function() {
@@ -199,4 +191,12 @@ angular.module('gamelogApp')
       $window.location.href = '/login';
     }
 
+	$scope.filterTopics = function() {
+		$scope.selected_opponent_topics = _.chain($scope.filteredByTopic($scope.selected_opponent_games))
+			.map(function(game) { return game.topics; })
+			.flattenDeep()
+			.uniq()
+			.sort()
+			.value();
+	}
 });
