@@ -2,6 +2,7 @@
 
 angular.module('gamelogApp')
 	.controller('UserCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope) {
+		$scope.global = $rootScope;
 		$http.get('/api/users/' + $routeParams.id)
 		.then(function(result) {
 			$scope.user = result.data;
@@ -42,9 +43,15 @@ angular.module('gamelogApp')
 			$scope.pagination.currentPage = 1;
 			$scope.pagination.currentPageGrouped = 1;
 			$scope.pagination.totalItems = $scope.filtered_gameplays.length;
-		$scope.setPage();
-		$scope.setPageGrouped();
+			$scope.setPage();
+			$scope.setPageGrouped();
 		}
+
+		$scope.paginationSize = function() {
+			return $rootScope.isMobile ? 4 : 10;
+		}
+
+		window.dispatchEvent(new Event('resize'));
 });
 
 angular.module('gamelogApp')
@@ -143,27 +150,15 @@ angular.module('gamelogApp')
 				$scope.chart_score_options = {
 					legend : {
 						display : true
-					},
-					title : {
-						display : true,
-						text : 'Better Score'
 					}
 				};
 				$scope.chart_game_score_options = {
 					legend : {
 						display : true,
 						position: 'right'
-					},
-					title : {
-						display : true,
-						text : 'Better Score'
 					}
 				};
 				$scope.chart_wins_options = {
-					title : {
-						display : true,
-						text : 'Wins'
-					},
 					scales : {
 						xAxes: [{
 							type : 'linear',

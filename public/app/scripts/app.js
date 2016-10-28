@@ -71,14 +71,14 @@ angular
 		$locationProvider.html5Mode(true);
 	})
 	.config(['$uibTooltipProvider', function ($uibTooltipProvider) {
-	     var parser = new UAParser();
-	     var result = parser.getResult();
-	     var touch = result.device && (result.device.type === 'tablet' || result.device.type === 'mobile');
-	     if ( touch ){
-	         $uibTooltipProvider.options({trigger: 'dontTrigger'});
-	     } else {
-	         $uibTooltipProvider.options({trigger: 'mouseenter'});
-	    }
+		 var parser = new UAParser();
+		 var result = parser.getResult();
+		 var touch = result.device && (result.device.type === 'tablet' || result.device.type === 'mobile');
+		 if ( touch ){
+			 $uibTooltipProvider.options({trigger: 'dontTrigger'});
+		 } else {
+			 $uibTooltipProvider.options({trigger: 'mouseenter'});
+		}
 	}])
 	.directive('randomBackgroundColor', function() {
 		return {
@@ -88,46 +88,70 @@ angular
 		}
 	})
 	.directive('userIcon', function ($document, $window) {
-			return {
-					restrict: 'E',
-					templateUrl: 'partials/userIcon.html',
-					transclude: true,
-					scope: {
-							user: '=',
-							rank: '=',
-							noLink: '='
-					},
-					link: function(scope, element, attrs) {
-						scope.showUser = function(id) {
-							console.log(scope);
-							if(!scope.noLink) {
-								$window.location.href = '/user/' + id;
-							}
+		return {
+				restrict: 'E',
+				templateUrl: 'partials/userIcon.html',
+				transclude: true,
+				scope: {
+						user: '=',
+						rank: '=',
+						noLink: '='
+				},
+				link: function(scope, element, attrs) {
+					scope.showUser = function(id) {
+						console.log(scope);
+						if(!scope.noLink) {
+							$window.location.href = '/user/' + id;
 						}
 					}
-			};
+				}
+		};
 	})
 	.directive('gameplay', function ($document, $window) {
-			return {
-					restrict: 'E',
-					templateUrl: 'partials/gameplay.html',
-					transclude: true,
-					scope: {
-							gameplayData: '='
-					}
-			};
+		return {
+				restrict: 'E',
+				templateUrl: 'partials/gameplay.html',
+				transclude: true,
+				scope: {
+						gameplayData: '='
+				}
+		};
+	})
+	.directive('resize', function($window) {
+	  return {
+		link: function(scope) {
+		  function onResize(e) {
+			// Namespacing events with name of directive + event to avoid collisions
+			scope.$broadcast('resize::resize');
+			var windowWidth = 'innerWidth' in window ? window.innerWidth : document.documentElement.offsetWidth;
+			if(windowWidth <= 992) {
+				scope.isMobile = true;
+			} else {
+				scope.isMobile = false;
+			}
+			scope.$apply();
+		  }
+
+		  function cleanUp() {
+			angular.element($window).off('resize', onResize);
+		  }
+
+		  angular.element($window).on('resize', onResize);
+		  scope.$on('$destroy', cleanUp);
+		}
+	  }
 	})
 	.filter('startFrom', function () {
-	    return function (input, start) {
-	        if (input === undefined || input === null || input.length === 0) return [];
-	        start = +start; //parse to int
-	        return input.slice(start);
-	    }
+		return function (input, start) {
+			if (input === undefined || input === null || input.length === 0) return [];
+			start = +start; //parse to int
+			return input.slice(start);
+		}
 	})
 	.filter('ordinalDate', function ($filter) {
-	    return function (date) {
-	        return $filter('date')(date, 'MMMM') + ' ' + $filter('ordinal')($filter('date')(date, 'd'));
-	    }
+		return function (date) {
+			return $filter('date')(date, 'MMMM') + ' ' + $filter('ordinal')($filter('date')(date, 'd'));
+		}
 	})
 	.filter('humanizedList', function() {
 		return function(items) {
