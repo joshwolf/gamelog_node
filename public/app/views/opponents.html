@@ -11,7 +11,7 @@
 				<h1><img ng-show="selected_opponent.profile_pic && selected_opponent.profile_pic != ''" ng-src="{{selected_opponent.profile_pic}}" class="profile-circle" alt="{{selected_opponent.initials}}" title="{{selected_opponent.full_name}}" uib-tooltip="{{selected_opponent.full_name}}">
  {{selected_opponent.full_name}}</h1>
 				<aside>
-					<p><b>{{selected_opponent.count}}</b> plays, last on <b>{{selected_opponent.last_played | ordinalDate }}.</b> You had a better score <b>{{selected_opponent.betters}}</b> times. <span ng-show="selected_opponent.ties > 0">You tied <b>{{selected_opponent.ties}}</b> times.</span></p>
+					<p>You played <b>{{selected_opponent_games.length}}</b> games <b>{{selected_opponent.count}}</b> times together in the past year, last on <b>{{selected_opponent.last_played | ordinalDate }}.</b> You had a better score <b>{{selected_opponent.betters}}</b> times. <span ng-show="selected_opponent.ties > 0">You tied <b>{{selected_opponent.ties}}</b> times.</span></p>
 					<p>You won <b>{{selected_opponent.me_wins}}</b> times against {{selected_opponent.first_name}}, last on <b>{{selected_opponent.me_last_won | ordinalDate }}</b>. {{selected_opponent.first_name}} won <b>{{selected_opponent.wins}}</b> times, last on <b>{{selected_opponent.last_won | ordinalDate }}.</b></p>
 				</aside>
 			</div>

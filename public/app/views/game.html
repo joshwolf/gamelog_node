@@ -39,7 +39,7 @@
 		</ng-form>
 	</section>
 	<section id="gameplays">
-		<article ng-repeat="gameplay in current_game.gameplays" class="well">
+		<article ng-repeat="gameplay in current_game.gameplays" class="well col-xs-12 col-sm-6">
 			<p>{{gameplay.play_date | date:'shortDate'}}</p>
 			<a target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://games.greenlightgo.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
 			<a target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png"></a>
