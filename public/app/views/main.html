@@ -1,4 +1,4 @@
-<div class="container row" id="home-page">
+<div class="container" id="home-page">
 	<section ng-if="current_user">
 		<h2>Recently played games:</h2>
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="setPage()"></ul>
