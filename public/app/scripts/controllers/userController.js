@@ -149,6 +149,16 @@ angular.module('gamelogApp')
 						text : 'Better Score'
 					}
 				};
+				$scope.chart_game_score_options = {
+					legend : {
+						display : true,
+						position: 'right'
+					},
+					title : {
+						display : true,
+						text : 'Better Score'
+					}
+				};
 				$scope.chart_wins_options = {
 					title : {
 						display : true,

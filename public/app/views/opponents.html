@@ -39,7 +39,7 @@
 				</ul>
 				<figure class="col-xs-6 selected-game" ng-show="selected_game">
 					<a ng-href="/game/{{selected_game.id}}"><img class="center-block img-responsive" ng-src="{{selected_game.image_thumbnail}}"></a>
-					<canvas class="chart chart-pie" chart-data="selected_game.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_score_options"></canvas> 
+					<canvas class="chart chart-pie" chart-data="selected_game.chart_score_data" chart-labels="['You',selected_opponent.first_name,'Tied']" chart-options="chart_game_score_options"></canvas> 
 					<canvas class="chart chart-horizontal-bar" chart-data="selected_game.chart_wins_data" chart-labels="['You',selected_opponent.first_name]" chart-options="chart_wins_options"></canvas>
 				</figure>
 			</div>
