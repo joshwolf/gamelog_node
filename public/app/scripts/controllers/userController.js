@@ -70,6 +70,7 @@ angular.module('gamelogApp')
 
 angular.module('gamelogApp')
 	.controller('UserOpponentsCtrl', function ($scope, $window, $http, $location, $cookies, $rootScope) {
+	$rootScope.page_title = 'You vs. The World'
 	if($scope.current_user) {
 		$http.get('/api/gameplays/my/recent')
 			.then(function(result) {
