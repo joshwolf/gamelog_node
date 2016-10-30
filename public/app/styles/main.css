@@ -6013,7 +6013,8 @@ gameplay article.well {
   #game-page #new-gameplay aside.rank {
     display: inline; }
 #game-page .game-actions {
-  padding-left: 0; }
+  padding-left: 0;
+  display: inline-block; }
   #game-page .game-actions li {
     float: left;
     list-style-type: none;
