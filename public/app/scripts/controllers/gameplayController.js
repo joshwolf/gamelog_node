@@ -68,7 +68,7 @@ angular.module('gamelogApp')
 		}
 
 		$scope.addUserToGameplay = function(user) {
-			if(!_.any($scope.new_gameplay.scores, function(score) { return score.player.full_name == user.full_name; })) {
+			if(!_.some($scope.new_gameplay.scores, function(score) { return score.player.full_name == user.full_name; })) {
 				$scope.recent_opponents = _.reject($scope.recent_opponents, function(opponent) { return opponent.full_name == user.full_name; });
 				$scope.new_gameplay.scores.push({ player: user });
 			}

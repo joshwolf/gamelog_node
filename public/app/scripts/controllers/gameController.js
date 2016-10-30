@@ -39,15 +39,16 @@ angular.module('gamelogApp')
 				$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
 				$scope.new_gameplay.scores.push({ player: $scope.current_user});
 				$http.get('/api/gameplays/my/recent').then(function(response) {
-					$scope.recent_opponents = _.reject(_.uniq(_.flatten(_.map(response.data, function(gameplay) {
+					$scope.recent_opponents = _.reject(_.uniqBy(_.flatten(_.map(response.data, function(gameplay) {
 						return _.map(gameplay.Gameplay.Scores, function(score) {
 								return score.Player;
 						});
 					})),
 					function (player) { return player ? player.full_name : ''; }
-					),
+					,'id'),
 					function (player) { return player ? (player.id == $scope.current_user.id) : false; }
 					);
+					$scope.recent_opponents = _.uniqBy($scope.recent_opponents,'full_name');
 				});
 			}
 		}
@@ -72,7 +73,7 @@ angular.module('gamelogApp')
 		}
 
 		$scope.addUserToGameplay = function(user) {
-			if(!_.any($scope.new_gameplay.scores, function(score) { return score.player.full_name == user.full_name; })) {
+			if(!_.some($scope.new_gameplay.scores, function(score) { return score.player.full_name == user.full_name; })) {
 				$scope.recent_opponents = _.reject($scope.recent_opponents, function(opponent) { return opponent.full_name == user.full_name; });
 				$scope.new_gameplay.scores.push({ player: user });
 			}
