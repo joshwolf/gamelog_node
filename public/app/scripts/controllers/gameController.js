@@ -48,7 +48,7 @@ angular.module('gamelogApp')
 					,'id'),
 					function (player) { return player ? (player.id == $scope.current_user.id) : false; }
 					);
-					$scope.recent_opponents = _.uniqBy($scope.recent_opponents,'full_name');
+					$scope.recent_opponents = _.uniqBy($scope.recent_opponents,'full_name').slice(0,23);
 				});
 			}
 		}

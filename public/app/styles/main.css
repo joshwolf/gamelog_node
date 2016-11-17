@@ -6144,6 +6144,10 @@ gameplay article.well {
             padding: 2rem; }
 
   ul.pagination {
-    font-size: 1.5rem; } }
+    font-size: 1.5rem; }
+
+  #game-page .user-quicksearch input {
+    width: 80%;
+    margin: 1rem auto; } }
 
 /*# sourceMappingURL=main.css.map */
