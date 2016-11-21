@@ -8,7 +8,7 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies, $rootScope) {
+	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies, $rootScope, $localStorage) {
 		$scope.searchRes = [];
 		$http.get('/api/games/' + $routeParams.id)
 		.then(function(result) {
@@ -21,12 +21,14 @@ angular.module('gamelogApp')
 			}
 			$rootScope.page_title = $scope.current_game.title;
 		});
+		$scope.recent_opponents = $localStorage.recent_opponents;
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {
 					$scope.current_game.gameplays.unshift(result);
 					$scope.new_gameplay = null;
 					$scope.show_gameplay_form = false;
+					$localStorage.recent_opponents = null;
 				})
 				.error(function(err) {
 					console.log(err);
@@ -38,18 +40,6 @@ angular.module('gamelogApp')
 				$scope.show_gameplay_form = true;
 				$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
 				$scope.new_gameplay.scores.push({ player: $scope.current_user});
-				$http.get('/api/gameplays/my/recent').then(function(response) {
-					$scope.recent_opponents = _.reject(_.uniqBy(_.flatten(_.map(response.data, function(gameplay) {
-						return _.map(gameplay.Gameplay.Scores, function(score) {
-								return score.Player;
-						});
-					})),
-					function (player) { return player ? player.full_name : ''; }
-					,'id'),
-					function (player) { return player ? (player.id == $scope.current_user.id) : false; }
-					);
-					$scope.recent_opponents = _.uniqBy($scope.recent_opponents,'full_name').slice(0,23);
-				});
 			}
 		}
 		$scope.searchRes = [];

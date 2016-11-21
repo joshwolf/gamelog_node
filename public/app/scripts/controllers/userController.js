@@ -55,24 +55,48 @@ angular.module('gamelogApp')
 });
 
 angular.module('gamelogApp')
-	.controller('UserStatusCtrl', function ($scope, $window, $http, $location, $cookies, $rootScope) {
-	$http.get('/api/users/me').then(function(response) {
-		var expires = new Date();
-		expires.setDate(expires.getDate() + 60);
-		$rootScope.current_user = response.data;
-		$scope.current_user = response.data;
-	});
-	$scope.logout = function() {
-		$scope.current_user = null;
-		$cookies.remove('user');
-		$cookies.remove('token');
-		$cookies.put('next_url',$location.path());
-		$window.location.href = '/logout';
-	}
-	$scope.login = function() {
-		$cookies.put('next_url',$location.path());
-		$window.location.href = '/login';
-	}
+	.controller('UserStatusCtrl', function ($scope, $window, $http, $location, $cookies, $rootScope, $localStorage) {
+		$scope.$storage = $localStorage;
+		$http.get('/api/users/me').then(function(response) {
+			var expires = new Date();
+			expires.setDate(expires.getDate() + 60);
+			$rootScope.current_user = response.data;
+			$scope.current_user = response.data;
+			if(!$scope.$storage.recent_opponents) {
+				$http.get('/api/gameplays/my/recent').then(function(response) {
+					console.log(response.data)
+					$scope.$storage.recent_opponents = _.chain(response.data)
+						.orderBy(function(gameplay) {
+							return gameplay.Gameplay.play_date;
+						})
+						.reverse()
+						.map(function(gameplay) {
+							return _.map(gameplay.Gameplay.Scores, function(score) {
+									return score.Player;
+							});
+						})
+						.flatten()
+						.uniqBy(function (player) { return player ? player.full_name : ''; },'id')
+						.reject(function (player) { return player ? (player.id == $scope.current_user.id) : false; })
+						.slice(0,15)
+						.value();
+				})
+			}
+		});
+
+
+		$scope.logout = function() {
+			$scope.current_user = null;
+			$cookies.remove('user');
+			$cookies.remove('token');
+			$cookies.put('next_url',$location.path());
+			$window.location.href = '/logout';
+			$scope.$storage.$reset();
+		}
+		$scope.login = function() {
+			$cookies.put('next_url',$location.path());
+			$window.location.href = '/login';
+		}
 });
 
 angular.module('gamelogApp')
