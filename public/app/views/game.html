@@ -10,7 +10,7 @@
 			<li class="" ng-show="{{current_user}}""><img ng-click="showGameplayForm()" src="images/dice.svg"></li>
 		</ul>
 	</section>
-	<section class="" ng-show="current_user && show_gameplay_form" id="new-gameplay">
+	<section class="" ng-show="current_user && show_gameplay_form || true" id="new-gameplay">
 		<ng-form name="newGameplayForm">
 			<h2>Add a gameplay</h2>
 			<datepicker date-format="shortDate" date-set="{{new_gameplay.play_date.toString()}}" selector="date-played">

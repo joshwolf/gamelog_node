@@ -129,6 +129,10 @@ ul {
 	}
 }
 
+.ui-select-container input.ui-select-search:not(.ng-touched) {
+    width: 100% !important;
+}
+
 img.profile-circle, span.initials-circle {
 	height: 5rem;
 	width: 5rem;

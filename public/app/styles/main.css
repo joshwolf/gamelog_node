@@ -5896,6 +5896,9 @@ ul li {
 .user-quicksearch .user-quicksearch-pic {
   margin-right: 1.5rem; }
 
+.ui-select-container input.ui-select-search:not(.ng-touched) {
+  width: 100% !important; }
+
 img.profile-circle, span.initials-circle {
   height: 5rem;
   width: 5rem;
