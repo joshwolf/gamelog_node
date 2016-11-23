@@ -58,6 +58,12 @@ angular
 				controllerAs: 'gameplayController',
 				page_title: 'Gameplay'
 			})
+			.when('/gameplays/:id', {
+				templateUrl: 'views/gameplay.html',
+				controller: 'GameplayCtrl',
+				controllerAs: 'gameplayController',
+				page_title: 'Gameplay'
+			})
 			.when('/import', {
 				templateUrl: 'views/import.html',
 				controller: 'ImportCtrl',
