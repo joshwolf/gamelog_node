@@ -18,6 +18,8 @@ angular.module('gamelogApp')
     	})
   	}
 
+    $scope.is_loading = true;
+
   	$http.get('/api/gameplays/recent').then(function (result) {
   		$scope.recent_gameplays = result.data;
       $scope.pagination = {
@@ -26,7 +28,10 @@ angular.module('gamelogApp')
         numPerPage : 10,
       }
       $scope.setPage();
-  	});
+  	})
+    .finally(function() { 
+      $scope.is_loading = false;
+    });
 
     $scope.login = function() {
       $cookies.put('next_url',$location.path());

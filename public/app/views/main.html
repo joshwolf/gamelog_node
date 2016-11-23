@@ -1,5 +1,8 @@
 <div class="container" id="home-page">
-	<section ng-if="current_user">
+	<div class="container" id="spinner" ng-show="current_user && is_loading">
+		<span us-spinner="{radius:30, width:8, length: 16}"></span>
+	</div>
+	<section ng-if="current_user && !is_loading">
 		<h2>Recently played games:</h2>
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItems" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="!isMobile" num-pages="numPages" ng-change="setPage()" rotate="!isMobile"></ul>
 		<gameplay ng-repeat="gameplay in pagedGameplays" gameplay-data="gameplay"></gameplay>

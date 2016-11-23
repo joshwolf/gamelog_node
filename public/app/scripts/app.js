@@ -22,9 +22,10 @@ angular
 		'ui.select',
 		'ui.bootstrap',
 		'720kb.datepicker',
-		'ordinal',
 		'angular.filter',
-		'chart.js'
+		'angularSpinner',
+		'chart.js',
+		'ordinal'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider

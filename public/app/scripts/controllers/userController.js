@@ -101,8 +101,10 @@ angular.module('gamelogApp')
 
 angular.module('gamelogApp')
 	.controller('UserOpponentsCtrl', function ($scope, $window, $http, $location, $cookies, $rootScope) {
-	$rootScope.page_title = 'You vs. The World'
+	$rootScope.page_title = 'You vs. The World';
+
 	if($scope.current_user) {
+		$scope.is_loading = true;
 		$http.get('/api/gameplays/my/recent')
 			.then(function(result) {
 				$scope.opponents =
@@ -192,6 +194,9 @@ angular.module('gamelogApp')
 						}]
 					}
 				};
+			})
+			.finally(function() {
+				$scope.is_loading = false;
 			});
 	}
 

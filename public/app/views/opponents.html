@@ -1,4 +1,8 @@
-<div class="container" id="opponents-page" ng-show="current_user">
+<div class="container" id="spinner" ng-show="current_user && is_loading">
+	<span us-spinner="{radius:30, width:8, length: 16}"></span>
+</div>
+
+<div class="container" id="opponents-page" ng-show="current_user && !is_loading">
 	<ui-select ng-model="user_search" on-select="setCurrentOpponent($item,$model)" style="min-width: 300px;" class="user-quicksearch">
 		<ui-select-match placeholder="Search for People">{{$select.selected.full_name}}</ui-select-match>
 	    <ui-select-choices repeat="opponent in opponents">
