@@ -68,7 +68,7 @@ router.post('/new', loggedIn, function(req, res) {
 				Scores: _.map(gameplay_data.scores, function(score) { return { points: score.points, rank: score.rank, PlayerId: score.player.id }; })
 			}, { include: {model: models.GameplayScore, as: 'Scores'}})
 			.then(function(gameplay) {
-				gameplay.save().then(function(gameplay) { gameplay.reload({ include: [{model: models.GameplayScore, as: 'Scores', include: [{model: models.User, as: 'Player'}] }] }).then(function(scores) { res.jsonp(gameplay); }); });
+				gameplay.save().then(function(gameplay) { gameplay.reload({ include: [{model: models.Game}, {model: models.GameplayScore, as: 'Scores', include: [{model: models.User, as: 'Player'}] }] }).then(function(scores) { res.jsonp(gameplay); }); });
 			});
 		})
 		.catch(function(error) { console.log(error); });

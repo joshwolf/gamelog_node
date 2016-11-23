@@ -17,7 +17,6 @@ angular.module('gamelogApp')
 			$rootScope.page_title = $scope.current_game.title;
 		});
 		$scope.addGameplay = function() {
-			console.log($scope.new_gameplay);
 			$http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {
 					$scope.current_game.gameplays.unshift(result);

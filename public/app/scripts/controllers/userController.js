@@ -64,7 +64,6 @@ angular.module('gamelogApp')
 			$scope.current_user = response.data;
 			if(!$scope.$storage.recent_opponents) {
 				$http.get('/api/gameplays/my/recent').then(function(response) {
-					console.log(response.data)
 					$scope.$storage.recent_opponents = _.chain(response.data)
 						.orderBy(function(gameplay) {
 							return gameplay.Gameplay.play_date;

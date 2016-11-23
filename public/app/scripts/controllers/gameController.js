@@ -38,7 +38,7 @@ angular.module('gamelogApp')
 		$scope.showGameplayForm = function() {
 			if(!$scope.show_gameplay_form) {
 				$scope.show_gameplay_form = true;
-				$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id };
+				$scope.new_gameplay = { game_id: $scope.current_game.id, scores : [], play_date : (new Date()), creator_id: $scope.current_user.id, Game: $scope.current_game };
 				$scope.new_gameplay.scores.push({ player: $scope.current_user});
 			}
 		}
