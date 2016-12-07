@@ -1,6 +1,6 @@
 {
   "name": "gamelog",
-  "version": "0.0.1",
+  "version": "0.6.0",
   "dependencies": {
     "async-task": "^0.4.2",
     "bgg": "^1.0.0",

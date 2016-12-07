@@ -8,9 +8,13 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies, $rootScope, $localStorage) {
+	.controller('GameCtrl', function ($scope, $http, $location, $routeParams, $cookies, $rootScope, $localStorage, $window) {
 		$scope.searchRes = [];
-		$http.get('/api/games/' + $routeParams.id)
+	    $scope.login = function() {
+	      $cookies.put('next_url',$location.path());
+	      $window.location.href = '/login';
+	    }
+   		$http.get('/api/games/' + $routeParams.id)
 		.then(function(result) {
 			$scope.current_game = result.data;
 			if($scope.current_user) {
