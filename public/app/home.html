@@ -16,8 +16,9 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" type="text/css" href="/bower_components/chardin.js/chardinjs.css">
     <link rel="stylesheet" href="/styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lato|Roboto|Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/bower_components/angular-ui-select/dist/select.min.css">
     <link rel="stylesheet" href="/bower_components/angular-ui/build/angular-ui.css">
@@ -38,7 +39,7 @@
           <div class="navbar main-nav" id="js-navbar-collapse">
             <a class="navbar-brand" href="/">G</a>
             <div ng-controller="GameSearchCtrl" ng-cloak id="game-quicksearch">
-              <ui-select ng-model="gameSearchResult" on-select="goToGame($item,$model)">
+              <ui-select ng-model="gameSearchResult" on-select="goToGame($item,$model)" data-intro="Search for a game by title" data-position="bottom">
                 <ui-select-match placeholder="Search for Games">{{$select.selected.name.value}}</ui-select-match>
                 <ui-select-choices refresh="searchGames($select)" refresh-delay="300" repeat="game in searchRes">
                   <span ng-bind-html="game.name.value + ' (' + (game.yearpublished.value || 1900) + ')' | highlight: $select.search"></span>
@@ -47,7 +48,7 @@
             </div>
             <ul class="nav navbar-nav">
               <li class="user" ng-controller="UserStatusCtrl">
-                <i ng-if="!current_user" ng-click="login()" class="material-icons" uib-tooltip="Log In" title="Log In">account_circle</i>
+                <i ng-if="!current_user" ng-click="login()" class="material-icons" uib-tooltip="Log In" title="Log In" data-intro="Click here to log in with Facebook" data-position="right">account_circle</i>
                 <div class="dropdown" ng-if="current_user">
                     <img ng-src="{{current_user.profile_pic}}" class="user-profile-pic" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" uib-tooltip="Log In" uib-tooltip-position="bottom" title="Log In">
                     <ul class="dropdown-menu">
@@ -57,6 +58,7 @@
                     </ul>
                 </div>
               </li>
+              <show-help>
             </ul>
 
           </div>
@@ -98,6 +100,7 @@
     <script type="text/javascript" src="/bower_components/angularjs-ordinal-filter/ordinal-browser.js"></script>
     <script type="text/javascript" src="/bower_components/spin.js/spin.js"></script>
     <script type="text/javascript" src="/bower_components/angular-spinner/angular-spinner.js"></script>
+    <script type="text/javascript" src="/bower_components/chardin.js/chardinjs.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.2/ui-bootstrap.min.js"></script>

@@ -6,8 +6,8 @@
 		<h3 ng-if="current_game.categories">{{current_game.categories | humanizedList}}</h3>
 		<h3 ng-if="current_game.mechanics">{{current_game.mechanics | humanizedList}}</h3>
 		<ul class="game-actions">
-			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png" title="BGG Entry" uib-tooltip="BGG Entry"></a></li>
-			<li class="" ng-show="{{current_user}}"><img ng-click="showGameplayForm()" src="images/dice.svg" uib-tooltip="Add a Gameplay" title="Add a Gameplay"></li>
+			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png" title="BGG Entry" uib-tooltip="BGG Entry" data-intro="{{current_game.title}} entry on BGG" data-position="top"></a></li>
+			<li class="" ng-show="{{current_user}}"><img ng-click="showGameplayForm()" src="images/dice.svg" uib-tooltip="Add a Gameplay" title="Add a Gameplay" data-intro="Log a Gameplay!" data-position="right"></li>
 			<li class="" ng-show="{{!current_user}}"><button ng-click="login()">Log in</button> to add a gameplay!</li>
 		</ul>
 	</section>
@@ -40,10 +40,13 @@
 		</ng-form>
 	</section>
 	<section id="gameplays">
+		<h2>Recent gameplays</h2>
 		<article ng-repeat="gameplay in current_game.gameplays" class="well col-xs-12 col-sm-6">
 			<p>{{gameplay.play_date | date:'shortDate'}}</p>
-			<a target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://games.greenlightgo.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true" uib-tooltip="Share on Facebook"></i></a>
-			<a target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png" uib-tooltip="Log on BGG"></a>
+			<a ng-if="$first" target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://games.greenlightgo.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true" uib-tooltip="Share on Facebook" data-intro="Share Gameplay to Facebook" data-position="bottom"></i></a>
+			<a ng-if="$first" target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png" uib-tooltip="Log on BGG" data-intro="Record on BGG" data-position="right"></a>
+			<a ng-if="!$first" target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://games.greenlightgo.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true" uib-tooltip="Share on Facebook"></i></a>
+			<a ng-if="!$first" target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png" uib-tooltip="Log on BGG"></a>
 			<ul class="clearfix">
 				<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
 					<user-icon user="score.Player" rank="score.rank"></user-icon>

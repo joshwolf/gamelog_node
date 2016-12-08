@@ -1,5 +1,6 @@
 $font-family: 'Lato','Verdana','Helvetica','Sans-Serif';
 $font-family-header: 'Roboto','Verdana','Sans-Serif';
+$font-family-coach-marks: 'Indie Flower','cursive','Verdana','Sans-Serif';
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 $primary-blue: #225378;
 $secondary-blue: #1695A3;
@@ -8,6 +9,7 @@ $orange: #EB7F00;
 $off-white: #F3FFE2;
 // bower:scss
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "mixins";
 // endbower
 
 .browsehappy {
@@ -34,6 +36,14 @@ ul {
 .font-fontawesome{
 	font-family: 'FontAwesome',$font-family;
 }
+
+.chardinjs-tooltip {
+	.chardinjs-tooltiptext {
+		font-family: $font-family-coach-marks;
+		font-size: 2rem;
+	}
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -71,6 +81,10 @@ ul {
 		font-size: 2rem;
 		color: $off-white;
 		cursor: pointer;
+	}
+	show-help {
+		margin-left: 2rem;
+		@include centerer(false, true);
 	}
 }
 
@@ -323,7 +337,7 @@ gameplay {
 
 #user-page {
 	.gameplay-display {
-		display: block;
+		margin: 1rem 0;
 	}
 }
 

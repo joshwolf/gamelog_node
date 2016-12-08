@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gamelogApp')
-	.controller('UserCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope) {
+	.controller('UserCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope, $timeout) {
 		$scope.global = $rootScope;
 		$http.get('/api/users/' + $routeParams.id)
 		.then(function(result) {
@@ -51,7 +51,7 @@ angular.module('gamelogApp')
 			return $rootScope.isMobile ? 4 : 10;
 		}
 
-		window.dispatchEvent(new Event('resize'));
+		$timeout(() => window.dispatchEvent(new Event('resize')));
 });
 
 angular.module('gamelogApp')

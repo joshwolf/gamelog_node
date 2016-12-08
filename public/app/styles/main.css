@@ -5825,6 +5825,10 @@ ul li {
 .font-fontawesome {
   font-family: "FontAwesome", "Lato", "Verdana", "Helvetica", "Sans-Serif"; }
 
+.chardinjs-tooltip .chardinjs-tooltiptext {
+  font-family: "Indie Flower", "cursive", "Verdana", "Sans-Serif";
+  font-size: 2rem; }
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -5856,6 +5860,11 @@ ul li {
     font-size: 2rem;
     color: #F3FFE2;
     cursor: pointer; }
+  .header show-help {
+    margin-left: 2rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%); }
 
 /* Custom page footer */
 .footer {
@@ -6040,7 +6049,7 @@ gameplay article.well {
   vertical-align: bottom; }
 
 #user-page .gameplay-display {
-  display: block; }
+  margin: 1rem 0; }
 
 #opponents-page .opponent-games {
   margin-top: 1rem;

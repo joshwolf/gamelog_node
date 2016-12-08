@@ -25,7 +25,7 @@ angular
 		'angular.filter',
 		'angularSpinner',
 		'chart.js',
-		'ordinal'
+		'ordinal',
 	])
 	.config(function ($routeProvider) {
 		$routeProvider
@@ -106,7 +106,6 @@ angular
 				},
 				link: function(scope, element, attrs) {
 					scope.showUser = function(id) {
-						console.log(scope);
 						if(!scope.noLink) {
 							$window.location.href = '/user/' + id;
 						}
@@ -120,7 +119,7 @@ angular
 				templateUrl: 'partials/gameplay.html',
 				transclude: true,
 				scope: {
-						gameplayData: '='
+					gameplayData: '='
 				}
 		};
 	})
@@ -147,6 +146,21 @@ angular
 		  scope.$on('$destroy', cleanUp);
 		}
 	  }
+	})
+	.directive('showHelp', function($rootScope, $window) {
+		return {
+			restrict: 'E',
+			template: '<i class="fa fa-question-circle fa-inverse fa-2x" aria-hidden="true"></i>',
+			link: function(scope, elem, attrs) {
+				$rootScope.showHelp = false;
+				$('body').bind('chardinJs:stop', function() {
+					$('body').chardinJs('stop');
+				});
+		        elem.bind('click', function() {
+					$('body').chardinJs('start');
+				});
+			}
+		}
 	})
 	.filter('startFrom', function () {
 		return function (input, start) {

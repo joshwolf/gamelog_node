@@ -3,16 +3,10 @@
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
     <nav class="gameplay-display">
-    	<div class="btn-group">
+    	<div class="btn-group" data-intro="View {{user.first_name}}'s Gameplays chronologically, or grouped by title" data-position="bottom">
 	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">List By Date</label>
     	    <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="true">List By Game</label>
     	</div>
-		<!--<ui-select ng-model="gameSearchResult" on-select="filterGameplays($item,$model)" style="min-width: 300px;">
-			<ui-select-match placeholder="Search for Games">{{$select.selected.name.value}}</ui-select-match>
-		    <ui-select-choices repeat="game in gameplay_games | filter: $select.search">
-				<span ng-bind-html="game | highlight: $select.search"></span>
-			</ui-select-choices>
-		</ui-select>-->
     </nav>
 	<section ng-show="current_user && games_grouped" class="grouped-gameplays">
 	    <ul class="pagination" uib-pagination total-items="pagination.totalItemsGrouped" items-per-page="5" ng-model="pagination.currentPageGrouped" max-size="paginationSize()" class="pagination-sm" boundary-links="!isMobile" num-pages="numPagesGrouped" ng-change="setPageGrouped()" boundary-link-numbers="!isMobile" rotate="isMobile"></ul>
@@ -28,8 +22,6 @@
 			<div class="col-xs-9 gameplays">
 				<article ng-repeat="gameplay in plays | orderBy: '-play_date'">
 					<h4>{{gameplay.play_date | date:'shortDate'}}</h4>
-					<!--<a target="_new" href="https://www.facebook.com/sharer/sharer.php?u=http://gamelog-node.herokuapp.com/gameplay/{{gameplay.id}}"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-					<a target="_new" href="http://www.boardgamegeek.com/geekplay.php?objecttype=thing&objectid={{gameplay.Game.bgg_id}}&playdate={{gameplay.play_date | date: 'yyyy-MM-dd'}}&action=new"><img class="bgg-share-icon" src="http://cf.geekdo-static.com/images/logos/bgg.png"></a>-->
 					<ul class="clearfix gameplay-scores">
 						<li ng-repeat="score in gameplay.Scores | orderBy: 'rank'">
 							<user-icon user="score.Player" rank="score.rank"></user-icon>

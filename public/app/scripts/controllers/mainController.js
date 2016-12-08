@@ -8,7 +8,8 @@
  * Controller of the gamelogApp
  */
 angular.module('gamelogApp')
-  .controller('MainCtrl', function ($scope, $http, $location, $document, $cookies, $window, $rootScope) {
+  .controller('MainCtrl', function ($scope, $http, $location, $document, $cookies, $window, $rootScope, $interval) {
+
   	if($document[0].cookie.indexOf('token') >= 0) {
    		var expires = new Date();
     	expires.setDate(expires.getDate() + 60);
