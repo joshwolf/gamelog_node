@@ -4,7 +4,6 @@
  * @ngdoc overview
  * @name gamelogApp
  * @description
- * # gamelogApp
  *
  * Main module of the application.
  */

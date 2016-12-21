@@ -107,6 +107,9 @@ passport.deserializeUser(function(id, done) {
 
 app.set('port', process.env.PORT || 8888);
 
+app.get('/r', function(req, res) {
+	res.redirect('calshow://');
+})
 
 app.use('/api/games', games);
 app.use('/api/gameplays', gameplays);
