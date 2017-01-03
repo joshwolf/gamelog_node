@@ -17,6 +17,7 @@
     "morgan": "^1.7.0",
     "mysql": "^2.11.1",
     "nconf": "^0.8.4",
+    "newrelic": "^1.36.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pug": "^2.0.0-beta6",
