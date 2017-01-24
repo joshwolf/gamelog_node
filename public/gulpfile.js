@@ -27,13 +27,15 @@ gulp.task('default', function() {
 });
 
 gulp.task('bower', function() {
-	gulp.src(plugins.mainBowerFiles())
+	var extraJsFiles = ['bower_components/chardin.js/chardinjs.min.js'];
+	var extraCssFiles = ['bower_components/chardin.js/chardinjs.css'];
+	gulp.src(plugins.mainBowerFiles().concat(extraJsFiles))
 		.pipe(plugins.filter('**/*.js'))
 		.pipe(plugins.concat('vendor.js'))
 //		.pipe(plugins.uglify())
 		.pipe(gulp.dest('app/scripts/'));
 
-	gulp.src(plugins.mainBowerFiles())
+	gulp.src(plugins.mainBowerFiles().concat(extraCssFiles))
 		.pipe(plugins.filter('**/*.css'))
 		.pipe(plugins.concat('vendor.css'))
 		.pipe(gulp.dest('app/styles'));
