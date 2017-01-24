@@ -2,30 +2,15 @@
   "name": "gamelog",
   "version": "0.6.0",
   "dependencies": {
-    "async-task": "^0.4.2",
-    "bgg": "^1.0.0",
-    "body-parser": "^1.15.2",
-    "connect-redis": "^3.1.0",
-    "cookie": "^0.3.1",
-    "cookie-parser": "^1.4.3",
-    "dateformat": "^1.0.12",
-    "express": "^4.14.0",
-    "express-session": "^1.14.0",
-    "fb": "^1.1.1",
-    "jsonwebtoken": "^7.1.7",
-    "lodash": "^4.14.1",
-    "morgan": "^1.7.0",
-    "mysql": "^2.11.1",
-    "nconf": "^0.8.4",
-    "passport": "^0.3.2",
-    "passport-facebook": "^2.1.1",
-    "pug": "^2.0.0-beta6",
-    "redis": "^2.6.2",
-    "sequelize": "^3.23.6",
-    "sequelize-cli": "^2.4.0",
-    "sequelize-redis-cache": "^1.4.0"
   },
-  "scripts": {
-    "start": "node app.js"
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-filter": "^5.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.0.0",
+    "main-bower-files": "^2.13.1"
   }
 }

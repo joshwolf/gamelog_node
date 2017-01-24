@@ -1,0 +1,359 @@
+/*!
+ * ui-select
+ * http://github.com/angular-ui/ui-select
+ * Version: 0.18.1 - 2016-07-10T00:18:11.107Z
+ * License: MIT
+ */
+
+
+/* Style when highlighting a search. */
+.ui-select-highlight {
+  font-weight: bold;
+}
+
+.ui-select-offscreen {
+  clip: rect(0 0 0 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  outline: 0 !important;
+  left: 0px !important;
+  top: 0px !important;
+}
+
+
+.ui-select-choices-row:hover {
+  background-color: #f5f5f5;
+}
+
+/* Select2 theme */
+
+/* Mark invalid Select2 */
+.ng-dirty.ng-invalid > a.select2-choice {
+    border-color: #D44950;
+}
+
+.select2-result-single {
+  padding-left: 0;
+}
+
+.select2-locked > .select2-search-choice-close{
+  display:none;
+}
+
+.select-locked > .ui-select-match-close{
+    display:none;
+}
+
+body > .select2-container.open {
+  z-index: 9999; /* The z-index Select2 applies to the select2-drop */
+}
+
+/* Handle up direction Select2 */
+.ui-select-container[theme="select2"].direction-up .ui-select-match,
+.ui-select-container.select2.direction-up .ui-select-match {
+    border-radius: 4px; /* FIXME hardcoded value :-/ */
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.ui-select-container[theme="select2"].direction-up .ui-select-dropdown,
+.ui-select-container.select2.direction-up .ui-select-dropdown {
+    border-radius: 4px; /* FIXME hardcoded value :-/ */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    border-top-width: 1px;  /* FIXME hardcoded value :-/ */
+    border-top-style: solid;
+
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+
+    margin-top: -4px; /* FIXME hardcoded value :-/ */
+}
+.ui-select-container[theme="select2"].direction-up .ui-select-dropdown .select2-search,
+.ui-select-container.select2.direction-up .ui-select-dropdown .select2-search {
+    margin-top: 4px; /* FIXME hardcoded value :-/ */
+}
+.ui-select-container[theme="select2"].direction-up.select2-dropdown-open .ui-select-match,
+.ui-select-container.select2.direction-up.select2-dropdown-open .ui-select-match {
+    border-bottom-color: #5897fb;
+}
+
+/* Selectize theme */
+
+/* Helper class to show styles when focus */
+.selectize-input.selectize-focus{
+  border-color: #007FBB !important;
+}
+
+/* Fix input width for Selectize theme */
+.selectize-control > .selectize-input > input {
+  width: 100%;
+}
+
+/* Fix dropdown width for Selectize theme */
+.selectize-control > .selectize-dropdown {
+  width: 100%;
+}
+
+/* Mark invalid Selectize */
+.ng-dirty.ng-invalid > div.selectize-input {
+    border-color: #D44950;
+}
+
+/* Handle up direction Selectize */
+.ui-select-container[theme="selectize"].direction-up .ui-select-dropdown {
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+
+    margin-top: -2px; /* FIXME hardcoded value :-/ */
+}
+
+/* Bootstrap theme */
+
+/* Helper class to show styles when focus */
+.btn-default-focus {
+  color: #333;
+  background-color: #EBEBEB;
+  border-color: #ADADAD;
+  text-decoration: none;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.ui-select-bootstrap .ui-select-toggle {
+  position: relative;
+}
+
+.ui-select-bootstrap .ui-select-toggle > .caret {
+  position: absolute;
+  height: 10px;
+  top: 50%;
+  right: 10px;
+  margin-top: -2px;
+}
+
+/* Fix Bootstrap dropdown position when inside a input-group */
+.input-group > .ui-select-bootstrap.dropdown {
+  /* Instead of relative */
+  position: static;
+}
+
+.input-group > .ui-select-bootstrap > input.ui-select-search.form-control {
+  border-radius: 4px; /* FIXME hardcoded value :-/ */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group > .ui-select-bootstrap > input.ui-select-search.form-control.direction-up {
+  border-radius: 4px !important; /* FIXME hardcoded value :-/ */
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.ui-select-bootstrap > .ui-select-match > .btn{
+  /* Instead of center because of .btn */
+  text-align: left !important;
+}
+
+.ui-select-bootstrap > .ui-select-match > .caret {
+  position: absolute;
+  top: 45%;
+  right: 15px;
+}
+
+/* See Scrollable Menu with Bootstrap 3 http://stackoverflow.com/questions/19227496 */
+.ui-select-bootstrap > .ui-select-choices ,.ui-select-bootstrap > .ui-select-no-choice {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+  margin-top: -1px;
+}
+
+body > .ui-select-bootstrap.open {
+  z-index: 1000; /* Standard Bootstrap dropdown z-index */
+}
+
+.ui-select-multiple.ui-select-bootstrap {
+  height: auto;
+  padding: 3px 3px 0 3px;
+}
+
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+  background-color: transparent !important; /* To prevent double background when disabled */
+  border: none;
+  outline: none;
+  height: 1.666666em;
+  margin-bottom: 3px;
+}
+
+.ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
+  font-size: 1.6em;
+  line-height: 0.75;
+}
+
+.ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+  outline: 0;
+  margin: 0 3px 3px 0;
+}
+
+.ui-select-multiple .ui-select-match-item {
+  position: relative;
+}
+
+.ui-select-multiple .ui-select-match-item.dropping .ui-select-match-close {
+  pointer-events: none;
+}
+
+.ui-select-multiple:hover .ui-select-match-item.dropping-before:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 100%;
+  height: 100%;
+  margin-right: 2px;
+  border-left: 1px solid #428bca;
+}
+
+.ui-select-multiple:hover .ui-select-match-item.dropping-after:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 100%;
+  margin-left: 2px;
+  border-right: 1px solid #428bca;
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+}
+
+.ui-select-bootstrap .ui-select-choices-row.active>a {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #428bca;
+}
+
+.ui-select-bootstrap .ui-select-choices-row.disabled>a,
+.ui-select-bootstrap .ui-select-choices-row.active.disabled>a {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+}
+
+/* fix hide/show angular animation */
+.ui-select-match.ng-hide-add,
+.ui-select-search.ng-hide-add {
+    display: none !important;
+}
+
+/* Mark invalid Bootstrap */
+.ui-select-bootstrap.ng-dirty.ng-invalid > button.btn.ui-select-match {
+    border-color: #D44950;
+}
+
+/* Handle up direction Bootstrap */
+.ui-select-container[theme="bootstrap"].direction-up .ui-select-dropdown {
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.datepicker a,[datepicker] a,datepicker a{color:inherit;text-decoration:none}.datepicker a:hover,[datepicker] a:hover,datepicker a:hover{text-decoration:none}.datepicker select,.datepicker select:focus,.datepicker select:hover,[datepicker] select,[datepicker] select:focus,[datepicker] select:hover,datepicker select,datepicker select:focus,datepicker select:hover{width:100%;overflow:hidden;background:#138EFA;color:#fff;border-radius:2px;border:0;margin-top:5px}._720kb-datepicker-calendar-body,._720kb-datepicker-calendar-days-header,._720kb-datepicker-calendar-header,._720kb-datepicker-calendar-years-pagination-pages,.datepicker,[datepicker],datepicker{font-family:Helvetica Neue,Arial,sans-serif;font-size:13.5px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;width:100%;margin:0 auto;float:left;clear:right;position:relative}._720kb-datepicker-calendar{background:#fff;color:#333;position:absolute;z-index:999;min-width:220px;margin:0 auto 0 -.5%;width:101%;-webkit-box-shadow:0 0 0 1px rgba(0,0,0,.1) inset;-moz-box-shadow:0 0 0 1px rgba(0,0,0,.1) inset;box-shadow:0 0 0 1px rgba(0,0,0,.1) inset;visibility:hidden;overflow:hidden;padding:0 0 2%;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}._720kb-datepicker-calendar._720kb-datepicker-forced-to-open,._720kb-datepicker-calendar._720kb-datepicker-open{visibility:visible}._720kb-datepicker-calendar-header{text-align:center;font-size:15px;line-height:40px}._720kb-datepicker-calendar-header:nth-child(odd){background:#138EFA}._720kb-datepicker-calendar-header:nth-child(even){background:#7BC6FC}._720kb-datepicker-calendar-header-left,._720kb-datepicker-calendar-header-middle,._720kb-datepicker-calendar-header-right{width:15%;float:left}._720kb-datepicker-calendar-header-middle{width:70%}._720kb-datepicker-calendar-header-closed-pagination::after{content:" \25BE"}._720kb-datepicker-calendar-header-opened-pagination::after{content:" \25BE";margin-left:4px;position:relative;bottom:-3px;display:inline-block;-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}._720kb-datepicker-calendar-body{width:96%;margin:2%;text-align:center}._720kb-datepicker-calendar-day{cursor:pointer;font-size:12.5px;width:12.2%;margin:5px 1%;padding:1.5% 0;float:left;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px}._720kb-datepicker-calendar-day._720kb-datepicker-active,._720kb-datepicker-calendar-day:hover{background:rgba(0,0,0,.03)}._720kb-datepicker-calendar-header a,._720kb-datepicker-calendar-header a:hover{text-decoration:none;padding:3% 9% 4%;font-size:13.5px;color:rgba(0,0,0,.55);font-weight:700;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}._720kb-datepicker-calendar-header a:hover{color:rgba(0,0,0,.9);background:rgba(255,255,255,.45)}._720kb-datepicker-calendar-month{color:#fff}._720kb-datepicker-calendar-month span{font-size:13px;color:rgba(0,0,0,.4)}._720kb-datepicker-calendar-month a span i{font-style:normal;font-size:15px}._720kb-datepicker-calendar-month a,._720kb-datepicker-calendar-month a:hover{padding:3px;margin-left:1%}._720kb-datepicker-calendar-years-pagination{padding:2% 0 0;float:left;clear:right;width:100%}._720kb-datepicker-calendar-years-pagination a,._720kb-datepicker-calendar-years-pagination a:hover{font-size:12px;padding:0 7px;font-weight:400;margin:3px 1% 0;line-height:20px;display:inline-block}._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active{color:rgba(0,0,0,.9);font-weight:500;background:rgba(255,255,255,.45)}._720kb-datepicker-calendar-years-pagination-pages a,._720kb-datepicker-calendar-years-pagination-pages a:hover{padding:5px 10px}._720kb-datepicker-calendar-days-header{max-width:100%;margin:0 auto;padding:0 2%;background:rgba(19,142,250,.08);border-bottom:1px solid rgba(0,0,0,.02)}._720kb-datepicker-calendar-days-header div{width:14.18%;font-weight:500;font-size:11.5px;padding:10px 0;float:left;text-align:center;color:rgba(0,0,0,.7)}._720kb-datepicker-calendar-days ._720kb-datepicker-default-button{font-size:18.5px;position:relative;bottom:-.5px}._720kb-datepicker-default-button{padding:0 4.5px}._720kb-datepicker-calendar-header-middle._720kb-datepicker-mobile-item{width:95%;float:none;margin:0 auto}._720kb-datepicker-item-hidden{visibility:hidden}._720kb-datepicker-calendar-day._720kb-datepicker-disabled,._720kb-datepicker-calendar-day._720kb-datepicker-disabled:hover,._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active._720kb-datepicker-disabled,._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active._720kb-datepicker-disabled:hover,._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-disabled,._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-disabled:hover{color:rgba(0,0,0,.2);background:rgba(25,2,0,.02);cursor:default}
+.chardinjs-overlay {
+  position: absolute;
+  z-index: 999999;
+  background-color: #000;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+
+.chardinjs-helper-layer {
+  position: absolute;
+  z-index: 9999998;
+  color: white;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+  .chardinjs-helper-layer.chardinjs-left {
+    border-left: solid white 1px;
+    margin-left: -10px; }
+  .chardinjs-helper-layer.chardinjs-right {
+    border-right: solid white 1px;
+    padding-right: 10px; }
+  .chardinjs-helper-layer.chardinjs-bottom {
+    border-bottom: solid white 1px;
+    padding-bottom: 10px; }
+  .chardinjs-helper-layer.chardinjs-top {
+    border-top: solid white 1px;
+    padding-top: 10px; }
+
+.chardinjs-tooltip {
+  position: absolute;
+  -webkit-transition: opacity 0.1s ease-out;
+  -moz-transition: opacity 0.1s ease-out;
+  -ms-transition: opacity 0.1s ease-out;
+  -o-transition: opacity 0.1s ease-out;
+  transition: opacity 0.1s ease-out;
+  max-width: 200px; }
+  .chardinjs-tooltip.chardinjs-left {
+    margin-left: -135px;
+    padding-right: 10px; }
+  .chardinjs-tooltip.chardinjs-right {
+    margin-right: -135px;
+    padding-left: 10px; }
+  .chardinjs-tooltip.chardinjs-bottom {
+    margin-bottom: -50px;
+    padding-top: 10px; }
+  .chardinjs-tooltip.chardinjs-top {
+    margin-top: -50px;
+    padding-bottom: 10px; }
+  .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after, .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
+    content: ".";
+    display: inline-block;
+    background-color: white;
+    height: 1px;
+    overflow: hidden;
+    position: absolute; }
+  .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after {
+    width: 100px;
+    top: 50%; }
+  .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
+    width: 1px;
+    height: 50px;
+    left: 50%; }
+  .chardinjs-tooltip.chardinjs-bottom:before {
+    top: -50px; }
+  .chardinjs-tooltip.chardinjs-top:after {
+    bottom: -50px; }
+  .chardinjs-tooltip.chardinjs-right:before {
+    left: -100px; }
+  .chardinjs-tooltip.chardinjs-left:after {
+    right: -100px; }
+
+.chardinjs-show-element {
+  z-index: 9999999;
+  opacity: 0.8; }
+
+.chardinjs-relative-position {
+  position: relative; }
