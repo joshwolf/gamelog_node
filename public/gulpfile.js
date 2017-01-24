@@ -32,12 +32,19 @@ gulp.task('bower', function() {
 	gulp.src(plugins.mainBowerFiles().concat(extraJsFiles))
 		.pipe(plugins.filter('**/*.js'))
 		.pipe(plugins.concat('vendor.js'))
-//		.pipe(plugins.uglify())
-		.pipe(gulp.dest('app/scripts/'));
-
+		.pipe(gulp.dest('app/scripts/'))
 	gulp.src(plugins.mainBowerFiles().concat(extraCssFiles))
 		.pipe(plugins.filter('**/*.css'))
 		.pipe(plugins.concat('vendor.css'))
-		.pipe(gulp.dest('app/styles'));
-
+		.pipe(gulp.dest('app/styles'))
 });
+
+gulp.task('minify', function() {
+	gulp.src(['app/scripts/*.js','!app/scripts/*.min.js'])
+		.pipe(plugins.minify({ext: { min: '.min.js' }, mangle: false }))
+		.pipe(gulp.dest('app/scripts/'));
+	gulp.src(['app/styles/*.css','!app/styles/*.min.css'])
+		.pipe(plugins.rename({ suffix: '.min' }))
+		.pipe(plugins.uglifycss())
+		.pipe(gulp.dest('app/styles/'));
+})
