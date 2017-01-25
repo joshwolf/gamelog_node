@@ -51,7 +51,7 @@ angular.module('gamelogApp')
 			return $rootScope.isMobile ? 4 : 10;
 		}
 
-		$timeout(() => window.dispatchEvent(new Event('resize')));
+		$timeout(function() { window.dispatchEvent(new Event('resize')) });
 });
 
 angular.module('gamelogApp')

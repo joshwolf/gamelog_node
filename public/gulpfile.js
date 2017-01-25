@@ -10,6 +10,7 @@ var dest = 'app/';
 gulp.task('default', function() {
 	gulp.watch(['app/styles/*.scss','!app/styles/_*.scss'], ['sass']);
 	gulp.watch(['app/styles/*.css','!app/styles/*.min.css'], ['minifycss']);
+	gulp.watch(['app/scripts/controllers/*.js'], ['concatcontrollers']);
 	gulp.watch(['app/scripts/*.js','!app/scripts/*.min.js'], ['minifyjs']);
 });
 
@@ -65,4 +66,16 @@ gulp.task('minifycss', function() {
 		.pipe(plugins.rename({ suffix: '.min' }))
 		.pipe(plugins.uglifycss())
 		.pipe(gulp.dest('app/styles/'))
+})
+
+gulp.task('concatcontrollers', function() {
+	gulp.src(['app/scripts/controllers/*.js'])
+		.pipe(plugins.logger({
+			before: 'Concatenating Controllers...',
+			after: 'Controllers Concatenated!',
+			showChange: true
+		}))
+		.pipe(plugins.plumber())
+		.pipe(plugins.concat('controllers.js'))
+		.pipe(gulp.dest('app/scripts/'))
 })
