@@ -2,6 +2,7 @@
 
 require('newrelic');
 
+var compression = require('compression')
 var express = require('express');
 var nconf = require('nconf');
 var path = require('path');
@@ -38,6 +39,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.use(compression());
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(logger('dev'));
