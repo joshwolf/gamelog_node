@@ -35,6 +35,7 @@ module.exports = function(sequelize, DataTypes) {
         Game.belongsToMany(models.Mechanic, {through: 'GameMechanic'});
         Game.belongsToMany(models.Category, {through: 'GameCategory'});
         Game.hasMany(models.Gameplay);
+        Game.hasMany(models.WishlistLitem);
 	  	},
     	getOrFindByBggId: function(bgg_id, done) {
         var m = require('../models');

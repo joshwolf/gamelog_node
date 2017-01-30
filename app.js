@@ -36,6 +36,7 @@ nconf.argv()
 var games = require('./routes/games');
 var gameplays = require('./routes/gameplays');
 var users = require('./routes/users');
+var wishlistitems = require('./routes/wishlistitems');
 
 var app = express();
 
@@ -76,12 +77,14 @@ passport.use(new FacebookStrategy({
 	},
 	function(req, accessToken, refreshToken, profile, done) {
 			// find the user in the database based on their facebook id
-			models.User.findOrCreate({ where: {full_name: profile.displayName} })
+			models.User.findOrCreate({ where: {full_name: profile.displayName} , include: [{ model: models.WishlistLitem, attributes: ['GameId'] }] })
 				.spread(function(user, created) {
+					//turn wishlist into array of game id's
 					//set all of the facebook information in our user model
 					user.facebook_id = user.facebook_id || profile.id;
 					user.updateFromFacebook(accessToken);
 					req.session.token = user.getToken();
+					console.log(JSON.stringify(user));
 					done(null,user);
 				});
 	}
@@ -99,14 +102,14 @@ passport.use(new FacebookStrategy({
 // and deserialized.
 // used to serialize the user for the session
 passport.serializeUser(function(user, done) {
-		done(null, user.id);
+	done(null, user.id);
 });
 
 // used to deserialize the user
 passport.deserializeUser(function(id, done) {
-		models.User.findById(id, function(err, user) {
-				done(err, user);
-		});
+	models.User.findById(id, function(err, user) {
+		done(err, user);
+	});
 });
 
 app.set('port', process.env.PORT || 8888);
@@ -118,6 +121,8 @@ app.get('/alive', function(req, res) {
 app.use('/api/games', games);
 app.use('/api/gameplays', gameplays);
 app.use('/api/users', users);
+app.use('/api/wishlistitems', wishlistitems);
+
 app.get(['/login/facebook','/login'],
 	passport.authenticate('facebook', {}),
 	function(req, res, next) {
@@ -197,5 +202,6 @@ app.get('/*', function(req, res) {
 });
 
 models.sequelize.sync().then(function () {
+	console.log('Gamelog starting up...');
 	var server = app.listen(app.get('port'));
 });

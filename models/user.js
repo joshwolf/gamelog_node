@@ -14,7 +14,8 @@ module.exports = function(sequelize, DataTypes) {
 		profile_pic: DataTypes.STRING
 		}, {
 		getterMethods: {
-			initials: function()  { if(!this.first_name) { return ''; } return (this.first_name.slice(0,1) + (this.last_name || '').slice(0,1)).toUpperCase(); }
+			initials: function()  { if(!this.first_name) { return ''; } return (this.first_name.slice(0,1) + (this.last_name || '').slice(0,1)).toUpperCase(); },
+			wishlist: function()  { return _.map(this.WishlistLitems, function(item) { return item.GameId; }); }
 		},
 	  	indexes: [
 	  		{
@@ -73,6 +74,7 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 		  	associate: function(models) {
 		        User.hasMany(models.GameplayScore, { as: 'Scores', foreignKey: 'PlayerId' });
+		        User.hasMany(models.WishlistLitem);
 		  	}
 		}
 	});

@@ -307,9 +307,12 @@ gameplay {
 			width: auto;
 			display: inline;
 			cursor: pointer;
-				img {
-					width: 6rem;
-				}
+			img {
+				width: 6rem;
+			}
+			.wishlist-icon {
+				font-size: 6rem;
+			}
 		}
 	}
 	#gameplays {

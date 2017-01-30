@@ -26,6 +26,7 @@ angular.module('gamelogApp')
 			$rootScope.page_title = $scope.current_game.title;
 		});
 		$scope.recent_opponents = $localStorage.recent_opponents;
+
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {

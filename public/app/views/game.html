@@ -8,6 +8,7 @@
 		<ul class="game-actions">
 			<li class=""><a href="https://boardgamegeek.com/boardgame/{{current_game.bgg_id}}" target="_new"><img src="http://cf.geekdo-static.com/images/logos/bgg.png" title="BGG Entry" uib-tooltip="BGG Entry" data-intro="{{current_game.title}} entry on BGG" data-position="top"></a></li>
 			<li class="" ng-show="{{current_user}}"><img ng-click="showGameplayForm()" src="images/dice.svg" uib-tooltip="Add a Gameplay" title="Add a Gameplay" data-intro="Log a Gameplay!" data-position="right"></li>
+			<li class="" ng-show="{{current_user}}"><wishlist-icon user="current_user" game="current_game"></wishlist-icon></li>
 			<li class="" ng-show="{{!current_user}}"><button ng-click="login()">Log in</button> to add a gameplay!</li>
 		</ul>
 	</section>

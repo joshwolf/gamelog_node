@@ -6044,6 +6044,8 @@ gameplay article.well {
     cursor: pointer; }
     #game-page .game-actions li img {
       width: 6rem; }
+    #game-page .game-actions li .wishlist-icon {
+      font-size: 6rem; }
 
 #game-page #gameplays ul li {
   list-style-type: none;

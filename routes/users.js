@@ -16,7 +16,7 @@ function loggedIn(req, res, next) {
 }
 
 router.get('/me', loggedIn, function(req, res) {
-	models.User.findById(req.session.user.id).then(function(user) { res.send(user) });
+	models.User.findOne({ where: { id: req.session.user.id }, include: [{ model: models.WishlistLitem, attributes: ['GameId'] }]}).then(function(user) { res.send(user) });
 });
 
 router.get('/:id', function(req, res) {
