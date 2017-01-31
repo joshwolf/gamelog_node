@@ -28,7 +28,7 @@ router.get('/add/:game_id', loggedIn, function(req, res) {
 			if(req.session.user.wishlist.indexOf(wishlistItem.GameId) == -1 ) {
 				req.session.user.wishlist.push(wishlistItem.GameId);
 			}
-			res.jsonp(req.session.user);
+			res.jsonp({success: true});
 		});
 });
 
