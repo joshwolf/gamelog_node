@@ -23,6 +23,7 @@ function loggedIn(req, res, next) {
 }
 
 router.get('/add/:game_id', loggedIn, function(req, res) {
+			console.log('eh');
 	models.WishlistLitem.findOrCreate({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
 		.spread(function(wishlistItem, created) {
 			console.log('foo');
