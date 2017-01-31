@@ -26,7 +26,7 @@ router.get('/add/:game_id', loggedIn, function(req, res) {
 	models.WishlistLitem.findOrCreate({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
 		.spread(function(wishlistItem, created) {
 			if(req.session.user.wishlist.indexOf(wishlistItem.GameId) == -1 ) {
-				req.session.user.wishlist.push(wishlistItem.GameId);
+				//req.session.user.wishlist.push(wishlistItem.GameId);
 			}
 			res.jsonp({success: true});
 		});
