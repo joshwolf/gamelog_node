@@ -33,7 +33,7 @@ angular.module('gamelogApp')
 					game: '=',
 					user: '='
 				},
-				template: '<i ng-class="[\'fa\',\'wishlist-icon\',{\'fa-star-o\':!onWishlist(game.id)},{\'fa-star\':onWishlist(game.id)}]" ng-click="toggleWishlist(game.id)">',
+				template: '<i ng-class="[\'fa\',\'wishlist-icon\',{\'fa-star-o\':!onWishlist(game.id)},{\'fa-star\':onWishlist(game.id)}]" ng-click="toggleWishlist(game.id)" ng-attr-title="12312">',
 				link: function(scope, element, attrs) {
 					scope.onWishlist = function(game_id) {
 						return scope.user && (scope.user.wishlist.indexOf(game_id) > -1);
@@ -50,6 +50,9 @@ angular.module('gamelogApp')
 									_.pull(scope.user.wishlist, game_id);
 								});
 						}
+					}
+					scope.iconTitle = function(game_id) {
+						return (scope.user && (scope.user.wishlist.indexOf(scope.game.id) > -1)) ? 'Remove from \'To Play\' List' : 'Add to \'To Play\' List';
 					}
 				}
 		};

@@ -6062,6 +6062,39 @@ gameplay article.well {
   width: 3rem;
   vertical-align: bottom; }
 
+#user-page > .user-profile-pic {
+  height: 5rem; }
+
+#user-page > label h2 {
+  margin: 0;
+  vertical-align: middle; }
+
+#user-page .user-wishlist {
+  display: inline;
+  float: right;
+  height: 5rem;
+  vertical-align: middle; }
+  #user-page .user-wishlist .user-wishlist-item {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    float: left;
+    height: 5rem;
+    width: 3rem;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center; }
+    #user-page .user-wishlist .user-wishlist-item img {
+      height: 100%; }
+    #user-page .user-wishlist .user-wishlist-item:hover {
+      height: 8rem;
+      transform: translate(0, -50%) scale(1.5);
+      z-index: 10; }
+
 #user-page .gameplay-display {
   margin: 1rem 0; }
 

@@ -2,6 +2,12 @@
 		{{$rootScope.isMobile}}
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
+	<section ng-show="current_user" class="user-wishlist">
+		<article ng-repeat="item in user.WishlistItems" class="user-wishlist-item">
+			<a href="/game/{{item.Game.id}}"><img class="img-game" ng-src="{{item.Game.image_thumbnail}}" uib-tooltip="{{item.Game.title}}" title="{{item.Game.title}}"></a>
+		</article>
+		<div class="clearfix"></div>
+	</section>
     <nav class="gameplay-display">
     	<div class="btn-group" data-intro="View {{user.first_name}}'s Gameplays chronologically, or grouped by title" data-position="bottom">
 	        <label class="btn btn-primary" ng-model="games_grouped" uib-btn-radio="false">List By Date</label>

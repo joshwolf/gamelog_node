@@ -23,14 +23,14 @@ function loggedIn(req, res, next) {
 }
 
 router.get('/add/:game_id', loggedIn, function(req, res) {
-	models.WishlistLitem.findOrCreate({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
+	models.WishlistItem.findOrCreate({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
 		.spread(function(wishlistItem, created) {
 			res.jsonp({success: true});
 		});
 });
 
 router.get('/remove/:game_id', loggedIn, function(req, res) {
-	models.WishlistLitem.destroy({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
+	models.WishlistItem.destroy({ where: { UserId: req.session.user.id, GameId: req.params.game_id }})
 		.then(function(r) {
 			res.jsonp(r);
 		});

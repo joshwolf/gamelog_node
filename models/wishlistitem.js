@@ -2,14 +2,14 @@ var _ = require('lodash');
 var gamelogUtils = require('../lib/gamelogUtils');
 
 module.exports = function(sequelize, DataTypes) {
-  var WishlistLitem = sequelize.define("WishlistLitem", {
+  var WishlistItem = sequelize.define("WishlistItem", {
 	}, {
 	  classMethods: {
 		associate: function(models) {
-			WishlistLitem.belongsTo(models.User);
-			WishlistLitem.belongsTo(models.Game);
+			WishlistItem.belongsTo(models.User);
+			WishlistItem.belongsTo(models.Game);
 		}
 	  }
 	});
-  return WishlistLitem;
+  return WishlistItem;
 };

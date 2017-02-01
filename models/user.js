@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
 		}, {
 		getterMethods: {
 			initials: function()  { if(!this.first_name) { return ''; } return (this.first_name.slice(0,1) + (this.last_name || '').slice(0,1)).toUpperCase(); },
-			wishlist: function()  { return _.map(this.WishlistLitems, function(item) { return item.GameId; }); }
+			wishlist: function()  { return _.map(this.WishlistItems, function(item) { return item.GameId; }); }
 		},
 	  	indexes: [
 	  		{
@@ -74,7 +74,7 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 		  	associate: function(models) {
 		        User.hasMany(models.GameplayScore, { as: 'Scores', foreignKey: 'PlayerId' });
-		        User.hasMany(models.WishlistLitem);
+		        User.hasMany(models.WishlistItem);
 		  	}
 		}
 	});

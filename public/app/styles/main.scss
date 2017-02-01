@@ -339,6 +339,37 @@ gameplay {
 }
 
 #user-page {
+	>.user-profile-pic {
+		height: 5rem;
+	}
+	>label h2 {
+		margin: 0;
+		vertical-align: middle;
+	}
+	.user-wishlist {
+		display: inline;
+		float: right;
+		height: 5rem;
+		vertical-align: middle;
+		.user-wishlist-item {
+			position: relative;
+			top: 50%;
+    		transform: translate(0, -50%);
+			float: left;
+			height: 5rem;
+			width: 3rem;
+			@include transition(all .5s ease);
+			@include transform-origin(center);
+			img {
+				height: 100%;
+			}
+			&:hover {
+				height: 8rem;
+				transform: translate(0, -50%) scale(1.5);
+				z-index: 10;
+			}
+		}
+	}
 	.gameplay-display {
 		margin: 1rem 0;
 	}

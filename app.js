@@ -77,14 +77,13 @@ passport.use(new FacebookStrategy({
 	},
 	function(req, accessToken, refreshToken, profile, done) {
 			// find the user in the database based on their facebook id
-			models.User.findOrCreate({ where: {full_name: profile.displayName} , include: [{ model: models.WishlistLitem, attributes: ['GameId'] }] })
+			models.User.findOrCreate({ where: {full_name: profile.displayName} , include: [{ model: models.WishlistItem, attributes: ['GameId'] }] })
 				.spread(function(user, created) {
 					//turn wishlist into array of game id's
 					//set all of the facebook information in our user model
 					user.facebook_id = user.facebook_id || profile.id;
 					user.updateFromFacebook(accessToken);
 					req.session.token = user.getToken();
-					console.log(JSON.stringify(user));
 					done(null,user);
 				});
 	}

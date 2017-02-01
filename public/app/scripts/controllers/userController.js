@@ -6,7 +6,7 @@ angular.module('gamelogApp')
 		$http.get('/api/users/' + $routeParams.id)
 		.then(function(result) {
 			$scope.user = result.data;
-				$scope.games_grouped = false;
+			$scope.games_grouped = false;
 			$rootScope.page_title = $scope.user.full_name;
 			$scope.gameplays = _.sortBy(_.map($scope.user.Scores, function(score) { return score.Gameplay; }), 'play_date').reverse();
 

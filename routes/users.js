@@ -16,7 +16,7 @@ function loggedIn(req, res, next) {
 }
 
 router.get('/me', loggedIn, function(req, res) {
-	models.User.findOne({ where: { id: req.session.user.id }, include: [{ model: models.WishlistLitem, attributes: ['GameId'] }]}).then(function(user) { res.send(user) });
+	models.User.findOne({ where: { id: req.session.user.id }, include: [{ model: models.WishlistItem, attributes: ['GameId'] }]}).then(function(user) { res.send(user) });
 });
 
 router.get('/:id', function(req, res) {
@@ -30,7 +30,7 @@ router.get('/:id', function(req, res) {
 			] }
 		);
 	}
-	var	gameplays = [
+	var	gameplays = 
 		{
 			model: models.GameplayScore, as: 'Scores', include: [
 				{
@@ -39,10 +39,17 @@ router.get('/:id', function(req, res) {
 				}
 			]
 		}
-	];
+	var	wishlistitems = 
+		{
+			model: models.WishlistItem, include: [
+				{
+					model: models.Game
+				}
+			]
+		}
 	models.User.findOne({
 		where: { id: req.params.id},
-		include: gameplays
+		include: [ gameplays, wishlistitems ]
 	}).then(function(user) { res.jsonp(user) });
 });
 
