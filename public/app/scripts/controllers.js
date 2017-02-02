@@ -332,6 +332,8 @@ angular.module('gamelogApp')
 angular.module('gamelogApp')
 	.controller('UserCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope, $timeout) {
 		$scope.global = $rootScope;
+
+	    $scope.is_loading = true;
 		$http.get('/api/users/' + $routeParams.id)
 		.then(function(result) {
 			$scope.user = result.data;
@@ -353,7 +355,10 @@ angular.module('gamelogApp')
 
 				$scope.setPage();
 				$scope.setPageGrouped();
-		});
+		})
+	    .finally(function() { 
+	      $scope.is_loading = false;
+	    });
 
 
 		$scope.setPageGrouped = function() {

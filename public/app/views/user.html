@@ -1,4 +1,8 @@
-<div class="container" ng-show="user" id="user-page">
+<div class="container" id="spinner" ng-show="current_user && is_loading">
+	<span us-spinner="{radius:30, width:8, length: 16}"></span>
+</div>
+
+<div class="container" ng-show="user && !is_loading" id="user-page">
 		{{$rootScope.isMobile}}
 	<img class="user-profile-pic" ng-src="{{user.profile_pic}}">
 	<label><h2>{{user.full_name}}</h2></label>
