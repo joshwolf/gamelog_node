@@ -33,7 +33,7 @@ angular.module('gamelogApp')
 					game: '=',
 					user: '='
 				},
-				template: '<i ng-class="[\'fa\',\'wishlist-icon\',{\'fa-star-o\':!onWishlist(game.id)},{\'fa-star\':onWishlist(game.id)}]" ng-click="toggleWishlist(game.id)" ng-attr-title="12312">',
+				template: '<i ng-class="[\'fa\',\'wishlist-icon\',{\'fa-star-o\':!onWishlist(game.id)},{\'fa-star\':onWishlist(game.id)}]" ng-click="toggleWishlist(game.id)" ng-attr-title="{{game.id}}">',
 				link: function(scope, element, attrs) {
 					scope.onWishlist = function(game_id) {
 						return scope.user && (scope.user.wishlist.indexOf(game_id) > -1);
