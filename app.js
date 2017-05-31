@@ -159,7 +159,7 @@ app.get('/gameplay/:id', function(req, res) {
 				var og_data = {
 					"title" : gameplay.getFacebookPostTitle(),
 					"type" : "website",
-					"image" : "http:" + gameplay.Game.image_thumbnail.replace('_t',''),
+					"image" : (gameplay.Game.image_thumbnail.indexOf('http') == 0 ? "" : "http:") + gameplay.Game.image_thumbnail.replace('_t',''),
 					"description" : "Played on " + dateFormat(gameplay.play_date, "shortDate") + ". " + _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
 					"url" : "http://games.greenlightgo.com/gameplay/" + gameplay.id
 				}
