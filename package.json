@@ -1,5 +1,8 @@
 {
   "name": "gamelog",
+  "engines": {
+    "node": "6.11.1"
+  },
   "version": "0.6.0",
   "dependencies": {
     "async-task": "^0.4.2",
@@ -20,7 +23,7 @@
     "nconf": "^0.8.4",
     "newrelic": "^1.36.0",
     "passport": "^0.3.2",
-    "passport-facebook": "^2.1.1",
+    "passport-facebook": "rwky/passport-facebook",
     "pug": "^2.0.0-beta6",
     "redis": "^2.6.2",
     "sequelize": "^3.23.6",
