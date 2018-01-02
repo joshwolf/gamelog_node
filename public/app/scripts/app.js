@@ -96,6 +96,24 @@ angular.module('gamelogApp')
 				}
 		};
 	})
+	.directive('userIcons', function ($document, $window) {
+		return {
+				restrict: 'E',
+				templateUrl: 'partials/userIcons.html',
+				transclude: true,
+				scope: {
+						users: '=',
+						noLink: '='
+				},
+				link: function(scope, element, attrs) {
+					scope.showUser = function(id) {
+						if(!scope.noLink) {
+							$window.location.href = '/user/' + id;
+						}
+					}
+				}
+		};
+	})
 	.directive('wishlistIcon', function ($document, $window, $http) {
 		return {
 				restrict: 'E',
@@ -201,6 +219,12 @@ angular.module('gamelogApp').config(function ($routeProvider) {
 		.when('/opponents', {
 			templateUrl: 'views/opponents.html',
 			controller: 'UserOpponentsCtrl',
+			controllerAs: 'userController',
+			page_title: 'User'
+		})
+		.when('/review/:year', {
+			templateUrl: 'views/review.html',
+			controller: 'UserYearReviewCtrl',
 			controllerAs: 'userController',
 			page_title: 'User'
 		})

@@ -24,6 +24,12 @@ angular.module('gamelogApp').config(function ($routeProvider) {
 			controllerAs: 'userController',
 			page_title: 'User'
 		})
+		.when('/review/:year', {
+			templateUrl: 'views/review.html',
+			controller: 'UserYearReviewCtrl',
+			controllerAs: 'userController',
+			page_title: 'User'
+		})
 		.when('/gameplay/:id', {
 			templateUrl: 'views/gameplay.html',
 			controller: 'GameplayCtrl',

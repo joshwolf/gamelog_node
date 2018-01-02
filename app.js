@@ -180,14 +180,14 @@ app.get('/*', function(req, res) {
 		res.redirect((req.connection.encrypted ? 'https://' : 'http://') + appHost);
 	}
 	if(req.session && req.session.token) {
-		res.cookie('user', req.session.user,  {
+		res.setHeader('Set-Cookie',cookie.serialize('user', JSON.stringify(req.session.user), {
 			path: '/',
 			maxAge: 60 * 60 * 24 * 60 // 60 days
-		});
-		res.cookie('token', req.session.token,  {
+		}));
+		res.setHeader('Set-Cookie',cookie.serialize('token', req.session.token, {
 			path: '/',
 			maxAge: 60 * 60 * 24 * 60 // 60 days
-		});
+		}));
 	}
 	var cookies = cookie.parse(req.headers.cookie || '');
 	var payload = jwt.decode(cookies.token, authConfig.jwt.secret);

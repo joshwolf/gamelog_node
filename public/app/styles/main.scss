@@ -147,6 +147,15 @@ ul {
 	height: 5rem;
 }
 
+.user-icons {
+	display: inline-block;
+	padding: 0;
+	li {
+		display: inline-block;
+		margin: 0 .5rem;
+	}
+}
+
 .ui-select-container input.ui-select-search:not(.ng-touched) {
     width: 100% !important;
 }
@@ -435,6 +444,11 @@ gameplay {
 	}
 }
 
+#year-review-page {
+	li {
+		//display: inline-block;
+	}
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
 

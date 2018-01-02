@@ -239,3 +239,99 @@ angular.module('gamelogApp')
 			.value();
 	}
 });
+
+angular.module('gamelogApp')
+	.controller('UserYearReviewCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope) {
+	$rootScope.page_title = 'Your Year In Review';
+
+	var current_year = $routeParams.year;
+
+	if($scope.current_user) {
+		$scope.is_loading = true;
+		$http.get('/api/users/' + $scope.current_user.id)
+			.then(function(result) {
+				var current_year_gameplays = _.chain(result.data.Scores)
+				.filter(function(score) {
+					return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
+				})
+				.orderBy(['play_date'])
+				.value();
+				var wins = _.filter(current_year_gameplays, function(gameplay) {
+					return gameplay.rank == 1;
+				});
+				$scope.wins_count = wins.length;
+				$scope.first_win = _.head(wins);
+				$scope.first_win.other_winners = _.chain($scope.first_win.Gameplay.Scores)
+					.filter(function(score) { return score.rank == 1 && score.PlayerId != $scope.current_user.id; })
+					.map('Player')
+					.value();
+				$scope.first_win.other_players = _.chain($scope.first_win.Gameplay.Scores)
+					.filter(function(score) { return score.rank > 1 && score.PlayerId != $scope.current_user.id; })
+					.map('Player')
+					.value();
+				$scope.last_win = _.last(wins);
+				$scope.last_win.other_winners = _.chain($scope.last_win.Gameplay.Scores)
+					.filter(function(score) { return score.rank == 1 && score.PlayerId != $scope.current_user.id; })
+					.map('Player')
+					.value();
+				$scope.last_win.other_players = _.chain($scope.last_win.Gameplay.Scores)
+					.filter(function(score) { return score.rank > 1 && score.PlayerId != $scope.current_user.id; })
+					.map('Player')
+					.value();
+				var defeated_players = _.chain(wins)
+					.map('Gameplay')
+					.map('Scores')
+					.flatten()
+					.remove(function(score) { return score.PlayerId != $scope.current_user.id; })
+					.reduce(function(result,value,key) {
+						result[value.PlayerId] = result[value.PlayerId] || { Player: value.Player, count: 0 };
+						result[value.PlayerId].count += 1;
+						return result;
+					}, {})
+					.sortBy(function(player) { return player.count; })
+					.reverse()
+					.value();
+				$scope.most_defeated = _.filter(defeated_players, function(player) { return player.count == (_.first(defeated_players)).count; });
+				$scope.most_defeated_players = _.map($scope.most_defeated,'Player');
+
+			})
+			.finally(function() {
+				$scope.is_loading = false;
+			});
+	}
+
+	$scope.setCurrentOpponent = function(user) {
+		$scope.selected_opponent = user;
+		$scope.selected_opponent_games = _.orderBy(_.values(user.games),['last_played'],['desc']);
+		$scope.selected_game = $scope.selected_opponent_games[0];
+		$scope.filterTopics();
+		$scope.selected_topics = {};
+	}
+
+	$scope.setCurrentGame = function(game) {
+		$scope.selected_game = game;
+	}
+
+	$scope.filteredByTopic = function(games) {
+		if(!$scope.selected_topics || !$scope.selected_topics.topics) {
+			return games;
+		}
+		return _.filter(games, function(game) {
+			return _.intersection(game.topics, $scope.selected_topics.topics).length == $scope.selected_topics.topics.length;
+		});
+	}
+
+    $scope.login = function() {
+      $cookies.put('next_url',$location.path());
+      $window.location.href = '/login';
+    }
+
+	$scope.filterTopics = function() {
+		$scope.selected_opponent_topics = _.chain($scope.filteredByTopic($scope.selected_opponent_games))
+			.map(function(game) { return game.topics; })
+			.flattenDeep()
+			.uniq()
+			.sort()
+			.value();
+	}
+});

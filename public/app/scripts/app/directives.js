@@ -25,6 +25,24 @@ angular.module('gamelogApp')
 				}
 		};
 	})
+	.directive('userIcons', function ($document, $window) {
+		return {
+				restrict: 'E',
+				templateUrl: 'partials/userIcons.html',
+				transclude: true,
+				scope: {
+						users: '=',
+						noLink: '='
+				},
+				link: function(scope, element, attrs) {
+					scope.showUser = function(id) {
+						if(!scope.noLink) {
+							$window.location.href = '/user/' + id;
+						}
+					}
+				}
+		};
+	})
 	.directive('wishlistIcon', function ($document, $window, $http) {
 		return {
 				restrict: 'E',
