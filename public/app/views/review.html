@@ -3,8 +3,10 @@
 </div>
 
 <div class="container" id="year-review-page" ng-show="current_user && !is_loading">
+	<h3>You played {{play_count}} games.</h3>
 	<ul>
-		<li>You won {{wins_count}} times, most often against <user-icons users="most_defeated_players"></user-icons>({{most_defeated[0].count}} times)</li>.
+		<li>You won {{wins_count}} times, most often against <user-icons users="most_defeated_players"></user-icons>({{most_defeated[0].count}} times).</li>
+		<li>You lost {{losses_count}} times, most often against <user-icons users="most_defeated_by_players"></user-icons>({{most_defeated_by[0].count}} times).</li>
 		<li>
 			<p>Your first win was <a ng-href="/game/{{first_win.Gameplay.GameId}}"><img class="img-game" ng-src="{{first_win.Gameplay.Game.image_thumbnail}}" uib-tooltip="{{first_win.Gameplay.Game.title}}" title="{{first_win.Gameplay.Game.title}}"></a>, on {{ first_win.Gameplay.play_date | date: 'shortDate'}}. You <span ng-if="first_win.other_winners">and <user-icons users="first_win.other_winners"></user-icons></span> beat <user-icons users="first_win.other_players"></user-icons>.</p>
 		</li>

@@ -248,7 +248,7 @@ angular.module('gamelogApp')
 
 	if($scope.current_user) {
 		$scope.is_loading = true;
-		$http.get('/api/users/' + $scope.current_user.id)
+		$http.get('/api/users/' + $scope.current_user.id + '?deep=true')
 			.then(function(result) {
 				var current_year_gameplays = _.chain(result.data.Scores)
 				.filter(function(score) {
@@ -259,7 +259,17 @@ angular.module('gamelogApp')
 				var wins = _.filter(current_year_gameplays, function(gameplay) {
 					return gameplay.rank == 1;
 				});
+				var losses = _.filter(current_year_gameplays, function(gameplay) {
+					return gameplay.rank > 1;
+				});
+				var played_games = _.chain(current_year_gameplays)
+					.map('Gameplay')
+					//.map('Game')
+					.value();
+					console.log(played_games)
+				$scope.play_count = current_year_gameplays.length;
 				$scope.wins_count = wins.length;
+				$scope.losses_count = losses.length;
 				$scope.first_win = _.head(wins);
 				$scope.first_win.other_winners = _.chain($scope.first_win.Gameplay.Scores)
 					.filter(function(score) { return score.rank == 1 && score.PlayerId != $scope.current_user.id; })
@@ -293,7 +303,22 @@ angular.module('gamelogApp')
 					.value();
 				$scope.most_defeated = _.filter(defeated_players, function(player) { return player.count == (_.first(defeated_players)).count; });
 				$scope.most_defeated_players = _.map($scope.most_defeated,'Player');
-
+				var defeated_by_players = _.chain(losses)
+					.map('Gameplay')
+					.map('Scores')
+					.flatten()
+					.filter(function(score) { return score.rank == 1; })
+					.reduce(function(result,value,key) {
+						result[value.PlayerId] = result[value.PlayerId] || { Player: value.Player, count: 0 };
+						result[value.PlayerId].count += 1;
+						return result;
+					}, {})
+					.sortBy(function(player) { return player.count; })
+					.reverse()
+					.value();
+					console.log(defeated_by_players)
+				$scope.most_defeated_by = _.filter(defeated_by_players, function(player) { return player.count == (_.first(defeated_by_players)).count; });
+				$scope.most_defeated_by_players = _.map($scope.most_defeated_by,'Player');
 			})
 			.finally(function() {
 				$scope.is_loading = false;
