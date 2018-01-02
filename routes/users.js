@@ -25,6 +25,7 @@ router.get('/:id', function(req, res) {
 	]
 	if(req.session.user) {
 		if(req.query.deep) {
+			scoreInfo[0].include = [ { model: models.Mechanic }, { model: models.Category }, { model: models.Designer } ]
 		}
 		scoreInfo.push(
 			{ model: models.GameplayScore, as: 'Scores', include: [
