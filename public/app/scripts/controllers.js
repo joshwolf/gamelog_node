@@ -573,17 +573,22 @@ angular.module('gamelogApp')
 	.controller('UserYearReviewCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope) {
 	$rootScope.page_title = 'Your Year In Review';
 
-	$scope.line_chart_options = {
+	var line_chart_options = {
 		scales : {
 			xAxes: [{
 				type : 'linear',
 				ticks: {
+					min: 0,
 					beginAtZero : true,
-					stepSize: 2
+				    callback: function(value, index, values) {
+				        if (Math.floor(value) === value) {
+				            return value;
+				        }
+				    }
 				}
 			}]
 		}
-	};
+   	};
 
 	var current_year = $routeParams.year;
 
@@ -678,6 +683,28 @@ angular.module('gamelogApp')
 							$scope.mechanics_list = mechanics_list
 						$scope.mechanics_data = _.map(mechanics_list,'count').slice(0,10);
 						$scope.mechanics_labels = _.map(mechanics_list,'mechanic').slice(0,10);
+						$scope.mechanics_chart_options = line_chart_options;
+						$scope.mechanics_chart_options.tooltips =
+							{
+								mode: 'single',
+							    callbacks: {
+							        label: function(tooltipItem, data) {
+							            var tooltipGameList = [];
+							            // do some stuff
+							            _.chain(played_games)
+						                	.filter(function(game) { return _.some(game.Mechanics, function(mechanic) { return mechanic.title == tooltipItem.yLabel; }); })
+						                	.map(function(game) { return game.title; })
+						                	.sortBy()
+						                	.each(function(title) {
+									            tooltipGameList.push(title);
+						                	})
+						                	.value();
+
+							            return tooltipGameList;
+							        }
+							    }
+						    }
+
 						var categories_list = _.chain(current_year_gameplays)
 							.map('Gameplay.Game.Categories')
 							.flatten()
@@ -692,20 +719,6 @@ angular.module('gamelogApp')
 							$scope.categories_list = categories_list
 						$scope.categories_data = _.map(categories_list,'count').slice(0,10);
 						$scope.categories_labels = _.map(categories_list,'category').slice(0,10);
-						var designers_list = _.chain(current_year_gameplays)
-							.map('Gameplay.Game')
-							.flatten()
-							.reduce(function(result,value,key) {
-								result[value.id] = result[value.id] || { designer: value.title, count: 0 };
-								result[value.id].count += 1;
-								return result;
-							}, {})
-							.sortBy(function(designer) { return designer.count; })
-							.reverse()
-							.value();
-							$scope.designers_list = designers_list;
-						$scope.designers_data = _.map(designers_list,'count').slice(0,10);
-						$scope.designers_labels = _.map(designers_list,'designer').slice(0,10);
 					});
 
 			})
