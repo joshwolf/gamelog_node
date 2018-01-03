@@ -573,11 +573,23 @@ angular.module('gamelogApp')
 	.controller('UserYearReviewCtrl', function ($scope, $window, $http, $location, $cookies, $routeParams, $rootScope) {
 	$rootScope.page_title = 'Your Year In Review';
 
+	$scope.line_chart_options = {
+		scales : {
+			xAxes: [{
+				type : 'linear',
+				ticks: {
+					beginAtZero : true,
+					stepSize: 2
+				}
+			}]
+		}
+	};
+
 	var current_year = $routeParams.year;
 
 	if($scope.current_user) {
 		$scope.is_loading = true;
-		$http.get('/api/users/' + $scope.current_user.id + '?deep=true')
+		$http.get('/api/users/' + $scope.current_user.id)
 			.then(function(result) {
 				var current_year_gameplays = _.chain(result.data.Scores)
 				.filter(function(score) {
@@ -592,11 +604,11 @@ angular.module('gamelogApp')
 					return gameplay.rank > 1;
 				});
 				var played_games = _.chain(current_year_gameplays)
-					.map('Gameplay')
-					//.map('Game')
+					.map('Gameplay.Game')
+					.uniqBy('id')
 					.value();
-					console.log(played_games)
 				$scope.play_count = current_year_gameplays.length;
+				$scope.games_count = played_games.length;
 				$scope.wins_count = wins.length;
 				$scope.losses_count = losses.length;
 				$scope.first_win = _.head(wins);
@@ -618,8 +630,7 @@ angular.module('gamelogApp')
 					.map('Player')
 					.value();
 				var defeated_players = _.chain(wins)
-					.map('Gameplay')
-					.map('Scores')
+					.map('Gameplay.Scores')
 					.flatten()
 					.remove(function(score) { return score.PlayerId != $scope.current_user.id; })
 					.reduce(function(result,value,key) {
@@ -633,8 +644,7 @@ angular.module('gamelogApp')
 				$scope.most_defeated = _.filter(defeated_players, function(player) { return player.count == (_.first(defeated_players)).count; });
 				$scope.most_defeated_players = _.map($scope.most_defeated,'Player');
 				var defeated_by_players = _.chain(losses)
-					.map('Gameplay')
-					.map('Scores')
+					.map('Gameplay.Scores')
 					.flatten()
 					.filter(function(score) { return score.rank == 1; })
 					.reduce(function(result,value,key) {
@@ -645,9 +655,59 @@ angular.module('gamelogApp')
 					.sortBy(function(player) { return player.count; })
 					.reverse()
 					.value();
-					console.log(defeated_by_players)
 				$scope.most_defeated_by = _.filter(defeated_by_players, function(player) { return player.count == (_.first(defeated_by_players)).count; });
 				$scope.most_defeated_by_players = _.map($scope.most_defeated_by,'Player');
+
+				$http.get('/api/games/' + _.map(played_games, function(game) { return game.id; }).join(','))
+					.then(function(result) {
+						played_games = result.data;
+						_.forEach(current_year_gameplays, function(gameplay) {
+							_.merge(gameplay.Gameplay.Game, _.find(played_games, function(game) { return game.id == gameplay.Gameplay.GameId }));
+						});
+						var mechanics_list = _.chain(current_year_gameplays)
+							.map('Gameplay.Game.Mechanics')
+							.flatten()
+							.reduce(function(result,value,key) {
+								result[value.id] = result[value.id] || { mechanic: value.title, count: 0 };
+								result[value.id].count += 1;
+								return result;
+							}, {})
+							.sortBy(function(mechanic) { return mechanic.count; })
+							.reverse()
+							.value();
+							$scope.mechanics_list = mechanics_list
+						$scope.mechanics_data = _.map(mechanics_list,'count').slice(0,10);
+						$scope.mechanics_labels = _.map(mechanics_list,'mechanic').slice(0,10);
+						var categories_list = _.chain(current_year_gameplays)
+							.map('Gameplay.Game.Categories')
+							.flatten()
+							.reduce(function(result,value,key) {
+								result[value.id] = result[value.id] || { category: value.title, count: 0 };
+								result[value.id].count += 1;
+								return result;
+							}, {})
+							.sortBy(function(category) { return category.count; })
+							.reverse()
+							.value();
+							$scope.categories_list = categories_list
+						$scope.categories_data = _.map(categories_list,'count').slice(0,10);
+						$scope.categories_labels = _.map(categories_list,'category').slice(0,10);
+						var designers_list = _.chain(current_year_gameplays)
+							.map('Gameplay.Game')
+							.flatten()
+							.reduce(function(result,value,key) {
+								result[value.id] = result[value.id] || { designer: value.title, count: 0 };
+								result[value.id].count += 1;
+								return result;
+							}, {})
+							.sortBy(function(designer) { return designer.count; })
+							.reverse()
+							.value();
+							$scope.designers_list = designers_list;
+						$scope.designers_data = _.map(designers_list,'count').slice(0,10);
+						$scope.designers_labels = _.map(designers_list,'designer').slice(0,10);
+					});
+
 			})
 			.finally(function() {
 				$scope.is_loading = false;

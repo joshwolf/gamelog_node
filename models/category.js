@@ -11,12 +11,7 @@ module.exports = function(sequelize, DataTypes) {
 	      fields: ['bgg_id'],
 	      unique: true
 	    }
-	  ],
-	  classMethods: {
-	  	associate: function(models) {
-	  		//Category.belongsToMany(models.Game, {through: 'GameCategory'});
-	  	}
-	  }
+	  ]
 	});
   return Category;
 };
