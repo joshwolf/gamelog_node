@@ -154,13 +154,19 @@ app.get('/logout', function(req, res) {
 
 app.get('/gameplay/:id', function(req, res) {
 	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
-		models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
+		models.Gameplay.find(
+			{ where: {id: req.params.id},
+				include:
+					[models.Game,
+					{model: models.User, as: 'Creator'},
+					{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]
+			}).then(function(gameplay) {
 			if(gameplay) {
 				var og_data = {
 					"title" : gameplay.getFacebookPostTitle(),
 					"type" : "website",
 					"image" : (gameplay.Game.image_thumbnail.indexOf('http') == 0 ? "" : "http:") + gameplay.Game.image_thumbnail.replace('_t',''),
-					"description" : "Played on " + dateFormat(gameplay.play_date, "shortDate") + ". " + _.map(gameplay.Scores, function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
+					"description" : "Played on " + dateFormat(gameplay.play_date, "shortDate") + ". " + _.chain(gameplay.Scores).orderBy('rank').map(function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
 					"url" : "http://games.greenlightgo.com/gameplay/" + gameplay.id
 				}
 				res.render('opengraph', { "og_data" : og_data });
