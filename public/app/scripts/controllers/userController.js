@@ -268,11 +268,12 @@ angular.module('gamelogApp')
 		$http.get('/api/users/' + $scope.current_user.id)
 			.then(function(result) {
 				var current_year_gameplays = _.chain(result.data.Scores)
-				.filter(function(score) {
-					return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
-				})
-				.orderBy(['play_date'])
-				.value();
+					.filter(function(score) {
+						return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
+					})
+					.orderBy(['play_date'])
+					.value();
+				console.log(_.map(current_year_gameplays,function(g) { return g.rank.toString() + ' ' + g.Gameplay.play_date.toString() }))
 				var wins = _.filter(current_year_gameplays, function(gameplay) {
 					return gameplay.rank == 1;
 				});
@@ -354,27 +355,6 @@ angular.module('gamelogApp')
 							$scope.mechanics_list = mechanics_list
 						$scope.mechanics_data = _.map(mechanics_list,'count').slice(0,10);
 						$scope.mechanics_labels = _.map(mechanics_list,'mechanic').slice(0,10);
-						$scope.mechanics_chart_options = line_chart_options;
-						$scope.mechanics_chart_options.tooltips =
-							{
-								mode: 'single',
-							    callbacks: {
-							        label: function(tooltipItem, data) {
-							            var tooltipGameList = [];
-							            // do some stuff
-							            _.chain(played_games)
-						                	.filter(function(game) { return _.some(game.Mechanics, function(mechanic) { return mechanic.title == tooltipItem.yLabel; }); })
-						                	.map(function(game) { return game.title; })
-						                	.sortBy()
-						                	.each(function(title) {
-									            tooltipGameList.push(title);
-						                	})
-						                	.value();
-
-							            return tooltipGameList;
-							        }
-							    }
-						    }
 
 						var categories_list = _.chain(current_year_gameplays)
 							.map('Gameplay.Game.Categories')
@@ -390,46 +370,35 @@ angular.module('gamelogApp')
 							$scope.categories_list = categories_list
 						$scope.categories_data = _.map(categories_list,'count').slice(0,10);
 						$scope.categories_labels = _.map(categories_list,'category').slice(0,10);
+						$scope.chart_options = line_chart_options;
+						$scope.chart_options.tooltips =
+							{
+								mode: 'single',
+							    callbacks: {
+							    	title: function(tooltipItem, data) {
+							    		return tooltipItem[0].yLabel + ' (' + tooltipItem[0].xLabel + ')'
+							    	},
+							        label: function(tooltipItem, data) {
+							            var tooltipGameList = [];
+
+							            _.chain(played_games)
+						                	.filter(function(game) { return _.some(_.concat(game.Categories, game.Mechanics), function(mechaniccategory) { return mechaniccategory.title == tooltipItem.yLabel; }); })
+						                	.map(function(game) { return game.title; })
+						                	.sortBy()
+						                	.each(function(title) {
+									            tooltipGameList.push(title);
+						                	})
+						                	.value();
+
+							            return tooltipGameList;
+							        }
+							    }
+						    }
 					});
 
 			})
 			.finally(function() {
 				$scope.is_loading = false;
 			});
-	}
-
-	$scope.setCurrentOpponent = function(user) {
-		$scope.selected_opponent = user;
-		$scope.selected_opponent_games = _.orderBy(_.values(user.games),['last_played'],['desc']);
-		$scope.selected_game = $scope.selected_opponent_games[0];
-		$scope.filterTopics();
-		$scope.selected_topics = {};
-	}
-
-	$scope.setCurrentGame = function(game) {
-		$scope.selected_game = game;
-	}
-
-	$scope.filteredByTopic = function(games) {
-		if(!$scope.selected_topics || !$scope.selected_topics.topics) {
-			return games;
 		}
-		return _.filter(games, function(game) {
-			return _.intersection(game.topics, $scope.selected_topics.topics).length == $scope.selected_topics.topics.length;
-		});
-	}
-
-    $scope.login = function() {
-      $cookies.put('next_url',$location.path());
-      $window.location.href = '/login';
-    }
-
-	$scope.filterTopics = function() {
-		$scope.selected_opponent_topics = _.chain($scope.filteredByTopic($scope.selected_opponent_games))
-			.map(function(game) { return game.topics; })
-			.flattenDeep()
-			.uniq()
-			.sort()
-			.value();
-	}
-});
+	});

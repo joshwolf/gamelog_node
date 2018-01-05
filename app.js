@@ -154,7 +154,7 @@ app.get('/logout', function(req, res) {
 
 app.get('/gameplay/:id', function(req, res) {
 	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
-		models.Gameplay.find({where: {id: req.params.id}, order: ['rank'], include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
+		models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]}).then(function(gameplay) {
 			if(gameplay) {
 				var og_data = {
 					"title" : gameplay.getFacebookPostTitle(),

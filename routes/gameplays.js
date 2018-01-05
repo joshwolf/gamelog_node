@@ -130,6 +130,32 @@ router.get('/recent', function(req,res) {
 	});
 });
 
+/*router.get('/user/:userid/year/:year', loggedIn, function(req, res) {
+	models.GameplayScore.findAll({
+		where: {
+			User: req.params.userid
+		},
+		include: [ {
+			model: models.Gameplay,
+			where: {
+				play_date: { $gt: time_ago }
+			},
+			order: [['play_date','DESC']],
+			include: [ 
+				{
+					model: models.GameplayScore, as: 'Scores', include: [ {
+						model: models.User, as: 'Player'
+					}]
+				},
+				{
+					model: models.Game, as: 'Game', include: [ { model: models.Category, as: 'Categories' }, { model: models.Mechanic, as: 'Mechanics' }, { model: models.Designer, as: 'Designers' }]
+				}
+			]
+		} ]
+	})
+	.then(function(scores) { res.jsonp(scores); });
+});*/
+
 
 router.get('/:id', function(req, res) {
 	models.Gameplay.find({where: {id: req.params.id}, include: [models.Game, {model: models.User, as: 'Creator'},{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]})

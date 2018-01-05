@@ -14,8 +14,8 @@
 			<p>Your last win was <a ng-href="/game/{{last_win.Gameplay.GameId}}"><img class="img-game" ng-src="{{last_win.Gameplay.Game.image_thumbnail}}" uib-tooltip="{{last_win.Gameplay.Game.title}}" title="{{last_win.Gameplay.Game.title}}"></a>, on {{ last_win.Gameplay.play_date | date: 'shortDate'}}. You <span ng-if="last_win.other_winners.length > 0">and <user-icons users="last_win.other_winners"></user-icons></span> beat <user-icons users="last_win.other_players"></user-icons>.</p>
 		</li>
 	</ul>
-	<canvas class="chart chart-horizontal-bar" chart-data="mechanics_data" chart-labels="mechanics_labels" chart-options="mechanics_chart_options"></canvas> 
-	<canvas class="chart chart-horizontal-bar" chart-data="categories_data" chart-labels="categories_labels" chart-options="line_chart_options"></canvas> 
+	<canvas class="chart chart-horizontal-bar" chart-data="mechanics_data" chart-labels="mechanics_labels" chart-options="chart_options"></canvas> 
+	<canvas class="chart chart-horizontal-bar" chart-data="categories_data" chart-labels="categories_labels" chart-options="chart_options"></canvas> 
 </div>
 <div class="container" ng-show="!current_user">
 	<h2>Please <button ng-click="login()">Log in</button>
