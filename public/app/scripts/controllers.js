@@ -596,7 +596,7 @@ angular.module('gamelogApp')
 
 	if($scope.current_user) {
 		var user_id = $scope.current_user.id;
-		if($scope.current_user.is_admin && (parseInt($routeParams.user_id) != undefined)) {
+		if($scope.current_user.is_admin && ($routeParams.user_id != undefined)) {
 			user_id = $routeParams.user_id;
 		}
 		$scope.is_loading = true;
