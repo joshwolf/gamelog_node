@@ -42,9 +42,11 @@ angular.module('gamelogApp')
 				});
 			}
 			$rootScope.page_title = $scope.current_game.title;
+			$scope.current_game.designers = _.map($scope.current_game.Designers, function(designer) { return designer.name; });
+			$scope.current_game.mechanics = _.map($scope.current_game.Mechanics, function(mechanic) { return mechanic.title; });
+			$scope.current_game.categories = _.map($scope.current_game.Categories, function(category) { return category.title; });
 		});
 		$scope.recent_opponents = $localStorage.recent_opponents;
-
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {
@@ -600,7 +602,7 @@ angular.module('gamelogApp')
 					.filter(function(score) {
 						return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
 					})
-					.orderBy(['play_date'])
+					.orderBy(['Gameplay.play_date'])
 					.value();
 				console.log(_.map(current_year_gameplays,function(g) { return g.rank.toString() + ' ' + g.Gameplay.play_date.toString() }))
 				var wins = _.filter(current_year_gameplays, function(gameplay) {

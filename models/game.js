@@ -25,9 +25,9 @@ module.exports = function(sequelize, DataTypes) {
   		}
   	]
   });
-  Game.designers = function() { return _.map(this.Designers, function(designer) { return designer.name; })},
-  Game.mechanics = function() { return _.map(this.Mechanics, function(mechanic) { return mechanic.title; })},
-  Game.categories = function() { return _.map(this.Categories, function(category) { return category.title; })},
+  Game.prototype.designers = function() { return _.map(this.Designers, function(designer) { return designer.name; })};
+  Game.mechanics = function() { return _.map(this.Mechanics, function(mechanic) { return mechanic.title; })};
+  Game.prototype.categories = function() { return _.map(this.Categories, function(category) { return category.title; })};
   Game.associate = function(models) {
     Game.belongsToMany(models.Designer, {through: 'GameDesigner'});
     Game.belongsToMany(models.Mechanic, {through: 'GameMechanic'});
@@ -84,6 +84,7 @@ module.exports = function(sequelize, DataTypes) {
           });
         } else {
           if(done) {
+            console.log(JSON.stringify(game.mechanics))
             done(game);
           } else {
             game;

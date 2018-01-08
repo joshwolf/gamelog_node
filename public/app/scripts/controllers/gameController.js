@@ -24,9 +24,11 @@ angular.module('gamelogApp')
 				});
 			}
 			$rootScope.page_title = $scope.current_game.title;
+			$scope.current_game.designers = _.map($scope.current_game.Designers, function(designer) { return designer.name; });
+			$scope.current_game.mechanics = _.map($scope.current_game.Mechanics, function(mechanic) { return mechanic.title; });
+			$scope.current_game.categories = _.map($scope.current_game.Categories, function(category) { return category.title; });
 		});
 		$scope.recent_opponents = $localStorage.recent_opponents;
-
 		$scope.addGameplay = function() {
 			$http.post('/api/gameplays/new', JSON.stringify({token: $cookies.get('token'), data: $scope.new_gameplay}))
 				.success(function(result) {

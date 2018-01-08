@@ -271,7 +271,7 @@ angular.module('gamelogApp')
 					.filter(function(score) {
 						return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
 					})
-					.orderBy(['play_date'])
+					.orderBy(['Gameplay.play_date'])
 					.value();
 				console.log(_.map(current_year_gameplays,function(g) { return g.rank.toString() + ' ' + g.Gameplay.play_date.toString() }))
 				var wins = _.filter(current_year_gameplays, function(gameplay) {

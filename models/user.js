@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
 		last_name: DataTypes.STRING,
 		full_name: DataTypes.STRING,
 		email: DataTypes.STRING,
-		profile_pic: DataTypes.STRING
+		profile_pic: DataTypes.STRING,
+		is_admin: DataTypes.BOOLEAN
 		}, {
 		getterMethods: {
 			initials: function()  { if(!this.first_name) { return ''; } return (this.first_name.slice(0,1) + (this.last_name || '').slice(0,1)).toUpperCase(); },
