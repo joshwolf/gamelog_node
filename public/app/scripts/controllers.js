@@ -595,16 +595,21 @@ angular.module('gamelogApp')
 	var current_year = $routeParams.year;
 
 	if($scope.current_user) {
+		var user_id = $scope.current_user.id;
+		if($scope.current_user.is_admin && (parseInt($routeParams.user_id) != undefined)) {
+			user_id = $routeParams.user_id;
+		}
 		$scope.is_loading = true;
-		$http.get('/api/users/' + $scope.current_user.id)
+		$http.get('/api/users/' + user_id)
 			.then(function(result) {
+				$scope.review_user = result.data;
+				$scope.review_year = current_year;
 				var current_year_gameplays = _.chain(result.data.Scores)
 					.filter(function(score) {
 						return (new Date(score.Gameplay.play_date)).getFullYear() == current_year;
 					})
 					.orderBy(['Gameplay.play_date'])
 					.value();
-				console.log(_.map(current_year_gameplays,function(g) { return g.rank.toString() + ' ' + g.Gameplay.play_date.toString() }))
 				var wins = _.filter(current_year_gameplays, function(gameplay) {
 					return gameplay.rank == 1;
 				});
@@ -617,30 +622,41 @@ angular.module('gamelogApp')
 					.value();
 				$scope.play_count = current_year_gameplays.length;
 				$scope.games_count = played_games.length;
+				var played_game_counts = _.chain(current_year_gameplays)
+					.map('Gameplay.Game')
+					.reduce(function(result,value,key) {
+							result[value.id] = result[value.id] || { Game: value, count: 0 };
+							result[value.id].count += 1;
+							return result;
+						}, {})
+					.sortBy(function(game) { return game.count; })
+					.reverse()
+					.value();
+				$scope.most_played_games = _.filter(played_game_counts, function(game) { return game.count == (_.first(played_game_counts)).count; });
 				$scope.wins_count = wins.length;
 				$scope.losses_count = losses.length;
 				$scope.first_win = _.head(wins);
 				$scope.first_win.other_winners = _.chain($scope.first_win.Gameplay.Scores)
-					.filter(function(score) { return score.rank == 1 && score.PlayerId != $scope.current_user.id; })
+					.filter(function(score) { return score.rank == 1 && score.PlayerId != user_id; })
 					.map('Player')
 					.value();
 				$scope.first_win.other_players = _.chain($scope.first_win.Gameplay.Scores)
-					.filter(function(score) { return score.rank > 1 && score.PlayerId != $scope.current_user.id; })
+					.filter(function(score) { return score.rank > 1 && score.PlayerId != user_id; })
 					.map('Player')
 					.value();
 				$scope.last_win = _.last(wins);
 				$scope.last_win.other_winners = _.chain($scope.last_win.Gameplay.Scores)
-					.filter(function(score) { return score.rank == 1 && score.PlayerId != $scope.current_user.id; })
+					.filter(function(score) { return score.rank == 1 && score.PlayerId != user_id; })
 					.map('Player')
 					.value();
 				$scope.last_win.other_players = _.chain($scope.last_win.Gameplay.Scores)
-					.filter(function(score) { return score.rank > 1 && score.PlayerId != $scope.current_user.id; })
+					.filter(function(score) { return score.rank > 1 && score.PlayerId != user_id; })
 					.map('Player')
 					.value();
 				var defeated_players = _.chain(wins)
 					.map('Gameplay.Scores')
 					.flatten()
-					.remove(function(score) { return score.PlayerId != $scope.current_user.id; })
+					.remove(function(score) { return score.PlayerId != user_id; })
 					.reduce(function(result,value,key) {
 						result[value.PlayerId] = result[value.PlayerId] || { Player: value.Player, count: 0 };
 						result[value.PlayerId].count += 1;

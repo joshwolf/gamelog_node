@@ -446,7 +446,19 @@ gameplay {
 
 #year-review-page {
 	li {
+		margin: .5rem 0;
 		//display: inline-block;
+		b {
+			color: $primary-blue;
+			font-size: 2rem;
+			margin: 0 .4rem;
+		}
+		.img-game, .user-icon {
+			margin: 0 .4rem;
+		}
+		&.chart {
+			margin: 3rem 0;
+		}
 	}
 }
 /* Responsive: Portrait tablets and up */

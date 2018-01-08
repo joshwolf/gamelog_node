@@ -6152,6 +6152,17 @@ gameplay article.well {
   #opponents-page .selected-game canvas {
     margin-bottom: 2rem; }
 
+#year-review-page li {
+  margin: .5rem 0; }
+  #year-review-page li b {
+    color: #225378;
+    font-size: 2rem;
+    margin: 0 .4rem; }
+  #year-review-page li .img-game, #year-review-page li .user-icon {
+    margin: 0 .4rem; }
+  #year-review-page li.chart {
+    margin: 3rem 0; }
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
