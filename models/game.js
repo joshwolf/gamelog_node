@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     bgg_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     year_published: DataTypes.INTEGER,
-    image_thumbnail: DataTypes.STRING   
+    image_thumbnail: DataTypes.STRING,
+    image_full: DataTypes.STRING 
   }, {
   	indexes: [
   		{
@@ -42,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         include: [ m.Designer, m.Mechanic, m.Category, m.Gameplay ]
       })
       .spread(function(game, created) {
-        if(created || !game.title) {
+        if(created || !game.title || 1 == 1) {
           //get from BGG
           bgg('thing', {id: bgg_id })
           .then(function(results){
@@ -52,6 +53,7 @@ module.exports = function(sequelize, DataTypes) {
             game.title = _.isArray(bgg_game.name) ? _.find(bgg_game.name,{'type':'primary'}).value : bgg_game.name.value;
             game.year_published = bgg_game.yearpublished.value || 1900;
             game.image_thumbnail = bgg_game.thumbnail;
+            game.image_full = bgg_game.image;
             _.forEach(bgg_game.link, function(link) {
               switch(link.type) {
                 case 'boardgamecategory':
@@ -117,6 +119,10 @@ module.exports = function(sequelize, DataTypes) {
         done(games);
       }
     });
+  }
+
+  Game.prototype.updateImage = function() {
+
   }
   return Game;
 };
