@@ -1,9 +1,9 @@
 {
   "name": "gamelog",
   "engines": {
-    "node": "6.11.1"
+    "node": "8.11.1"
   },
-  "version": "0.6.0",
+  "version": "1.0.0",
   "dependencies": {
     "async-task": "^0.4.2",
     "bgg": "^1.0.0",

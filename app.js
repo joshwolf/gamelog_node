@@ -113,6 +113,10 @@ passport.deserializeUser(function(id, done) {
 
 app.set('port', process.env.PORT || 8888);
 
+app.get('/.well-known/acme-challenge/:content', function(req, res) {
+  res.send('gQqF2p71zSqFlJsi8aSvZFIwwaGLWBiKQ-q9vwhYauk.dwzy1GrPOQfLqcVavYsbBQfh3_KtWa6-8kwnIJfSL7s')
+})
+
 app.get('/alive', function(req, res) {
 	res.send('OK');
 })
