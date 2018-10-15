@@ -4,10 +4,10 @@ require('newrelic');
 
 var compression = require('compression')
 var express = require('express');
+var router = express.Router();
 var nconf = require('nconf');
 var path = require('path');
 var _ = require('lodash');
-var jwt = require('jsonwebtoken');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -17,28 +17,32 @@ var session = require('express-session');
 var redisStore = require('connect-redis')(session);
 var models = require("./models");
 var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var authConfig = require('./config/auth');
-var cookie = require('cookie');
 var util = require('util');
 var dateFormat = require('dateformat');
+var cors = require('cors');
+var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookTokenStrategy = require('passport-facebook-token');
 
-//For testing
-module.exports = app;
+var routes = require('./routes/index')
 
+global.__basedir = path.resolve(__dirname);
 
 // Config
 nconf.argv()
    .env()
    .file({ file: 'config/env.json' });
 
-/* Route Imports */
-var games = require('./routes/games');
-var gameplays = require('./routes/gameplays');
-var users = require('./routes/users');
-var wishlistitems = require('./routes/wishlistitems');
-
 var app = express();
+
+var corsOption = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
+};
+
+app.use(cors(corsOption));
+
 
 app.use(compression());
 app.use(passport.initialize());
@@ -55,7 +59,6 @@ if (nconf.get('REDIS_AUTH')) {
 	redisClient.auth(nconf.get('REDIS_AUTH'));
 }
 
-var appHost = nconf.get('GAMELOG_HOST');
 
 app.use(session({
 		secret: 'secretstash',
@@ -68,7 +71,9 @@ app.use(session({
 
 app.use(passport.session());
 
-//Facebook auth
+app.use('/', routes);
+
+
 passport.use(new FacebookStrategy({
 		clientID: nconf.get('GAMELOG_FB_APP_ID'),
 		clientSecret: nconf.get('GAMELOG_FB_APP_SECRET'),
@@ -89,17 +94,26 @@ passport.use(new FacebookStrategy({
 	}
 ));
 
+passport.use(new FacebookTokenStrategy({
+		clientID: nconf.get('GAMELOG_FB_APP_ID'),
+		clientSecret: nconf.get('GAMELOG_FB_APP_SECRET'),
+		callbackURL: nconf.get('GAMELOG_FB_CALLBACK_URL'),
+		passReqToCallback: true
+	},
+	function(req, accessToken, refreshToken, profile, done) {
+			// find the user in the database based on their facebook id
+			models.User.findOrCreate({ where: {full_name: profile.displayName} , include: [{ model: models.WishlistItem, attributes: ['GameId'] }] })
+				.spread(function(user, created) {
+					//turn wishlist into array of game id's
+					//set all of the facebook information in our user model
+					user.facebook_id = user.facebook_id || profile.id;
+					user.updateFromFacebook(accessToken);
+					req.session.token = user.getToken();
+					done(null,user);
+				});
+	}
+));
 
-// Configure Passport authenticated session persistence.
-//f
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  In a
-// production-quality application, this would typically be as simple as
-// supplying the user ID when serializing, and querying the user record by ID
-// from the database when deserializing.  However, due to the fact that this
-// example does not have a database, the complete Twitter profile is serialized
-// and deserialized.
-// used to serialize the user for the session
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
@@ -111,106 +125,5 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-app.set('port', process.env.PORT || 8888);
 
-app.get('/.well-known/acme-challenge/:content', function(req, res) {
-  res.send('gQqF2p71zSqFlJsi8aSvZFIwwaGLWBiKQ-q9vwhYauk.dwzy1GrPOQfLqcVavYsbBQfh3_KtWa6-8kwnIJfSL7s')
-})
-
-app.get('/alive', function(req, res) {
-	res.send('OK');
-})
-
-app.use('/api/games', games);
-app.use('/api/gameplays', gameplays);
-app.use('/api/users', users);
-app.use('/api/wishlistitems', wishlistitems);
-
-app.get(['/login/facebook','/login'],
-	passport.authenticate('facebook', {}),
-	function(req, res, next) {
-		res.redirect('/');
-	});
-
-app.get('/login/facebook/return',
-	passport.authenticate('facebook', { failureRedirect: '/login/boo' }),
-	function(req, res, next) {
-		if(req.user) {
-			req.logIn(req.user, function(err) {
-				req.session.user = req.user;
-				if(req.cookies.next_url) {
-					res.redirect(req.cookies.next_url);
-				} else {
-					// Successful authentication, redirect home.
-					next();
-				}
-			});
-			next();
-		}
-	});
-
-app.get('/logout', function(req, res) {
-	req.logout();
-	req.session.destroy();
-	var next_url = req.cookies.url || '/';
-	res.redirect(next_url);
-});
-
-app.get('/gameplay/:id', function(req, res) {
-	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
-		models.Gameplay.find(
-			{ where: {id: req.params.id},
-				include:
-					[models.Game,
-					{model: models.User, as: 'Creator'},
-					{model: models.GameplayScore, as: 'Scores', include: [{model:models.User, as: 'Player'}]}]
-			}).then(function(gameplay) {
-			if(gameplay) {
-				var og_data = {
-					"title" : gameplay.getFacebookPostTitle(),
-					"type" : "website",
-					"image" : (gameplay.Game.image_full.indexOf('http') == 0 ? "" : "http:") + gameplay.Game.image_full,
-					"description" : "Played on " + dateFormat(gameplay.play_date, "shortDate") + ". " + _.chain(gameplay.Scores).orderBy('rank').map(function(score) { return score.Player.full_name + ": " + score.points; }).join(', '),
-					"url" : "http://games.greenlightgo.com/gameplay/" + gameplay.id
-				}
-				res.render('opengraph', { "og_data" : og_data });
-			} else {
-				res.send('No such gameplay');
-			}
-		});
-	} else {
-		res.sendFile(__dirname + '/public/app/home.html')
-	}
-});
-
-app.get('/*', function(req, res) {
-	//make sure we're on the right domain
-
-	if(req.headers.host != appHost) {
-		res.redirect((req.connection.encrypted ? 'https://' : 'http://') + appHost);
-	}
-	if(req.session && req.session.token) {
-		res.setHeader('Set-Cookie',cookie.serialize('user', JSON.stringify(req.session.user), {
-			path: '/',
-			maxAge: 60 * 60 * 24 * 60 // 60 days
-		}));
-		res.setHeader('Set-Cookie',cookie.serialize('token', req.session.token, {
-			path: '/',
-			maxAge: 60 * 60 * 24 * 60 // 60 days
-		}));
-	}
-	var cookies = cookie.parse(req.headers.cookie || '');
-	var payload = jwt.decode(cookies.token, authConfig.jwt.secret);
-	var now = new Date();
-
-	if (payload && (now > payload.exp)) {
-		res.setHeader('Set-Cookie', cookie.serialize('token', null));
-	}
-
-	res.sendFile(__dirname + '/public/app/home.html')
-});
-
-models.sequelize.sync().then(function () {
-	console.log('Gamelog starting up...');
-	var server = app.listen(app.get('port'));
-});
+module.exports = app;
