@@ -44,10 +44,13 @@ app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 app.set('view engine', 'pug');
 
-var redisClient = redis.createClient(process.env.REDIS_URL);
+var redisClient;
 
-if(redisClient)
+if(process.env.REDIS_URL != undefined) {
+	console.log(process.env.REDIS_URL);
+	redisClient = redis.createClient(process.env.REDIS_URL);
 	app.use(redisSession({ redisClient: redisClient }));
+}
 
 app.use(passport.session());
 
