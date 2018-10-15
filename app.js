@@ -12,7 +12,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var server = require('http').Server(app);
-var redis = require('redis');
+var redisSession = require('node-redis-session');
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
 var models = require("./models");
@@ -44,20 +44,13 @@ app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 app.set('view engine', 'pug');
 
-var redisClient  = redis.createClient(nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER'));
+var redisOptions  = [nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER')];
 if (nconf.get('REDIS_AUTH')) {
-	redisClient.auth(nconf.get('REDIS_AUTH'));
+	redisOptions.push({'auth_pass' : nconf.get('REDIS_AUTH')});
 }
 
 
-app.use(session({
-		secret: 'secretstash',
-		// create new redis store.
-		store: new redisStore({ host: nconf.get('REDIS_SERVER'), port: nconf.get('REDIS_PORT'), client: redisClient,ttl :  (60 * 60 * 24 * 14)}),
-		saveUninitialized: false,
-		resave: false,
-		secure: false
-}));
+app.use(redisSession({ cookieName: 'mySessionid' }));
 
 app.use(passport.session());
 

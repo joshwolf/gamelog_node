@@ -24,6 +24,7 @@
     "mysql2": "^1.5.1",
     "nconf": "^0.8.4",
     "newrelic": "^4.9.0",
+    "node-redis-session": "^0.3.4",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
