@@ -12,6 +12,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var server = require('http').Server(app);
+var redis = require('redis');
 var redisSession = require('node-redis-session');
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
@@ -44,14 +45,12 @@ app.use(express.static(__dirname + '/public/app'));
 app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
 app.set('view engine', 'pug');
 
-var redisOptions  = [nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER')];
-if (nconf.get('REDIS_AUTH')) {
-	redisOptions.push({'auth_pass' : nconf.get('REDIS_AUTH')});
-}
+var redisClient = redis.createClient(process.env.REDIS_URL);
 
+if(redisClient)
+	app.use(redisSession({ redisClient: redisClient }));
 
-app.use(redisSession({ cookieName: 'mySessionid' }));
-
+console.log(redisSession);
 app.use(passport.session());
 
 app.use('/', routes);
