@@ -9,11 +9,6 @@ var session = require('express-session')
 var jwt = require('jsonwebtoken');
 var redis = require('redis');
 
-var redisClient  = redis.createClient(nconf.get('REDIS_PORT'), nconf.get('REDIS_SERVER'));
-if (nconf.get('REDIS_AUTH')) {
-	redisClient.auth(nconf.get('REDIS_AUTH'));
-}
-
 function loggedIn(req, res, next) {
     if (req.session.user) {
         next();
