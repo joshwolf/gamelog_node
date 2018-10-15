@@ -34,16 +34,6 @@ nconf.argv()
 
 var app = express();
 
-var corsOption = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    exposedHeaders: ['x-auth-token']
-};
-
-app.use(cors(corsOption));
-
-
 app.use(compression());
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -124,6 +114,15 @@ passport.deserializeUser(function(id, done) {
 		done(err, user);
 	});
 });
+
+var corsOption = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
+};
+
+app.use(cors(corsOption));
 
 
 module.exports = app;
