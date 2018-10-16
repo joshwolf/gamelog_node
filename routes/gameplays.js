@@ -7,7 +7,6 @@ var util = require('util');
 var authConfig = require('../config/auth');
 var session = require('express-session')
 var jwt = require('jsonwebtoken');
-var redis = require('redis');
 
 function loggedIn(req, res, next) {
     if (req.session.user) {

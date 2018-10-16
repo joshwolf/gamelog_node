@@ -53,6 +53,17 @@ if(process.env.REDIS_URL != undefined) {
 
 app.use(passport.session());
 
+
+var corsOption = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
+};
+
+app.use(cors(corsOption));
+
+
 app.use('/', routes);
 
 
@@ -106,15 +117,5 @@ passport.deserializeUser(function(id, done) {
 		done(err, user);
 	});
 });
-
-var corsOption = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    exposedHeaders: ['x-auth-token']
-};
-
-app.use(cors(corsOption));
-
 
 module.exports = app;
