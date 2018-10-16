@@ -12,7 +12,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var server = require('http').Server(app);
-var session = require('express-session');
 var redis = require('redis');
 var redisSession = require('node-redis-session');
 var models = require("./models");
@@ -49,7 +48,7 @@ var redisClient;
 if(process.env.REDIS_URL != undefined) {
 	console.log(process.env.REDIS_URL);
 	redisClient = redis.createClient(process.env.REDIS_URL);
-//	app.use(redisSession({ redisClient: redisClient }));
+	app.use(redisSession({ redisClient: redisClient }));
 }
 
 app.use(passport.session());
