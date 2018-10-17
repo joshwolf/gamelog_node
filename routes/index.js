@@ -84,6 +84,7 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/gameplay/:id', function(req, res) {
+	console.log(req.headers['user-agent'])
 	if(req.headers['user-agent'].indexOf('facebookexternalhit') > -1) {
 		models.Gameplay.find(
 			{ where: {id: req.params.id},
