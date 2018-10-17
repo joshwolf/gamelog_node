@@ -10,7 +10,7 @@ var cookie = require('cookie')
 var jwt = require('jsonwebtoken');
 var authConfig = require('../config/auth');
 var { generateToken, sendToken } = require('../lib/token.utils');
-var dateFormat = require('dateFormat')
+var dateFormat = require('dateformat')
 
 /* Route Imports */
 var games = require('./games');
